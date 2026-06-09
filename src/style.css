@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@source "../index.html";
+@source "./**/*.{js,css}";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+}
+
+[data-testimonial-track] {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+[data-testimonial-track]::-webkit-scrollbar {
+  display: none;
+}
