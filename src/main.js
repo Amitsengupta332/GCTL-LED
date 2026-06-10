@@ -182,10 +182,51 @@ function initTestimonials() {
     button.addEventListener("click", slidePrev);
   });
 }
+
+function initProjectsSlider() {
+  const slider = document.getElementById("projectsSlider");
+  const prevBtn = document.getElementById("projectsPrevBtn");
+  const nextBtn = document.getElementById("projectsNextBtn");
+
+  if (!slider || !prevBtn || !nextBtn) return;
+
+  const getScrollAmount = () => {
+    const card = slider.querySelector("[data-project-card]");
+    if (!card) return 320;
+
+    const gap = 16;
+    return card.offsetWidth + gap;
+  };
+
+  prevBtn.addEventListener("click", () => {
+    slider.scrollBy({
+      left: -getScrollAmount(),
+      behavior: "smooth",
+    });
+  });
+
+  nextBtn.addEventListener("click", () => {
+    slider.scrollBy({
+      left: getScrollAmount(),
+      behavior: "smooth",
+    });
+  });
+}
+
+function initCurrentYear() {
+  const yearElements = document.querySelectorAll("[data-current-year]");
+  const currentYear = new Date().getFullYear();
+
+  yearElements.forEach((element) => {
+    element.textContent = currentYear;
+  });
+}
 document.addEventListener("DOMContentLoaded", async () => {
   await loadComponents();
 
   initNavbar();
   initHeroSlider();
   initTestimonials();
+  initProjectsSlider();
+  initCurrentYear();
 });
