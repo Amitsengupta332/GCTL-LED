@@ -290,7 +290,7 @@ function initProjectsPage() {
   }
 
 function projectCard(project) {
-  const detailsLink = `/project-details.html?project=${slugify(project.title)}`;
+  const detailsLink = `/project-details/${slugify(project.title)}`;
 
   return `
     <article class="group overflow-hidden rounded-[14px] bg-white shadow-[0_12px_35px_rgba(7,31,77,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_55px_rgba(7,31,77,0.14)]">
@@ -388,3 +388,514 @@ function waitForProjectsPage() {
 }
 
 waitForProjectsPage();
+
+function createProjectSlug(text) {
+  return String(text)
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
+function getProjectSlugFromUrl() {
+  const parts = window.location.pathname.split("/").filter(Boolean);
+  const detailsIndex = parts.indexOf("project-details");
+
+  if (detailsIndex === -1) return "";
+  return parts[detailsIndex + 1] || "";
+}
+
+function findProjectBySlug(slug) {
+  return gctlProjects.find(
+    (project) => createProjectSlug(project.title) === slug
+  );
+}
+
+function getProjectClient(project) {
+  const title = project.title;
+  const atIndex = title.toLowerCase().lastIndexOf(" at ");
+
+  if (atIndex === -1) return "GCTL LED Client";
+
+  return title
+    .slice(atIndex + 4)
+    .replace(/,\s*Bangladesh/gi, "")
+    .replace(/,\s*Dhaka/gi, "")
+    .replace(/,\s*Chittagong/gi, "")
+    .trim();
+}
+
+function getProjectSystem(project) {
+  const title = project.title.toLowerCase();
+
+  if (title.includes("billboard")) return "Outdoor LED Billboard";
+  if (title.includes("indoor")) return "Indoor LED Display";
+  if (title.includes("outdoor")) return "Outdoor LED Display";
+  if (title.includes("video wall")) return "LED Video Wall";
+
+  return "LED Display Solution";
+}
+
+function getBadgeClass(category) {
+  const classes = {
+    billboard: "bg-[#ff9800]",
+    outdoor: "bg-[#0068d9]",
+    indoor: "bg-[#0b8f6a]",
+    corporate: "bg-[#0068d9]",
+    government: "bg-[#1f5fbf]",
+    education: "bg-[#008fbd]",
+    healthcare: "bg-[#16a34a]",
+    retail: "bg-[#f97316]",
+    entertainment: "bg-[#f97316]",
+  };
+
+  return classes[category] || "bg-[#0068d9]";
+}
+
+function renderProjectNotFound(root) {
+  root.innerHTML = `
+    <div class="mx-auto max-w-[1320px] px-4 py-16 sm:px-6 lg:px-8">
+      <div class="rounded-[16px] bg-white p-10 text-center shadow-[0_20px_60px_rgba(7,31,77,0.08)]">
+        <h1 class="text-[32px] font-black text-[#071f4d]">
+          Project Not Found
+        </h1>
+
+        <p class="mt-3 text-[15px] font-semibold text-[#52657d]">
+          The project link is wrong or the project data has changed.
+        </p>
+
+        <a
+          href="/projects.html"
+          class="mt-7 inline-flex h-12 items-center justify-center rounded-[8px] bg-[#0068d9] px-7 text-[13px] font-black text-white"
+        >
+          Back to Projects
+        </a>
+      </div>
+    </div>
+  `;
+}
+
+function renderProjectDetails(root, project) {
+  const badgeClass = getBadgeClass(project.category);
+  const clientName = getProjectClient(project);
+  const systemName = getProjectSystem(project);
+  const galleryImages = [project.image, project.image, project.image, project.image];
+
+  root.innerHTML = `
+    <section class="bg-[#f4f8ff] py-8 text-[#071f4d]">
+      <div class="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8">
+        <div class="overflow-hidden rounded-[14px] border border-[#dce8f5] bg-white shadow-[0_18px_60px_rgba(7,31,77,0.07)]">
+          
+          <!-- Breadcrumb -->
+          <div class="border-b border-[#e4edf8] px-6 py-5 sm:px-8">
+            <div class="flex flex-wrap items-center gap-3 text-[13px] font-black">
+              <a href="/index.html" class="text-[#0068d9] hover:text-[#0058ba]">
+                Home
+              </a>
+              <span class="text-[#9aaabd]">›</span>
+              <a href="/projects.html" class="text-[#0068d9] hover:text-[#0058ba]">
+                Projects
+              </a>
+              <span class="text-[#9aaabd]">›</span>
+              <span class="text-[#071f4d]">Project Details</span>
+            </div>
+          </div>
+
+          <!-- Top Details Hero -->
+          <div class="bg-gradient-to-br from-white via-[#fbfdff] to-[#eef7ff] px-6 py-10 sm:px-8 lg:px-10">
+            <div class="grid items-center gap-10 lg:grid-cols-2">
+              <div>
+                <span class="inline-flex rounded-full ${badgeClass} px-5 py-2 text-[12px] font-black uppercase tracking-[0.08em] text-white shadow-[0_10px_24px_rgba(0,104,217,0.18)]">
+                  ${project.categoryLabel}
+                </span>
+
+                <h1 class="mt-6 text-[34px] font-black leading-[1.12] tracking-[-1.3px] text-[#071f4d] sm:text-[46px] lg:text-[50px]">
+                  ${project.title}
+                </h1>
+
+                <p class="mt-6 max-w-[650px] text-[15px] font-semibold leading-8 text-[#52657d]">
+                  GCTL completed this ${systemName.toLowerCase()} project with professional installation, reliable display performance, and complete solution support.
+                </p>
+
+                <div class="mt-8 flex flex-wrap gap-4">
+                  <a
+                    href="/contact.html"
+                    class="inline-flex h-13 items-center justify-center rounded-[8px] bg-[#0068d9] px-7 text-[14px] font-black text-white shadow-[0_12px_28px_rgba(0,104,217,0.24)] transition hover:bg-[#0058ba]"
+                  >
+                    Contact Our Experts
+                    <span class="ml-3">→</span>
+                  </a>
+
+                  <a
+                    href="/projects.html"
+                    class="inline-flex h-13 items-center justify-center rounded-[8px] border border-[#0068d9] bg-white px-7 text-[14px] font-black text-[#0068d9] transition hover:bg-[#eef6ff]"
+                  >
+                    Back to Projects
+                  </a>
+                </div>
+
+                <div class="mt-9 grid grid-cols-1 gap-5 sm:grid-cols-3">
+                  <div class="flex items-start gap-3">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eef6ff] text-[#0068d9]">
+                      ◇
+                    </div>
+                    <div>
+                      <h3 class="text-[13px] font-black text-[#071f4d]">
+                        High Brightness
+                      </h3>
+                      <p class="mt-1 text-[11px] font-semibold text-[#697b90]">
+                        Clear visual output
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-3">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eef6ff] text-[#0068d9]">
+                      ▣
+                    </div>
+                    <div>
+                      <h3 class="text-[13px] font-black text-[#071f4d]">
+                        24/7 Operation
+                      </h3>
+                      <p class="mt-1 text-[11px] font-semibold text-[#697b90]">
+                        Stable performance
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-start gap-3">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eef6ff] text-[#0068d9]">
+                      ⚙
+                    </div>
+                    <div>
+                      <h3 class="text-[13px] font-black text-[#071f4d]">
+                        Professional Setup
+                      </h3>
+                      <p class="mt-1 text-[11px] font-semibold text-[#697b90]">
+                        Expert installation
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="overflow-hidden rounded-[14px] bg-[#eaf2fb] shadow-[0_18px_50px_rgba(7,31,77,0.12)]">
+                <img
+                  src="${project.image}"
+                  alt="${project.title}"
+                  class="h-[290px] w-full object-cover sm:h-[390px] lg:h-[460px]"
+                  onerror="this.src='/images/projects/project-placeholder.avif'"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Details Body -->
+          <div class="border-t border-[#e4edf8] px-6 py-10 sm:px-8 lg:px-10">
+            <div class="grid gap-10 lg:grid-cols-[1fr_370px]">
+              
+              <!-- Left Content -->
+              <div>
+                <!-- Overview -->
+                <div>
+                  <div class="flex items-center gap-4">
+                    <span class="h-8 w-[4px] rounded-full bg-[#0068d9]"></span>
+                    <h2 class="text-[20px] font-black text-[#071f4d]">
+                      Project Overview
+                    </h2>
+                  </div>
+
+                  <h3 class="mt-6 text-[28px] font-black tracking-[-0.7px] text-[#071f4d]">
+                    LED Display Solution Delivered Successfully
+                  </h3>
+
+                  <p class="mt-5 text-[15px] font-semibold leading-8 text-[#52657d]">
+                    ${project.description}
+                  </p>
+
+                  <p class="mt-4 text-[15px] font-semibold leading-8 text-[#52657d]">
+                    The project was planned to improve visual communication, audience engagement, and display performance at the site. Our team focused on proper installation, clean finishing, stable operation, and long-term usability.
+                  </p>
+                </div>
+
+                <!-- Stats -->
+                <div class="mt-9 grid grid-cols-1 gap-5 sm:grid-cols-3">
+                  <div class="rounded-[12px] border border-[#dce8f5] bg-white p-8 text-center shadow-[0_10px_32px_rgba(7,31,77,0.05)]">
+                    <div class="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#eef6ff] text-[#0068d9]">
+                      ◇
+                    </div>
+                    <h3 class="mt-5 text-[30px] font-black text-[#071f4d]">
+                      HD
+                    </h3>
+                    <p class="mt-1 text-[12px] font-black text-[#52657d]">
+                      Clear Display
+                    </p>
+                  </div>
+
+                  <div class="rounded-[12px] border border-[#dce8f5] bg-white p-8 text-center shadow-[0_10px_32px_rgba(7,31,77,0.05)]">
+                    <div class="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#eef6ff] text-[#0068d9]">
+                      ◇
+                    </div>
+                    <h3 class="mt-5 text-[30px] font-black text-[#071f4d]">
+                      24/7
+                    </h3>
+                    <p class="mt-1 text-[12px] font-black text-[#52657d]">
+                      Operation
+                    </p>
+                  </div>
+
+                  <div class="rounded-[12px] border border-[#dce8f5] bg-white p-8 text-center shadow-[0_10px_32px_rgba(7,31,77,0.05)]">
+                    <div class="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-[#eef6ff] text-[#0068d9]">
+                      ◇
+                    </div>
+                    <h3 class="mt-5 text-[30px] font-black text-[#071f4d]">
+                      100%
+                    </h3>
+                    <p class="mt-1 text-[12px] font-black text-[#52657d]">
+                      Completed
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Scope -->
+                <div class="mt-10">
+                  <div class="flex items-center gap-4">
+                    <span class="h-8 w-[4px] rounded-full bg-[#0068d9]"></span>
+                    <h2 class="text-[20px] font-black text-[#071f4d]">
+                      Project Scope
+                    </h2>
+                  </div>
+
+                  <div class="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
+                    <div class="rounded-[12px] border border-[#dce8f5] bg-white p-6 shadow-[0_10px_32px_rgba(7,31,77,0.05)]">
+                      <div class="flex gap-5">
+                        <div class="flex h-13 w-13 shrink-0 items-center justify-center rounded-full bg-[#0068d9] text-[18px] font-black text-white">
+                          01
+                        </div>
+                        <div>
+                          <h3 class="text-[16px] font-black text-[#071f4d]">
+                            Site Survey
+                          </h3>
+                          <p class="mt-3 text-[13px] font-semibold leading-7 text-[#52657d]">
+                            Reviewed site condition, display position, visibility, and installation requirements.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="rounded-[12px] border border-[#dce8f5] bg-white p-6 shadow-[0_10px_32px_rgba(7,31,77,0.05)]">
+                      <div class="flex gap-5">
+                        <div class="flex h-13 w-13 shrink-0 items-center justify-center rounded-full bg-[#0068d9] text-[18px] font-black text-white">
+                          02
+                        </div>
+                        <div>
+                          <h3 class="text-[16px] font-black text-[#071f4d]">
+                            Structure Planning
+                          </h3>
+                          <p class="mt-3 text-[13px] font-semibold leading-7 text-[#52657d]">
+                            Planned mounting, cabinet placement, wiring route, and installation support.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="rounded-[12px] border border-[#dce8f5] bg-white p-6 shadow-[0_10px_32px_rgba(7,31,77,0.05)]">
+                      <div class="flex gap-5">
+                        <div class="flex h-13 w-13 shrink-0 items-center justify-center rounded-full bg-[#0068d9] text-[18px] font-black text-white">
+                          03
+                        </div>
+                        <div>
+                          <h3 class="text-[16px] font-black text-[#071f4d]">
+                            LED Installation
+                          </h3>
+                          <p class="mt-3 text-[13px] font-semibold leading-7 text-[#52657d]">
+                            Installed LED display modules, power connection, controller, and related equipment.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="rounded-[12px] border border-[#dce8f5] bg-white p-6 shadow-[0_10px_32px_rgba(7,31,77,0.05)]">
+                      <div class="flex gap-5">
+                        <div class="flex h-13 w-13 shrink-0 items-center justify-center rounded-full bg-[#0068d9] text-[18px] font-black text-white">
+                          04
+                        </div>
+                        <div>
+                          <h3 class="text-[16px] font-black text-[#071f4d]">
+                            Testing & Handover
+                          </h3>
+                          <p class="mt-3 text-[13px] font-semibold leading-7 text-[#52657d]">
+                            Tested display output, brightness, content playback, and final system performance.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sidebar -->
+              <aside>
+                <div class="sticky top-28 rounded-[14px] border border-[#dce8f5] bg-white p-6 shadow-[0_18px_55px_rgba(7,31,77,0.08)]">
+                  <div class="flex items-center gap-4">
+                    <span class="h-8 w-[4px] rounded-full bg-[#0068d9]"></span>
+                    <h2 class="text-[20px] font-black text-[#071f4d]">
+                      Project Information
+                    </h2>
+                  </div>
+
+                  <div class="mt-6 divide-y divide-[#e4edf8]">
+                    <div class="grid grid-cols-[95px_1fr] gap-5 py-4">
+                      <p class="text-[13px] font-black text-[#071f4d]">Category</p>
+                      <p class="text-[13px] font-bold text-[#52657d]">${project.categoryLabel}</p>
+                    </div>
+
+                    <div class="grid grid-cols-[95px_1fr] gap-5 py-4">
+                      <p class="text-[13px] font-black text-[#071f4d]">Location</p>
+                      <p class="text-[13px] font-bold text-[#52657d]">${project.location}</p>
+                    </div>
+
+                    <div class="grid grid-cols-[95px_1fr] gap-5 py-4">
+                      <p class="text-[13px] font-black text-[#071f4d]">System</p>
+                      <p class="text-[13px] font-bold text-[#52657d]">${systemName}</p>
+                    </div>
+
+                    <div class="grid grid-cols-[95px_1fr] gap-5 py-4">
+                      <p class="text-[13px] font-black text-[#071f4d]">Status</p>
+                      <p>
+                        <span class="inline-flex rounded-full bg-[#dff8e9] px-4 py-1 text-[11px] font-black text-[#10a04b]">
+                          Completed
+                        </span>
+                      </p>
+                    </div>
+
+                    <div class="grid grid-cols-[95px_1fr] gap-5 py-4">
+                      <p class="text-[13px] font-black text-[#071f4d]">Year</p>
+                      <p class="text-[13px] font-bold text-[#52657d]">Completed</p>
+                    </div>
+
+                    <div class="grid grid-cols-[95px_1fr] gap-5 py-4">
+                      <p class="text-[13px] font-black text-[#071f4d]">Client</p>
+                      <p class="text-[13px] font-bold leading-6 text-[#52657d]">${clientName}</p>
+                    </div>
+                  </div>
+
+                  <div class="mt-7 rounded-[12px] bg-[#0068d9] p-6 text-white shadow-[0_16px_35px_rgba(0,104,217,0.22)]">
+                    <h3 class="text-[23px] font-black leading-tight">
+                      Have a Similar Project?
+                    </h3>
+
+                    <p class="mt-4 text-[13px] font-semibold leading-7 text-white/85">
+                      Let’s discuss how we can help you with the best LED display solution.
+                    </p>
+
+                    <a
+                      href="/contact.html"
+                      class="mt-6 inline-flex h-12 w-full items-center justify-center rounded-[8px] bg-white px-5 text-[13px] font-black text-[#0068d9] transition hover:bg-[#eef6ff]"
+                    >
+                      Contact Our Experts
+                      <span class="ml-3">→</span>
+                    </a>
+                  </div>
+                </div>
+              </aside>
+            </div>
+
+            <!-- Gallery -->
+            <div class="mt-12">
+              <div class="flex items-center gap-4">
+                <span class="h-8 w-[4px] rounded-full bg-[#0068d9]"></span>
+                <h2 class="text-[20px] font-black text-[#071f4d]">
+                  Project Gallery
+                </h2>
+              </div>
+
+              <div class="mt-6 grid grid-cols-2 gap-5 lg:grid-cols-4">
+                ${galleryImages
+                  .map(
+                    (image) => `
+                      <div class="overflow-hidden rounded-[10px] bg-[#eaf2fb] shadow-[0_10px_28px_rgba(7,31,77,0.08)]">
+                        <img
+                          src="${image}"
+                          alt="${project.title}"
+                          loading="lazy"
+                          class="h-[130px] w-full object-cover transition duration-500 hover:scale-105 sm:h-[160px]"
+                          onerror="this.src='/images/projects/project-placeholder.avif'"
+                        />
+                      </div>
+                    `
+                  )
+                  .join("")}
+              </div>
+            </div>
+
+            <!-- Bottom CTA -->
+            <div class="mt-10 rounded-[14px] bg-gradient-to-r from-[#eef7ff] to-white p-7 shadow-[0_10px_35px_rgba(7,31,77,0.05)]">
+              <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+                <div class="flex items-start gap-5">
+                  <div class="flex h-[64px] w-[64px] shrink-0 items-center justify-center rounded-full bg-[#0068d9] text-[26px] text-white shadow-[0_14px_28px_rgba(0,104,217,0.22)]">
+                    ♫
+                  </div>
+
+                  <div>
+                    <h2 class="text-[28px] font-black tracking-[-0.7px] text-[#071f4d]">
+                      Have an LED Display Project in Mind?
+                    </h2>
+                    <p class="mt-2 text-[14px] font-semibold leading-6 text-[#52657d]">
+                      Let’s work together to build a smarter, brighter and more engaging display solution.
+                    </p>
+                  </div>
+                </div>
+
+                <a
+                  href="/contact.html"
+                  class="inline-flex h-12 items-center justify-center rounded-[8px] bg-[#0068d9] px-7 text-[13px] font-black text-white shadow-[0_10px_24px_rgba(0,104,217,0.22)] transition hover:bg-[#0058ba]"
+                >
+                  Contact Our Experts
+                  <span class="ml-3">→</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function initProjectDetailsPage() {
+  const root = document.getElementById("projectDetailsRoot");
+  if (!root) return;
+
+  const slug = getProjectSlugFromUrl();
+  const project = findProjectBySlug(slug);
+
+  if (!project) {
+    renderProjectNotFound(root);
+    return;
+  }
+
+  document.title = `${project.title} - GCTL LED`;
+  renderProjectDetails(root, project);
+}
+
+function waitForProjectDetailsPage() {
+  if (document.getElementById("projectDetailsRoot")) {
+    initProjectDetailsPage();
+    return;
+  }
+
+  const observer = new MutationObserver(() => {
+    if (document.getElementById("projectDetailsRoot")) {
+      observer.disconnect();
+      initProjectDetailsPage();
+    }
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+}
+
+waitForProjectDetailsPage();

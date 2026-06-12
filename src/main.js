@@ -221,6 +221,132 @@ function initCurrentYear() {
     element.textContent = currentYear;
   });
 }
+
+
+function initProjectTypeMultiSelect() {
+  const multiSelects = document.querySelectorAll("[data-multi-select]");
+
+  if (!multiSelects.length) return;
+
+  multiSelects.forEach(function (multiSelect) {
+    if (multiSelect.dataset.multiSelectReady === "true") return;
+    multiSelect.dataset.multiSelectReady = "true";
+
+    const button = multiSelect.querySelector("[data-multi-select-button]");
+    const menu = multiSelect.querySelector("[data-multi-select-menu]");
+    const text = multiSelect.querySelector("[data-multi-select-text]");
+    const arrow = multiSelect.querySelector("[data-multi-select-arrow]");
+    const checkboxes = Array.from(
+      multiSelect.querySelectorAll('input[type="checkbox"]'),
+    );
+
+    if (!button || !menu || !text || !checkboxes.length) return;
+
+    function openMenu() {
+      menu.classList.remove("hidden");
+      button.setAttribute("aria-expanded", "true");
+
+      if (arrow) {
+        arrow.classList.add("rotate-180");
+      }
+    }
+
+    function closeMenu() {
+      menu.classList.add("hidden");
+      button.setAttribute("aria-expanded", "false");
+
+      if (arrow) {
+        arrow.classList.remove("rotate-180");
+      }
+    }
+
+    function toggleMenu() {
+      if (menu.classList.contains("hidden")) {
+        openMenu();
+      } else {
+        closeMenu();
+      }
+    }
+
+    function updateSelectedText() {
+      const selected = checkboxes
+        .filter(function (checkbox) {
+          return checkbox.checked;
+        })
+        .map(function (checkbox) {
+          return checkbox.value;
+        });
+
+      if (!selected.length) {
+        text.textContent = "Select project type";
+        text.classList.add("text-[#8b98aa]");
+        button.classList.remove("border-red-400");
+        return;
+      }
+
+      text.classList.remove("text-[#8b98aa]");
+      button.classList.remove("border-red-400");
+
+      if (selected.length === 1) {
+        text.textContent = selected[0];
+      } else if (selected.length === 2) {
+        text.textContent = selected.join(", ");
+      } else {
+        text.textContent = `${selected.length} project types selected`;
+      }
+    }
+
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      toggleMenu();
+    });
+
+    menu.addEventListener("click", function (e) {
+      e.stopPropagation();
+    });
+
+    checkboxes.forEach(function (checkbox) {
+      checkbox.addEventListener("change", updateSelectedText);
+    });
+
+    const form = multiSelect.closest("form");
+
+    if (form) {
+      form.addEventListener("submit", function (e) {
+        const hasSelectedItem = checkboxes.some(function (checkbox) {
+          return checkbox.checked;
+        });
+
+        if (!hasSelectedItem) {
+          e.preventDefault();
+
+          button.classList.add("border-red-400");
+          text.textContent = "Please select at least one project type";
+          text.classList.remove("text-[#8b98aa]");
+
+          openMenu();
+        }
+      });
+    }
+
+    document.addEventListener("click", function (e) {
+      if (!multiSelect.contains(e.target)) {
+        closeMenu();
+      }
+    });
+
+    window.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        closeMenu();
+      }
+    });
+
+    updateSelectedText();
+  });
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   await loadComponents();
 
@@ -229,4 +355,5 @@ document.addEventListener("DOMContentLoaded", async () => {
   initTestimonials();
   initProjectsSlider();
   initCurrentYear();
+  initProjectTypeMultiSelect();
 });
