@@ -1,5 +1,5 @@
 import "./style.css";
-
+import { initProductSections } from "./products/product-sections.js";
 async function loadComponents() {
   const components = document.querySelectorAll("[data-component]");
 
@@ -222,7 +222,6 @@ function initCurrentYear() {
   });
 }
 
-
 function initProjectTypeMultiSelect() {
   const multiSelects = document.querySelectorAll("[data-multi-select]");
 
@@ -353,6 +352,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initNavbar();
   initHeroSlider();
   initTestimonials();
+  initProductSections();
   initProjectsSlider();
   initCurrentYear();
   initProjectTypeMultiSelect();
