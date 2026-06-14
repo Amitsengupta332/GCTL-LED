@@ -1,4 +1,5 @@
 import "./style.css";
+// import "./blogs/blogs-data.js";
 import { initProductSections } from "./products/product-sections.js";
 async function loadComponents() {
   const components = document.querySelectorAll("[data-component]");

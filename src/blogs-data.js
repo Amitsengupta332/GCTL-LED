@@ -364,16 +364,45 @@ function categoryButton(category) {
     <button
       type="button"
       data-blog-category="${category}"
-      class="rounded-full border px-5 py-3 text-[12px] font-black transition ${
+      class="shrink-0 rounded-[8px] px-5 py-3 text-[13px] font-black transition ${
         isActive
-          ? "border-[#0068d9] bg-[#0068d9] text-white shadow-[0_10px_24px_rgba(0,104,217,0.20)]"
-          : "border-[#d7e4f2] bg-white text-[#40556d] hover:border-[#0068d9] hover:text-[#0068d9]"
+          ? "bg-[#0068d9] text-white shadow-[0_10px_24px_rgba(0,104,217,0.20)]"
+          : "bg-transparent text-[#071f4d] hover:bg-[#eef6ff] hover:text-[#0068d9]"
       }"
     >
-      ${category}
+      ${category === BLOGS_ALL_CATEGORY ? "☰ All Blogs" : category}
     </button>
   `;
 }
+
+function initBlogCategorySliderButtons() {
+  const categoriesWrapper = document.getElementById("blogsCategories");
+  const prevBtn = document.getElementById("blogsCategoryPrev");
+  const nextBtn = document.getElementById("blogsCategoryNext");
+
+  if (!categoriesWrapper || !prevBtn || !nextBtn) return;
+  if (categoriesWrapper.dataset.sliderReady === "true") return;
+
+  categoriesWrapper.dataset.sliderReady = "true";
+
+  const scrollAmount = 320;
+
+  prevBtn.addEventListener("click", () => {
+    categoriesWrapper.scrollBy({
+      left: -scrollAmount,
+      behavior: "smooth",
+    });
+  });
+
+  nextBtn.addEventListener("click", () => {
+    categoriesWrapper.scrollBy({
+      left: scrollAmount,
+      behavior: "smooth",
+    });
+  });
+}
+
+
 
 function getFilteredBlogs() {
   if (activeBlogCategory === BLOGS_ALL_CATEGORY) return gctlBlogs;
@@ -445,6 +474,7 @@ function initBlogsPage() {
 
   renderBlogCategories();
   renderBlogsGrid();
+  initBlogCategorySliderButtons();
 }
 
 function waitForBlogsPage() {
