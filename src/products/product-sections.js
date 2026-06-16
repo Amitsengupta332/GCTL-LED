@@ -1,4 +1,4 @@
-import { productSections } from "./product-sections-data.js";
+import { productSections } from "./product-sections-data.js"; 
 
 function productBadge(product) {
   if (!product.badge) return "";
@@ -22,8 +22,19 @@ function productImage(product) {
   `;
 }
 
+function productSlug(text = "") {
+  return String(text)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function productDetailsHref(productName) {
+  return `/products/details/${productSlug(productName)}.html`;
+}
+
 function productCard(product, sectionLink) {
-  const productLink = product.link || sectionLink;
+  const productLink = product.link || productDetailsHref(product.name);
 
   return `
     <a

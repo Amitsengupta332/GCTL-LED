@@ -1,6 +1,7 @@
 import "./style.css";
 // import "./blogs/blogs-data.js";
 import { initProductSections } from "./products/product-sections.js";
+import { initProductDetails } from "./products/product-details.js";
 import { navItems } from "./data/nav-data.js";
 async function loadComponents() {
   const components = document.querySelectorAll("[data-component]");
@@ -42,10 +43,8 @@ function slugify(text) {
 }
 
 function createProductHref(baseHref, productName) {
-  const separator = baseHref.includes("?") ? "&" : "?";
-  return `${baseHref}${separator}product=${slugify(productName)}`;
+  return `/products/details/${slugify(productName)}.html`;
 }
-
 function getProductTitle(product) {
   if (typeof product === "string") return product;
   return product.name || product.title || "";
@@ -349,15 +348,7 @@ function renderProductMegaTree(item) {
 
                                           <h4 class="mt-2 h-[32px] overflow-hidden text-[10px] font-bold leading-[16px] text-slate-900 group-hover/card:text-[#0050a8]">
                                             ${productTitle}
-                                          </h4>
-
-                                          <p class="mt-1 text-[10px] font-bold text-[#0050a8]">
-                                            ${getProductPrice(product)}
-                                          </p>
-
-                                          <span class="mt-2 inline-flex rounded-md border border-blue-100 px-3 py-1.5 text-[10px] font-bold text-[#0050a8] group-hover/card:bg-blue-50">
-                                            View Details
-                                          </span>
+                                          </h4>   
                                         </a>
                                       `;
                                     })
@@ -1058,16 +1049,48 @@ function initProjectTypeMultiSelect() {
   });
 }
 
+// function added
+
+function isProductDetailsRoute() {
+  return window.location.pathname.startsWith("/products/details/");
+}
+
+function mountProductDetailsLayout() {
+  if (document.querySelector("#product-details-root")) return;
+
+  document.body.innerHTML = `
+    <div data-component="/components/navbar.html"></div>
+
+    <main>
+      <section id="product-details-root"></section>
+    </main>
+
+    <div data-component="/components/footer.html"></div>
+  `;
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
+  const isDetailsPage = isProductDetailsRoute();
+
+  if (isDetailsPage) {
+    mountProductDetailsLayout();
+  }
+
   await loadComponents();
 
   renderNavbar();
 
   initNavbar();
+  initCurrentYear();
+
+  if (isDetailsPage) {
+    initProductDetails();
+    return;
+  }
+
   initHeroSlider();
   initTestimonials();
   initProductSections();
   initProjectsSlider();
-  initCurrentYear();
   initProjectTypeMultiSelect();
 });

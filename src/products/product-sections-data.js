@@ -2,21 +2,21 @@ export const productSections = [
   {
     title: "Floor Standing Signage",
     link: "/products/floor-standing-signage.html",
-    bg: "bg-white",
+    bg: "bg-white", 
     products: [
       {
         badge: "Best Seller",
         badgeClass: "bg-[#f6b400]",
         name: '43" Floor Standing Signage',
         desc: "Slim indoor digital signage for malls, lobbies and retail promotions.",
-        image: "",
+        image: "/images/product/3-9.jpg",
       },
       {
         badge: "New",
         badgeClass: "bg-[#0057d8]",
         name: '55" Floor Standing Display',
         desc: "Premium portrait display for product campaigns and brand messaging.",
-        image: "",
+        image: "/images/product/3-9.jpg",
       },
       {
         badge: "",
