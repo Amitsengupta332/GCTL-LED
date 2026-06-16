@@ -72,7 +72,7 @@ function renderSimpleDropdown(item) {
         <span class="text-[10px]">⌄</span>
       </button>
 
-      <div class="invisible absolute left-1/2 top-full ${dropdownWidth} -translate-x-1/2 pt-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+     <div class="invisible absolute left-1/2 top-full ${dropdownWidth} -translate-x-1/2 pt-1 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
         <div class="grid ${gridCols} gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-2xl shadow-slate-200/70">
           ${item.items
             .map(
@@ -100,52 +100,47 @@ function renderProductMegaTree(item) {
     firstGroup?.title || "",
   )}`;
 
-function renderProductImage(product) {
-  const image = getProductImage(product);
-  const title = getProductTitle(product);
+  function renderProductImage(product) {
+    const image = getProductImage(product);
+    const title = getProductTitle(product);
 
-  return `
-    <div class="relative flex h-[118px] items-center justify-center overflow-hidden rounded-lg border border-[#e5efff] bg-[#f7fbff] p-3">
-      ${
-        image
-          ? `
-            <img
-              src="${image}"
-              alt="${title}"
-              class="h-full w-full object-contain"
-              onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
-            />
+    return `
+      <div class="relative flex h-[86px] items-center justify-center overflow-hidden rounded-lg border border-[#e6eefb] bg-[#f8fbff] p-2">
+        ${
+          image
+            ? `
+              <img
+                src="${image}"
+                alt="${title}"
+                class="h-full w-full object-contain"
+                onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
+              />
 
-            <div class="hidden text-center">
-              <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-lg border border-blue-100 bg-white text-[20px] text-[#0050a8] shadow-sm">
-                🖼
+              <div class="hidden text-center">
+                <div class="mx-auto flex h-9 w-9 items-center justify-center rounded-md border border-blue-100 bg-white text-[17px] text-[#0050a8]">
+                  🖼
+                </div>
+
+                <p class="mt-1 text-[9px] font-bold text-[#0050a8]">
+                  Image Missing
+                </p>
               </div>
+            `
+            : `
+              <div class="text-center">
+                <div class="mx-auto flex h-9 w-9 items-center justify-center rounded-md border border-blue-100 bg-white text-[17px] text-[#0050a8]">
+                  🖼
+                </div>
 
-              <p class="mt-2 text-[10px] font-bold text-[#0050a8]">
-                Image Missing
-              </p>
-            </div>
-          `
-          : `
-            <div class="text-center">
-              <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-lg border border-blue-100 bg-white text-[20px] text-[#0050a8] shadow-sm">
-                🖼
+                <p class="mt-1 text-[9px] font-bold text-[#0050a8]">
+                  Image Missing
+                </p>
               </div>
-
-              <p class="mt-2 text-[10px] font-bold text-[#0050a8]">
-                Product Image
-              </p>
-
-              <p class="mt-0.5 text-[9px] font-medium text-slate-400">
-                Add image in nav-data.js
-              </p>
-            </div>
-          `
-      }
-    </div>
-  `;
-}
- 
+            `
+        }
+      </div>
+    `;
+  }
 
   return `
     <div class="group">
@@ -156,10 +151,10 @@ function renderProductImage(product) {
 
       <div
         data-product-mega-tree
-        class="invisible absolute left-1/2 top-full z-50 w-[1120px] max-w-[calc(100vw-32px)] -translate-x-1/2 pt-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100"
+       class="invisible absolute left-1/2 top-full z-50 w-[1120px] max-w-[calc(100vw-32px)] -translate-x-1/2 pt-1 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100"
       >
         <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl shadow-slate-300/60">
-          <div class="grid min-h-[495px] grid-cols-[245px_255px_minmax(0,1fr)]">
+          <div class="grid min-h-[430px] grid-cols-[230px_245px_minmax(0,1fr)]">
 
             <!-- LEFT SIDE CATEGORY -->
             <div class="border-r border-slate-100 bg-white p-3">
@@ -167,7 +162,7 @@ function renderProductImage(product) {
                 Product Category
               </div>
 
-              <div class="max-h-[455px] overflow-y-auto pr-1">
+              <div class="max-h-[395px] overflow-y-auto pr-1">
                 <div class="flex flex-col gap-1">
                   ${item.categories
                     .map((category, categoryIndex) => {
@@ -230,7 +225,7 @@ function renderProductImage(product) {
             </div>
 
             <!-- MIDDLE GROUP -->
-            <div class="border-r border-slate-100 bg-[#fbfdff] p-4">
+            <div class="border-r border-slate-100 bg-white p-4">
               ${item.categories
                 .map((category) =>
                   category.children
@@ -244,16 +239,17 @@ function renderProductImage(product) {
                           class="${isActiveSub ? "" : "hidden"}"
                         >
                           <div class="mb-4">
-                            <h3 class="text-[14px] font-bold text-slate-900">
+                            <h3 class="text-[13px] font-bold text-slate-900">
                               ${sub.label}
                             </h3>
+
                             <p class="mt-1 text-[11px] leading-5 text-slate-500">
                               Select product size or display group
                             </p>
                           </div>
 
-                          <div class="max-h-[405px] overflow-y-auto pr-1">
-                            <div class="flex flex-col gap-2">
+                          <div class="max-h-[365px] overflow-y-auto pr-1">
+                            <div class="flex flex-col">
                               ${sub.groups
                                 .map((group, groupIndex) => {
                                   const groupKey = `${category.id}__${sub.id}__${slugify(
@@ -266,18 +262,24 @@ function renderProductImage(product) {
                                     <button
                                       type="button"
                                       data-tree-group-btn="${groupKey}"
-                                      class="rounded-lg border px-4 py-3 text-left transition ${
+                                      class="group/mid flex w-full items-center justify-between border-b border-slate-100 px-2 py-3 text-left transition ${
                                         isGroupActive
                                           ? "border-[#bdd7ff] bg-[#eef5ff] text-[#0050a8]"
-                                          : "border-slate-100 bg-white text-slate-700 hover:border-[#bdd7ff] hover:bg-white"
+                                          : "border-slate-100 bg-white text-slate-700 hover:border-[#bdd7ff] hover:bg-[#f7fbff]"
                                       }"
                                     >
-                                      <span class="block text-[12px] font-bold leading-snug">
-                                        ${group.title}
+                                      <span>
+                                        <span class="block text-[12px] font-bold leading-snug">
+                                          ${group.title}
+                                        </span>
+
+                                        <span class="mt-1 block text-[10px] font-semibold text-slate-400">
+                                          ${group.products.length} Products
+                                        </span>
                                       </span>
 
-                                      <span class="mt-1 block text-[11px] font-semibold text-slate-400">
-                                        ${group.products.length} Products
+                                      <span class="ml-2 text-[14px] text-slate-300 group-hover/mid:text-[#0050a8]">
+                                        ›
                                       </span>
                                     </button>
                                   `;
@@ -311,9 +313,9 @@ function renderProductImage(product) {
                               data-tree-product-panel="${groupKey}"
                               class="${isActiveGroup ? "" : "hidden"} flex h-full flex-col"
                             >
-                              <div class="mb-3 flex items-center justify-between gap-4">
+                              <div class="mb-3 flex items-start justify-between gap-4">
                                 <div>
-                                  <h3 class="text-[14px] font-bold text-slate-900">
+                                  <h3 class="text-[14px] font-bold leading-snug text-slate-900">
                                     ${group.title}
                                   </h3>
 
@@ -324,15 +326,16 @@ function renderProductImage(product) {
 
                                 <a
                                   href="${sub.href}"
-                                  class="shrink-0 rounded-md border border-blue-100 px-3 py-2 text-[11px] font-bold text-[#0050a8] hover:bg-blue-50"
+                                  class="shrink-0 rounded-md border border-blue-100 px-4 py-2 text-[11px] font-bold text-[#0050a8] hover:bg-blue-50"
                                 >
                                   View Category →
                                 </a>
                               </div>
 
-                            <div class="min-h-[255px] max-h-[255px] overflow-y-auto pr-1">
-  <div class="grid grid-cols-5 gap-3">
+                              <div class="overflow-hidden">
+                                <div class="grid grid-cols-5 gap-3">
                                   ${group.products
+                                    .slice(0, 5)
                                     .map((product) => {
                                       const productTitle =
                                         getProductTitle(product);
@@ -340,17 +343,17 @@ function renderProductImage(product) {
                                       return `
                                         <a
                                           href="${createProductHref(sub.href, productTitle)}"
-                                        class="group/card rounded-lg border border-slate-100 bg-white p-2 transition hover:border-[#bdd7ff] hover:shadow-md hover:shadow-slate-200/70"
+                                          class="group/card rounded-lg border border-slate-100 bg-white p-2 transition hover:border-[#bdd7ff] hover:shadow-md hover:shadow-slate-200/70"
                                         >
-                                    ${renderProductImage(product)}
+                                          ${renderProductImage(product)}
 
-                                         <h4 class="mt-2 h-[36px] overflow-hidden text-[10px] font-bold leading-[18px] text-slate-900 group-hover/card:text-[#0050a8]">
+                                          <h4 class="mt-2 h-[32px] overflow-hidden text-[10px] font-bold leading-[16px] text-slate-900 group-hover/card:text-[#0050a8]">
                                             ${productTitle}
                                           </h4>
 
-                                        <p class="mt-1 text-[10px] font-bold text-[#0050a8]">
-  ${getProductPrice(product)}
-</p>
+                                          <p class="mt-1 text-[10px] font-bold text-[#0050a8]">
+                                            ${getProductPrice(product)}
+                                          </p>
 
                                           <span class="mt-2 inline-flex rounded-md border border-blue-100 px-3 py-1.5 text-[10px] font-bold text-[#0050a8] group-hover/card:bg-blue-50">
                                             View Details
@@ -362,26 +365,26 @@ function renderProductImage(product) {
                                 </div>
                               </div>
 
-                              <!-- QUALITY ROW INSIDE RIGHT SIDE -->
-                             <div class="mt-5 grid grid-cols-4 border-t border-slate-100 pt-4">
-                                <div class="flex items-center gap-2 pr-3">
-                                  <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[#0050a8]">✓</span>
+                              <!-- QUALITY ROW -->
+                              <div class="mt-3 grid grid-cols-4 gap-3 border-t border-slate-100 pt-3">
+                                <div class="flex items-center gap-2">
+                                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[12px] text-[#0050a8]">✓</span>
                                   <div>
                                     <h4 class="text-[10px] font-bold text-slate-900">Premium Quality</h4>
                                     <p class="text-[9px] text-slate-500">Top-tier products</p>
                                   </div>
                                 </div>
 
-                                <div class="flex items-center gap-2 pr-3">
-                                  <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[#0050a8]">⚙</span>
+                                <div class="flex items-center gap-2">
+                                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[12px] text-[#0050a8]">⚙</span>
                                   <div>
                                     <h4 class="text-[10px] font-bold text-slate-900">Latest Technology</h4>
                                     <p class="text-[9px] text-slate-500">Advanced features</p>
                                   </div>
                                 </div>
 
-                                <div class="flex items-center gap-2 pr-3">
-                                  <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[#0050a8]">⚡</span>
+                                <div class="flex items-center gap-2">
+                                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[12px] text-[#0050a8]">⚡</span>
                                   <div>
                                     <h4 class="text-[10px] font-bold text-slate-900">Energy Efficient</h4>
                                     <p class="text-[9px] text-slate-500">Lower power use</p>
@@ -389,7 +392,7 @@ function renderProductImage(product) {
                                 </div>
 
                                 <div class="flex items-center gap-2">
-                                  <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[#0050a8]">☎</span>
+                                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[12px] text-[#0050a8]">☎</span>
                                   <div>
                                     <h4 class="text-[10px] font-bold text-slate-900">Global Support</h4>
                                     <p class="text-[9px] text-slate-500">24/7 assistance</p>
@@ -397,24 +400,24 @@ function renderProductImage(product) {
                                 </div>
                               </div>
 
-                              <!-- HELP BANNER INSIDE RIGHT SIDE -->
-                              <div class="mt-auto rounded-xl bg-gradient-to-r from-[#eef6ff] via-[#f7fbff] to-[#eaf3ff] p-4">
-                                <div class="flex items-center justify-between gap-5">
+                              <!-- HELP BANNER -->
+                              <div class="mt-auto rounded-xl bg-gradient-to-r from-[#eef6ff] via-[#f8fbff] to-[#eaf3ff] px-4 py-3">
+                                <div class="flex items-center justify-between gap-4">
                                   <div>
-                                    <h3 class="text-[14px] font-bold text-slate-900">
+                                    <h3 class="text-[12px] font-bold text-slate-900">
                                       Need Help Choosing the Right Product?
                                     </h3>
 
-                                    <p class="mt-1 max-w-[520px] text-[11px] leading-5 text-slate-500">
+                                    <p class="mt-1 max-w-[440px] text-[10px] leading-4 text-slate-500">
                                       Our experts can help you choose the perfect LED display, kiosk, video wall or digital signage solution.
                                     </p>
                                   </div>
 
                                   <a
                                     href="/contact.html"
-                                    class="shrink-0 rounded-lg bg-[#0050a8] px-5 py-3 text-[11px] font-bold text-white hover:bg-[#003f87]"
+                                    class="shrink-0 rounded-lg bg-[#0050a8] px-4 py-2 text-[10px] font-bold text-white hover:bg-[#003f87]"
                                   >
-                                    Contact Our Experts
+                                    Contact Experts
                                   </a>
                                 </div>
                               </div>

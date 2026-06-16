@@ -19,12 +19,14 @@ const productMegaCategories = [
               },
               {
                 name: "43 Inch 4K Full Screen Floor Standing Kiosk",
-                image: "/images/product/43-inch-4k-full-screen-floor-standing-kiosk.jpg",
+                image:
+                  "/images/product/43-inch-4k-full-screen-floor-standing-kiosk.jpg",
                 price: "Call for Price",
               },
               {
                 name: "43 Inch 2K/4K Outdoor Floor Standing Displays",
-                image: "/images/product/43-inch-2k-4k-outdoor-floor-standing-displays.jpg",
+                image:
+                  "/images/product/43-inch-2k-4k-outdoor-floor-standing-displays.jpg",
                 price: "Call for Price",
               },
             ],
@@ -34,17 +36,20 @@ const productMegaCategories = [
             products: [
               {
                 name: "50 Inch 4K Floor Standing Kiosk Displays",
-                image: "/images/product/50-inch-4k-floor-standing-kiosk-displays.jpg",
+                image:
+                  "/images/product/50-inch-4k-floor-standing-kiosk-displays.jpg",
                 price: "Call for Price",
               },
               {
                 name: "50 Inch 4K Full Screen Floor Standing Kiosk",
-                image: "/images/product/50-inch-4k-full-screen-floor-standing-kiosk.jpg",
+                image:
+                  "/images/product/50-inch-4k-full-screen-floor-standing-kiosk.jpg",
                 price: "Call for Price",
               },
               {
                 name: "50 Inch 2K/4K Outdoor Floor Standing Displays",
-                image: "/images/product/50-inch-2k-4k-outdoor-floor-standing-displays.jpg",
+                image:
+                  "/images/product/50-inch-2k-4k-outdoor-floor-standing-displays.jpg",
                 price: "Call for Price",
               },
             ],
@@ -54,17 +59,20 @@ const productMegaCategories = [
             products: [
               {
                 name: "55 Inch 4K Floor Standing Kiosk Displays",
-                image: "/images/product/55-inch-4k-floor-standing-kiosk-displays.jpg",
+                image:
+                  "/images/product/55-inch-4k-floor-standing-kiosk-displays.jpg",
                 price: "Call for Price",
               },
               {
                 name: "55 Inch 4K Full Screen Floor Standing Kiosk",
-                image: "/images/product/55-inch-4k-full-screen-floor-standing-kiosk.jpg",
+                image:
+                  "/images/product/55-inch-4k-full-screen-floor-standing-kiosk.jpg",
                 price: "Call for Price",
               },
               {
                 name: "55 Inch 2K/4K Outdoor Floor Standing Displays",
-                image: "/images/product/55-inch-2k-4k-outdoor-floor-standing-displays.jpg",
+                image:
+                  "/images/product/55-inch-2k-4k-outdoor-floor-standing-displays.jpg",
                 price: "Call for Price",
               },
             ],
@@ -74,17 +82,20 @@ const productMegaCategories = [
             products: [
               {
                 name: "65 Inch 4K Floor Standing Kiosk Displays",
-                image: "/images/product/65-inch-4k-floor-standing-kiosk-displays.jpg",
+                image:
+                  "/images/product/65-inch-4k-floor-standing-kiosk-displays.jpg",
                 price: "Call for Price",
               },
               {
                 name: "65 Inch 4K Full Screen Floor Standing Kiosk",
-                image: "/images/product/65-inch-4k-full-screen-floor-standing-kiosk.jpg",
+                image:
+                  "/images/product/65-inch-4k-full-screen-floor-standing-kiosk.jpg",
                 price: "Call for Price",
               },
               {
                 name: "65 Inch 2K/4K Outdoor Floor Standing Displays",
-                image: "/images/product/65-inch-2k-4k-outdoor-floor-standing-displays.jpg",
+                image:
+                  "/images/product/65-inch-2k-4k-outdoor-floor-standing-displays.jpg",
                 price: "Call for Price",
               },
             ],
@@ -94,17 +105,20 @@ const productMegaCategories = [
             products: [
               {
                 name: "75 Inch 4K Floor Standing Kiosk Displays",
-                image: "/images/product/75-inch-4k-floor-standing-kiosk-displays.jpg",
+                image:
+                  "/images/product/75-inch-4k-floor-standing-kiosk-displays.jpg",
                 price: "Call for Price",
               },
               {
                 name: "75 Inch 4K Full Screen Floor Standing Kiosk",
-                image: "/images/product/75-inch-4k-full-screen-floor-standing-kiosk.jpg",
+                image:
+                  "/images/product/75-inch-4k-full-screen-floor-standing-kiosk.jpg",
                 price: "Call for Price",
               },
               {
                 name: "75 Inch 2K/4K Outdoor Floor Standing Displays",
-                image: "/images/product/75-inch-2k-4k-outdoor-floor-standing-displays.jpg",
+                image:
+                  "/images/product/75-inch-2k-4k-outdoor-floor-standing-displays.jpg",
                 price: "Call for Price",
               },
             ],
@@ -114,17 +128,20 @@ const productMegaCategories = [
             products: [
               {
                 name: "86 Inch 4K Floor Standing Kiosk Displays",
-                image: "/images/product/86-inch-4k-floor-standing-kiosk-displays.jpg",
+                image:
+                  "/images/product/86-inch-4k-floor-standing-kiosk-displays.jpg",
                 price: "Call for Price",
               },
               {
                 name: "86 Inch 4K Full Screen Floor Standing Kiosk",
-                image: "/images/product/86-inch-4k-full-screen-floor-standing-kiosk.jpg",
+                image:
+                  "/images/product/86-inch-4k-full-screen-floor-standing-kiosk.jpg",
                 price: "Call for Price",
               },
               {
                 name: "86 Inch 2K/4K Outdoor Floor Standing Displays",
-                image: "/images/product/86-inch-2k-4k-outdoor-floor-standing-displays.jpg",
+                image:
+                  "/images/product/86-inch-2k-4k-outdoor-floor-standing-displays.jpg",
                 price: "Call for Price",
               },
             ],
@@ -141,12 +158,14 @@ const productMegaCategories = [
             products: [
               {
                 name: "55 Inch Full Screen 4K 8+128 GB Floor Standing Kiosk for Advertisement",
-                image: "/images/product/55-inch-full-screen-4k-8-128-gb-floor-standing-kiosk-for-advertisement.jpg",
+                image:
+                  "/images/product/55-inch-full-screen-4k-8-128-gb-floor-standing-kiosk-for-advertisement.jpg",
                 price: "Call for Price",
               },
               {
                 name: "55 Inch Full Screen 2K 4+32 GB Floor Standing Kiosk Displays",
-                image: "/images/product/55-inch-full-screen-2k-4-32-gb-floor-standing-kiosk-displays.jpg",
+                image:
+                  "/images/product/55-inch-full-screen-2k-4-32-gb-floor-standing-kiosk-displays.jpg",
                 price: "Call for Price",
               },
             ],
@@ -156,12 +175,14 @@ const productMegaCategories = [
             products: [
               {
                 name: "65 Inch Full Screen 4K 8+128 GB Floor Standing Kiosk for Advertisement",
-                image: "/images/product/65-inch-full-screen-4k-8-128-gb-floor-standing-kiosk-for-advertisement.jpg",
+                image:
+                  "/images/product/65-inch-full-screen-4k-8-128-gb-floor-standing-kiosk-for-advertisement.jpg",
                 price: "Call for Price",
               },
               {
                 name: "65 Inch Full Screen 2K 4+32 GB Floor Standing Kiosk Displays",
-                image: "/images/product/65-inch-full-screen-2k-4-32-gb-floor-standing-kiosk-displays.jpg",
+                image:
+                  "/images/product/65-inch-full-screen-2k-4-32-gb-floor-standing-kiosk-displays.jpg",
                 price: "Call for Price",
               },
             ],
@@ -171,12 +192,14 @@ const productMegaCategories = [
             products: [
               {
                 name: "75 Inch Full Screen 4K 8+128 GB Floor Standing Kiosk for Advertisement",
-                image: "/images/product/75-inch-full-screen-4k-8-128-gb-floor-standing-kiosk-for-advertisement.jpg",
+                image:
+                  "/images/product/75-inch-full-screen-4k-8-128-gb-floor-standing-kiosk-for-advertisement.jpg",
                 price: "Call for Price",
               },
               {
                 name: "75 Inch Full Screen 2K 4+32 GB Floor Standing Kiosk Displays",
-                image: "/images/product/75-inch-full-screen-2k-4-32-gb-floor-standing-kiosk-displays.jpg",
+                image:
+                  "/images/product/75-inch-full-screen-2k-4-32-gb-floor-standing-kiosk-displays.jpg",
                 price: "Call for Price",
               },
             ],
@@ -193,7 +216,8 @@ const productMegaCategories = [
             products: [
               {
                 name: "65 Inch Touch 4K All in One Touch Panel Display for Classroom",
-                image: "/images/product/65-inch-touch-4k-all-in-one-touch-panel-display-for-classroom.jpg",
+                image:
+                  "/images/product/65-inch-touch-4k-all-in-one-touch-panel-display-for-classroom.jpg",
                 price: "Call for Price",
               },
             ],
@@ -203,7 +227,8 @@ const productMegaCategories = [
             products: [
               {
                 name: "75 Inch Touch 4K All in One Touch Interactive Flat Panel for Conference",
-                image: "/images/product/75-inch-touch-4k-all-in-one-touch-interactive-flat-panel-for-conference.jpg",
+                image:
+                  "/images/product/75-inch-touch-4k-all-in-one-touch-interactive-flat-panel-for-conference.jpg",
                 price: "Call for Price",
               },
             ],
@@ -213,7 +238,8 @@ const productMegaCategories = [
             products: [
               {
                 name: "86 Inch Touch 4K All in One Interactive Panel",
-                image: "/images/product/86-inch-touch-4k-all-in-one-interactive-panel.jpg",
+                image:
+                  "/images/product/86-inch-touch-4k-all-in-one-interactive-panel.jpg",
                 price: "Call for Price",
               },
             ],
@@ -223,7 +249,8 @@ const productMegaCategories = [
             products: [
               {
                 name: "98 Inch Touch 4K All in One Interactive Panel",
-                image: "/images/product/98-inch-touch-4k-all-in-one-interactive-panel.jpg",
+                image:
+                  "/images/product/98-inch-touch-4k-all-in-one-interactive-panel.jpg",
                 price: "Call for Price",
               },
             ],
@@ -233,7 +260,8 @@ const productMegaCategories = [
             products: [
               {
                 name: "110 Inch Touch 4K All in One Interactive Panel",
-                image: "/images/product/110-inch-touch-4k-all-in-one-interactive-panel.jpg",
+                image:
+                  "/images/product/110-inch-touch-4k-all-in-one-interactive-panel.jpg",
                 price: "Call for Price",
               },
             ],
@@ -250,7 +278,8 @@ const productMegaCategories = [
             products: [
               {
                 name: "21.5 Inch K-Type Inquiry Information Kiosk",
-                image: "/images/product/21-5-inch-k-type-inquiry-information-kiosk.jpg",
+                image:
+                  "/images/product/21-5-inch-k-type-inquiry-information-kiosk.jpg",
                 price: "Call for Price",
               },
             ],
@@ -260,7 +289,8 @@ const productMegaCategories = [
             products: [
               {
                 name: "32 Inch Touch K-Type Information Kiosk",
-                image: "/images/product/32-inch-touch-k-type-information-kiosk.jpg",
+                image:
+                  "/images/product/32-inch-touch-k-type-information-kiosk.jpg",
                 price: "Call for Price",
               },
             ],
@@ -270,7 +300,8 @@ const productMegaCategories = [
             products: [
               {
                 name: "43 Inch Touch K-Type Information Kiosk",
-                image: "/images/product/43-inch-touch-k-type-information-kiosk.jpg",
+                image:
+                  "/images/product/43-inch-touch-k-type-information-kiosk.jpg",
                 price: "Call for Price",
               },
             ],
@@ -280,7 +311,8 @@ const productMegaCategories = [
             products: [
               {
                 name: "55 Inch Touch 4K K-Type Information Kiosk",
-                image: "/images/product/55-inch-touch-4k-k-type-information-kiosk.jpg",
+                image:
+                  "/images/product/55-inch-touch-4k-k-type-information-kiosk.jpg",
                 price: "Call for Price",
               },
             ],
@@ -297,17 +329,20 @@ const productMegaCategories = [
             products: [
               {
                 name: "46-inch LCD Video Wall Display 3.5mm Narrow Bezel",
-                image: "/images/product/46-inch-lcd-video-wall-display-3-5mm-narrow-bezel.jpg",
+                image:
+                  "/images/product/46-inch-lcd-video-wall-display-3-5mm-narrow-bezel.jpg",
                 price: "Call for Price",
               },
               {
                 name: "46-inch Ultra-Narrow Bezel 0.88mm LCD Video Wall Display",
-                image: "/images/product/46-inch-ultra-narrow-bezel-0-88mm-lcd-video-wall-display.jpg",
+                image:
+                  "/images/product/46-inch-ultra-narrow-bezel-0-88mm-lcd-video-wall-display.jpg",
                 price: "Call for Price",
               },
               {
                 name: "46-inch Ultra-Narrow Bezel 1.8mm LCD Video Wall Display",
-                image: "/images/product/46-inch-ultra-narrow-bezel-1-8mm-lcd-video-wall-display.jpg",
+                image:
+                  "/images/product/46-inch-ultra-narrow-bezel-1-8mm-lcd-video-wall-display.jpg",
                 price: "Call for Price",
               },
             ],
@@ -317,17 +352,20 @@ const productMegaCategories = [
             products: [
               {
                 name: "55-inch LCD Video Wall Display 3.5mm Narrow Bezel",
-                image: "/images/product/55-inch-lcd-video-wall-display-3-5mm-narrow-bezel.jpg",
+                image:
+                  "/images/product/55-inch-lcd-video-wall-display-3-5mm-narrow-bezel.jpg",
                 price: "Call for Price",
               },
               {
                 name: "55-inch Ultra-Narrow Bezel 0.88mm LCD Video Wall Display",
-                image: "/images/product/55-inch-ultra-narrow-bezel-0-88mm-lcd-video-wall-display.jpg",
+                image:
+                  "/images/product/55-inch-ultra-narrow-bezel-0-88mm-lcd-video-wall-display.jpg",
                 price: "Call for Price",
               },
               {
                 name: "55-inch Ultra-Narrow Bezel 1.8mm LCD Video Wall Display",
-                image: "/images/product/55-inch-ultra-narrow-bezel-1-8mm-lcd-video-wall-display.jpg",
+                image:
+                  "/images/product/55-inch-ultra-narrow-bezel-1-8mm-lcd-video-wall-display.jpg",
                 price: "Call for Price",
               },
             ],
@@ -337,12 +375,14 @@ const productMegaCategories = [
             products: [
               {
                 name: "Video Wall Controller Processor Matrix Switching 4K",
-                image: "/images/product/video-wall-controller-processor-matrix-switching-4k.jpg",
+                image:
+                  "/images/product/video-wall-controller-processor-matrix-switching-4k.jpg",
                 price: "Call for Price",
               },
               {
                 name: "4K60 UHD Video Wall Controller 4 HDMI Supports 4 Inputs 9 Outputs",
-                image: "/images/product/4k60-uhd-video-wall-controller-4-hdmi-supports-4-inputs-9-outputs.jpg",
+                image:
+                  "/images/product/4k60-uhd-video-wall-controller-4-hdmi-supports-4-inputs-9-outputs.jpg",
                 price: "Call for Price",
               },
             ],
@@ -369,7 +409,8 @@ const productMegaCategories = [
             products: [
               {
                 name: "32 Inch Self Service Touch Kiosk for Restaurant",
-                image: "/images/product/32-inch-self-service-touch-kiosk-for-restaurant.jpg",
+                image:
+                  "/images/product/32-inch-self-service-touch-kiosk-for-restaurant.jpg",
                 price: "Call for Price",
               },
             ],
@@ -386,7 +427,8 @@ const productMegaCategories = [
             products: [
               {
                 name: "21.5 Inch Wall Mount Android Display",
-                image: "/images/product/21-5-inch-wall-mount-android-display.jpg",
+                image:
+                  "/images/product/21-5-inch-wall-mount-android-display.jpg",
                 price: "Call for Price",
               },
             ],
@@ -423,12 +465,14 @@ const productMegaCategories = [
             products: [
               {
                 name: "43 Inch Portable Digital Signage Poster for Advertising",
-                image: "/images/product/43-inch-portable-digital-signage-poster-for-advertising.jpg",
+                image:
+                  "/images/product/43-inch-portable-digital-signage-poster-for-advertising.jpg",
                 price: "Call for Price",
               },
               {
                 name: "43 Inch Advertising Recharge Portable Digital Signage Outdoor Waterproof",
-                image: "/images/product/43-inch-advertising-recharge-portable-digital-signage-outdoor-waterproof.jpg",
+                image:
+                  "/images/product/43-inch-advertising-recharge-portable-digital-signage-outdoor-waterproof.jpg",
                 price: "Call for Price",
               },
             ],
@@ -445,17 +489,20 @@ const productMegaCategories = [
             products: [
               {
                 name: "Digital Signage Media Player Box 2K 2G/32G",
-                image: "/images/product/digital-signage-media-player-box-2k-2g-32g.jpg",
+                image:
+                  "/images/product/digital-signage-media-player-box-2k-2g-32g.jpg",
                 price: "Call for Price",
               },
               {
                 name: "Digital Signage Media Player Box 2K 4G/32G",
-                image: "/images/product/digital-signage-media-player-box-2k-4g-32g.jpg",
+                image:
+                  "/images/product/digital-signage-media-player-box-2k-4g-32g.jpg",
                 price: "Call for Price",
               },
               {
                 name: "Digital Signage Media Player Box 2K 4G/64G",
-                image: "/images/product/digital-signage-media-player-box-2k-4g-64g.jpg",
+                image:
+                  "/images/product/digital-signage-media-player-box-2k-4g-64g.jpg",
                 price: "Call for Price",
               },
             ],
@@ -504,22 +551,26 @@ const productMegaCategories = [
             products: [
               {
                 name: "Indoor P4 LED Display Billboard Advertising Screen",
-                image: "/images/product/indoor-p4-led-display-billboard-advertising-screen.jpg",
+                image:
+                  "/images/product/indoor-p4-led-display-billboard-advertising-screen.jpg",
                 price: "Call for Price",
               },
               {
                 name: "Indoor P6.6 LED Display Billboard Advertising Screen",
-                image: "/images/product/indoor-p6-6-led-display-billboard-advertising-screen.jpg",
+                image:
+                  "/images/product/indoor-p6-6-led-display-billboard-advertising-screen.jpg",
                 price: "Call for Price",
               },
               {
                 name: "Indoor P8 LED Display Billboard Advertising Screen",
-                image: "/images/product/indoor-p8-led-display-billboard-advertising-screen.jpg",
+                image:
+                  "/images/product/indoor-p8-led-display-billboard-advertising-screen.jpg",
                 price: "Call for Price",
               },
               {
                 name: "Indoor P10 LED Display Billboard Advertising Screen",
-                image: "/images/product/indoor-p10-led-display-billboard-advertising-screen.jpg",
+                image:
+                  "/images/product/indoor-p10-led-display-billboard-advertising-screen.jpg",
                 price: "Call for Price",
               },
             ],
@@ -536,37 +587,44 @@ const productMegaCategories = [
             products: [
               {
                 name: "COB P0.9 4K LED Digital Advertising Billboard",
-                image: "/images/product/cob-p0-9-4k-led-digital-advertising-billboard.jpg",
+                image:
+                  "/images/product/cob-p0-9-4k-led-digital-advertising-billboard.jpg",
                 price: "Call for Price",
               },
               {
                 name: "COB P1.2 4K LED Digital Advertising Billboard",
-                image: "/images/product/cob-p1-2-4k-led-digital-advertising-billboard.jpg",
+                image:
+                  "/images/product/cob-p1-2-4k-led-digital-advertising-billboard.jpg",
                 price: "Call for Price",
               },
               {
                 name: "COB P1.5 4K LED Digital Advertising Billboard",
-                image: "/images/product/cob-p1-5-4k-led-digital-advertising-billboard.jpg",
+                image:
+                  "/images/product/cob-p1-5-4k-led-digital-advertising-billboard.jpg",
                 price: "Call for Price",
               },
               {
                 name: "COB P1.8 4K LED Digital Advertising Billboard",
-                image: "/images/product/cob-p1-8-4k-led-digital-advertising-billboard.jpg",
+                image:
+                  "/images/product/cob-p1-8-4k-led-digital-advertising-billboard.jpg",
                 price: "Call for Price",
               },
               {
                 name: "COB P2 4K LED Digital Advertising Billboard",
-                image: "/images/product/cob-p2-4k-led-digital-advertising-billboard.jpg",
+                image:
+                  "/images/product/cob-p2-4k-led-digital-advertising-billboard.jpg",
                 price: "Call for Price",
               },
               {
                 name: "COB P2.5 4K LED Video Wall Display Screen",
-                image: "/images/product/cob-p2-5-4k-led-video-wall-display-screen.jpg",
+                image:
+                  "/images/product/cob-p2-5-4k-led-video-wall-display-screen.jpg",
                 price: "Call for Price",
               },
               {
                 name: "COB P3 4K LED Video Wall Display Screen",
-                image: "/images/product/cob-p3-4k-led-video-wall-display-screen.jpg",
+                image:
+                  "/images/product/cob-p3-4k-led-video-wall-display-screen.jpg",
                 price: "Call for Price",
               },
             ],
@@ -576,37 +634,44 @@ const productMegaCategories = [
             products: [
               {
                 name: "COB P0.9 4K LED Digital Advertising Billboard",
-                image: "/images/product/outdoor-cob-p0-9-4k-led-digital-advertising-billboard.jpg",
+                image:
+                  "/images/product/outdoor-cob-p0-9-4k-led-digital-advertising-billboard.jpg",
                 price: "Call for Price",
               },
               {
                 name: "COB P1.2 4K LED Digital Advertising Billboard",
-                image: "/images/product/outdoor-cob-p1-2-4k-led-digital-advertising-billboard.jpg",
+                image:
+                  "/images/product/outdoor-cob-p1-2-4k-led-digital-advertising-billboard.jpg",
                 price: "Call for Price",
               },
               {
                 name: "COB P1.5 4K LED Digital Advertising Billboard",
-                image: "/images/product/outdoor-cob-p1-5-4k-led-digital-advertising-billboard.jpg",
+                image:
+                  "/images/product/outdoor-cob-p1-5-4k-led-digital-advertising-billboard.jpg",
                 price: "Call for Price",
               },
               {
                 name: "COB P1.8 4K LED Digital Advertising Billboard",
-                image: "/images/product/outdoor-cob-p1-8-4k-led-digital-advertising-billboard.jpg",
+                image:
+                  "/images/product/outdoor-cob-p1-8-4k-led-digital-advertising-billboard.jpg",
                 price: "Call for Price",
               },
               {
                 name: "COB P2 4K LED Digital Advertising Billboard",
-                image: "/images/product/outdoor-cob-p2-4k-led-digital-advertising-billboard.jpg",
+                image:
+                  "/images/product/outdoor-cob-p2-4k-led-digital-advertising-billboard.jpg",
                 price: "Call for Price",
               },
               {
                 name: "COB P2.5 4K LED Video Wall Display Screen",
-                image: "/images/product/outdoor-cob-p2-5-4k-led-video-wall-display-screen.jpg",
+                image:
+                  "/images/product/outdoor-cob-p2-5-4k-led-video-wall-display-screen.jpg",
                 price: "Call for Price",
               },
               {
                 name: "COB P3 4K LED Video Wall Display Screen",
-                image: "/images/product/outdoor-cob-p3-4k-led-video-wall-display-screen.jpg",
+                image:
+                  "/images/product/outdoor-cob-p3-4k-led-video-wall-display-screen.jpg",
                 price: "Call for Price",
               },
             ],
@@ -623,17 +688,20 @@ const productMegaCategories = [
             products: [
               {
                 name: "Rental Outdoor P2.60 Event Waterproof LED Display",
-                image: "/images/product/rental-outdoor-p2-60-event-waterproof-led-display.jpg",
+                image:
+                  "/images/product/rental-outdoor-p2-60-event-waterproof-led-display.jpg",
                 price: "Call for Price",
               },
               {
                 name: "Rental Outdoor P2.97 Event Waterproof LED Display",
-                image: "/images/product/rental-outdoor-p2-97-event-waterproof-led-display.jpg",
+                image:
+                  "/images/product/rental-outdoor-p2-97-event-waterproof-led-display.jpg",
                 price: "Call for Price",
               },
               {
                 name: "Rental Outdoor P3.91 Event Waterproof LED Display",
-                image: "/images/product/rental-outdoor-p3-91-event-waterproof-led-display.jpg",
+                image:
+                  "/images/product/rental-outdoor-p3-91-event-waterproof-led-display.jpg",
                 price: "Call for Price",
               },
             ],
@@ -643,17 +711,20 @@ const productMegaCategories = [
             products: [
               {
                 name: "Rental Indoor P2.60 Stage Concert Event Waterproof LED Display",
-                image: "/images/product/rental-indoor-p2-60-stage-concert-event-waterproof-led-display.jpg",
+                image:
+                  "/images/product/rental-indoor-p2-60-stage-concert-event-waterproof-led-display.jpg",
                 price: "Call for Price",
               },
               {
                 name: "Rental Indoor P2.97 Stage Concert Event Waterproof LED Display",
-                image: "/images/product/rental-indoor-p2-97-stage-concert-event-waterproof-led-display.jpg",
+                image:
+                  "/images/product/rental-indoor-p2-97-stage-concert-event-waterproof-led-display.jpg",
                 price: "Call for Price",
               },
               {
                 name: "Rental Indoor P3.91 Stage Concert Event Waterproof LED Display",
-                image: "/images/product/rental-indoor-p3-91-stage-concert-event-waterproof-led-display.jpg",
+                image:
+                  "/images/product/rental-indoor-p3-91-stage-concert-event-waterproof-led-display.jpg",
                 price: "Call for Price",
               },
             ],
@@ -670,17 +741,20 @@ const productMegaCategories = [
             products: [
               {
                 name: "Indoor P1.8 LED Poster Screen Display",
-                image: "/images/product/indoor-p1-8-led-poster-screen-display.jpg",
+                image:
+                  "/images/product/indoor-p1-8-led-poster-screen-display.jpg",
                 price: "Call for Price",
               },
               {
                 name: "Indoor P2 LED Poster Screen Display",
-                image: "/images/product/indoor-p2-led-poster-screen-display.jpg",
+                image:
+                  "/images/product/indoor-p2-led-poster-screen-display.jpg",
                 price: "Call for Price",
               },
               {
                 name: "Indoor P2.5 LED Poster Screen Display",
-                image: "/images/product/indoor-p2-5-led-poster-screen-display.jpg",
+                image:
+                  "/images/product/indoor-p2-5-led-poster-screen-display.jpg",
                 price: "Call for Price",
               },
             ],
@@ -690,17 +764,20 @@ const productMegaCategories = [
             products: [
               {
                 name: "Outdoor P1.8 LED Poster Screen Display",
-                image: "/images/product/outdoor-p1-8-led-poster-screen-display.jpg",
+                image:
+                  "/images/product/outdoor-p1-8-led-poster-screen-display.jpg",
                 price: "Call for Price",
               },
               {
                 name: "Outdoor P2 LED Poster Screen Display",
-                image: "/images/product/outdoor-p2-led-poster-screen-display.jpg",
+                image:
+                  "/images/product/outdoor-p2-led-poster-screen-display.jpg",
                 price: "Call for Price",
               },
               {
                 name: "Outdoor P2.5 LED Poster Screen Display",
-                image: "/images/product/outdoor-p2-5-led-poster-screen-display.jpg",
+                image:
+                  "/images/product/outdoor-p2-5-led-poster-screen-display.jpg",
                 price: "Call for Price",
               },
             ],
@@ -754,7 +831,8 @@ const productMegaCategories = [
               },
               {
                 name: "Cube LED Display Screen P2.5 Outdoor",
-                image: "/images/product/cube-led-display-screen-p2-5-outdoor.jpg",
+                image:
+                  "/images/product/cube-led-display-screen-p2-5-outdoor.jpg",
                 price: "Call for Price",
               },
             ],
@@ -769,7 +847,8 @@ const productMegaCategories = [
               },
               {
                 name: "Cube LED Display Screen P2.5 Indoor",
-                image: "/images/product/cube-led-display-screen-p2-5-indoor.jpg",
+                image:
+                  "/images/product/cube-led-display-screen-p2-5-indoor.jpg",
                 price: "Call for Price",
               },
             ],
@@ -786,12 +865,14 @@ const productMegaCategories = [
             products: [
               {
                 name: "Transparent P3.91-7.81 Full Color Grille Mesh LED Screen Indoor",
-                image: "/images/product/transparent-p3-91-7-81-full-color-grille-mesh-led-screen-indoor.jpg",
+                image:
+                  "/images/product/transparent-p3-91-7-81-full-color-grille-mesh-led-screen-indoor.jpg",
                 price: "Call for Price",
               },
               {
                 name: "Transparent P10.4-10.4 Full Color Grille Mesh LED Screen Indoor",
-                image: "/images/product/transparent-p10-4-10-4-full-color-grille-mesh-led-screen-indoor.jpg",
+                image:
+                  "/images/product/transparent-p10-4-10-4-full-color-grille-mesh-led-screen-indoor.jpg",
                 price: "Call for Price",
               },
             ],
@@ -801,12 +882,14 @@ const productMegaCategories = [
             products: [
               {
                 name: "Transparent 2.34-3.47 Full Color Grille Mesh LED Screen Outdoor",
-                image: "/images/product/transparent-2-34-3-47-full-color-grille-mesh-led-screen-outdoor.jpg",
+                image:
+                  "/images/product/transparent-2-34-3-47-full-color-grille-mesh-led-screen-outdoor.jpg",
                 price: "Call for Price",
               },
               {
                 name: "Transparent 2.6-5.2 Full Color Grille Mesh LED Screen Outdoor",
-                image: "/images/product/transparent-2-6-5-2-full-color-grille-mesh-led-screen-outdoor.jpg",
+                image:
+                  "/images/product/transparent-2-6-5-2-full-color-grille-mesh-led-screen-outdoor.jpg",
                 price: "Call for Price",
               },
             ],
@@ -823,7 +906,8 @@ const productMegaCategories = [
             products: [
               {
                 name: "P3 Tunnel Screen LED Video Wall LED Module Indoor",
-                image: "/images/product/p3-tunnel-screen-led-video-wall-led-module-indoor.jpg",
+                image:
+                  "/images/product/p3-tunnel-screen-led-video-wall-led-module-indoor.jpg",
                 price: "Call for Price",
               },
             ],
@@ -833,7 +917,8 @@ const productMegaCategories = [
             products: [
               {
                 name: "P3 Tunnel Screen LED Video Wall LED Module Outdoor",
-                image: "/images/product/p3-tunnel-screen-led-video-wall-led-module-outdoor.jpg",
+                image:
+                  "/images/product/p3-tunnel-screen-led-video-wall-led-module-outdoor.jpg",
                 price: "Call for Price",
               },
             ],
@@ -850,7 +935,8 @@ const productMegaCategories = [
             products: [
               {
                 name: "P4 Flexible LED Video Wall LED Module Indoor",
-                image: "/images/product/p4-flexible-led-video-wall-led-module-indoor.jpg",
+                image:
+                  "/images/product/p4-flexible-led-video-wall-led-module-indoor.jpg",
                 price: "Call for Price",
               },
             ],
@@ -860,7 +946,8 @@ const productMegaCategories = [
             products: [
               {
                 name: "P4 Flexible LED Video Wall LED Module Outdoor",
-                image: "/images/product/p4-flexible-led-video-wall-led-module-outdoor.jpg",
+                image:
+                  "/images/product/p4-flexible-led-video-wall-led-module-outdoor.jpg",
                 price: "Call for Price",
               },
             ],
@@ -873,9 +960,15 @@ const productMegaCategories = [
 
 export const navItems = [
   {
-    label: "Products",
+    label: "Digital Signage",
     type: "productMegaTree",
-    categories: productMegaCategories,
+    categories: [productMegaCategories[0]],
+  },
+
+  {
+    label: "LED Products",
+    type: "productMegaTree",
+    categories: [productMegaCategories[1]],
   },
 
   {
@@ -917,10 +1010,6 @@ export const navItems = [
   {
     label: "Blogs",
     href: "/blogs.html",
-  },
-  {
-    label: "Resources",
-    href: "/resources.html",
   },
   {
     label: "About Us",
