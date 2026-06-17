@@ -60,16 +60,36 @@ function getProductPrice(product) {
   return "Call for Price";
 }
 
+function dropdownChevronIcon() {
+  return `
+    <svg
+      class="h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover:rotate-180"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="m6 9 6 6 6-6"></path>
+    </svg>
+  `;
+}
+
 function renderSimpleDropdown(item) {
   const dropdownWidth = item.columns === 3 ? "w-[760px]" : "w-[520px]";
   const gridCols = item.columns === 3 ? "grid-cols-3" : "grid-cols-2";
 
   return `
     <div class="group relative">
-      <button class="flex items-center gap-1 py-2 hover:text-[#0050a8]">
-        ${item.label}
-        <span class="text-[10px]">⌄</span>
-      </button>
+   <button
+  type="button"
+  class="flex items-center gap-1.5 py-2 transition hover:text-[#0050a8]"
+>
+  ${item.label}
+  ${dropdownChevronIcon()}
+</button>
 
      <div class="invisible absolute left-1/2 top-full ${dropdownWidth} -translate-x-1/2 pt-1 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
         <div class="grid ${gridCols} gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-2xl shadow-slate-200/70">
@@ -143,10 +163,13 @@ function renderProductMegaTree(item) {
 
   return `
     <div class="group">
-      <button class="flex items-center gap-1 py-2 hover:text-[#0050a8]">
-        ${item.label}
-        <span class="text-[10px]">⌄</span>
-      </button>
+   <button
+  type="button"
+  class="flex items-center gap-1.5 py-2 transition hover:text-[#0050a8]"
+>
+  ${item.label}
+  ${dropdownChevronIcon()}
+</button>
 
       <div
         data-product-mega-tree

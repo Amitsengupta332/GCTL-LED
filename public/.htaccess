@@ -1,0 +1,10 @@
+Options -MultiViews
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  RewriteRule ^blogs/.*$ /blog-details.html [L]
+  RewriteRule ^project-details/.*$ /project-details.html [L]
+  RewriteRule ^products/details/.*\.html$ /index.html [L]
+</IfModule>
