@@ -298,6 +298,72 @@ const gctlBlogs = [
 const BLOGS_ALL_CATEGORY = "All Blogs";
 let activeBlogCategory = BLOGS_ALL_CATEGORY;
 
+const DEFAULT_BLOG_AUTHOR = "GCTL Editorial Team";
+const WORDS_PER_MINUTE = 200;
+
+function getBlogAuthor(blog) {
+  return blog.author || DEFAULT_BLOG_AUTHOR;
+}
+
+function getBlogPlainText(blog) {
+  return [blog.title, blog.excerpt, ...(blog.content || [])].join(" ");
+}
+
+function getBlogReadingTime(blog) {
+  const text = getBlogPlainText(blog);
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.ceil(words / WORDS_PER_MINUTE));
+
+  return `${minutes} min read`;
+}
+
+function createTocTitle(paragraph, index) {
+  const words = paragraph.trim().split(/\s+/);
+  const shortTitle = words
+    .slice(0, 8)
+    .join(" ")
+    .replace(/[.,:;!?]+$/, "");
+  const dots = words.length > 8 ? "..." : "";
+
+  return `Section ${index + 1}: ${shortTitle}${dots}`;
+}
+
+function getBlogTocItems(blog) {
+  return (blog.content || []).map((paragraph, index) => ({
+    id: `blog-section-${index + 1}`,
+    title: createTocTitle(paragraph, index),
+  }));
+}
+
+function blogTableOfContents(blog) {
+  const tocItems = getBlogTocItems(blog);
+
+  if (!tocItems.length) return "";
+
+  return `
+    <div class="rounded-[18px] bg-white p-7 shadow-[0_18px_55px_rgba(7,31,77,0.08)]">
+      <h3 class="text-[22px] font-black tracking-[-0.4px] text-[#071f4d]">
+        Table of Contents
+      </h3>
+
+      <div class="mt-5 space-y-3">
+        ${tocItems
+          .map(
+            (item) => `
+              <a
+                href="#${item.id}"
+                class="block rounded-[10px] border border-[#e4edf8] bg-[#f7fbff] px-4 py-3 text-[13px] font-bold leading-5 text-[#40556d] transition hover:border-[#0068d9] hover:bg-[#eef6ff] hover:text-[#0068d9]"
+              >
+                ${item.title}
+              </a>
+            `,
+          )
+          .join("")}
+      </div>
+    </div>
+  `;
+}
+
 function getOnlyBlogCategories() {
   return [...new Set(gctlBlogs.map((blog) => blog.category))];
 }
@@ -342,7 +408,7 @@ function blogCard(blog) {
         <div class="mt-5 flex items-center gap-3 text-[12px] font-bold text-[#6d7d8f]">
           <span>${blog.date}</span>
           <span>•</span>
-          <span>${blog.readTime}</span>
+          <span>${getBlogReadingTime(blog)}</span>
         </div>
 
         <a
@@ -401,8 +467,6 @@ function initBlogCategorySliderButtons() {
     });
   });
 }
-
-
 
 function getFilteredBlogs() {
   if (activeBlogCategory === BLOGS_ALL_CATEGORY) return gctlBlogs;
@@ -581,6 +645,9 @@ function renderBlogNotFound(root) {
 
 function renderBlogDetails(root, blog) {
   const relatedBlogs = getRelatedBlogs(blog);
+  const readingTime = getBlogReadingTime(blog);
+  const author = getBlogAuthor(blog);
+  const tocItems = getBlogTocItems(blog);
 
   root.innerHTML = `
     <section class="bg-[#f7fbff] text-[#071f4d]">
@@ -621,10 +688,12 @@ function renderBlogDetails(root, blog) {
                 ${blog.title}
               </h1>
 
-              <div class="mt-5 flex items-center gap-3 text-[14px] font-bold text-white/85">
+              <div class="mt-5 flex flex-wrap items-center gap-3 text-[14px] font-bold text-white/85">
+                <span>By ${author}</span>
+                <span>•</span>
                 <span>${blog.date}</span>
                 <span>•</span>
-                <span>${blog.readTime}</span>
+                <span>${readingTime}</span>
               </div>
             </div>
           </div>
@@ -650,20 +719,42 @@ function renderBlogDetails(root, blog) {
               </h2>
 
               <div class="mt-4 flex flex-wrap items-center gap-3 text-[13px] font-bold text-[#697b90]">
+                <span>By ${author}</span>
+                <span>•</span>
                 <span>${blog.category}</span>
                 <span>•</span>
                 <span>${blog.date}</span>
                 <span>•</span>
-                <span>${blog.readTime}</span>
+                <span>${readingTime}</span>
               </div>
 
-              <div class="mt-8 space-y-5">
+              <div class="mt-6 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  id="blogSpeakBtn"
+                  class="inline-flex h-11 items-center justify-center rounded-[8px] bg-[#0068d9] px-5 text-[13px] font-black text-white shadow-[0_10px_24px_rgba(0,104,217,0.18)] transition hover:bg-[#0058ba]"
+                >
+                  🔊 Listen to Article
+                </button>
+
+                <button
+                  type="button"
+                  id="blogStopSpeakBtn"
+                  class="inline-flex h-11 items-center justify-center rounded-[8px] border border-[#d7e4f2] bg-white px-5 text-[13px] font-black text-[#071f4d] transition hover:border-[#0068d9] hover:text-[#0068d9]"
+                >
+                  ■ Stop
+                </button>
+              </div>
+
+              <div id="blogSpeechContent" class="mt-8 space-y-6">
                 ${blog.content
                   .map(
-                    (paragraph) => `
-                      <p class="text-[16px] font-semibold leading-8 text-[#52657d]">
-                        ${paragraph}
-                      </p>
+                    (paragraph, index) => `
+                      <section id="${tocItems[index]?.id || `blog-section-${index + 1}`}" class="scroll-mt-28">
+                        <p class="text-[16px] font-semibold leading-8 text-[#52657d]">
+                          ${paragraph}
+                        </p>
+                      </section>
                     `,
                   )
                   .join("")}
@@ -671,7 +762,9 @@ function renderBlogDetails(root, blog) {
             </div>
           </article>
 
-          <aside class="space-y-6">
+          <aside class="space-y-6 lg:sticky lg:top-24 lg:self-start">
+            ${blogTableOfContents(blog)}
+
             ${blogCategoriesSidebar(blog.category)}
 
             <div class="rounded-[18px] bg-gradient-to-br from-[#0068d9] to-[#071f4d] p-7 text-white shadow-[0_18px_55px_rgba(0,104,217,0.20)]">
@@ -699,6 +792,7 @@ function renderBlogDetails(root, blog) {
               <p class="text-[12px] font-black uppercase tracking-[0.22em] text-[#0068d9]">
                 More Insights
               </p>
+
               <h2 class="mt-3 text-[30px] font-black tracking-[-0.8px] text-[#071f4d]">
                 Related Blogs
               </h2>
@@ -721,6 +815,66 @@ function renderBlogDetails(root, blog) {
   `;
 }
 
+function initBlogSpeech() {
+  const speakBtn = document.getElementById("blogSpeakBtn");
+  const stopBtn = document.getElementById("blogStopSpeakBtn");
+  const speechContent = document.getElementById("blogSpeechContent");
+
+  if (!speakBtn || !speechContent) return;
+
+  if (!("speechSynthesis" in window)) {
+    speakBtn.disabled = true;
+    speakBtn.textContent = "🔇 Speech Not Supported";
+    speakBtn.classList.add("cursor-not-allowed", "opacity-60");
+    return;
+  }
+
+  function resetButton() {
+    speakBtn.textContent = "🔊 Listen to Article";
+  }
+
+  speakBtn.addEventListener("click", () => {
+    if (window.speechSynthesis.paused) {
+      window.speechSynthesis.resume();
+      speakBtn.textContent = "⏸ Pause";
+      return;
+    }
+
+    if (window.speechSynthesis.speaking) {
+      window.speechSynthesis.pause();
+      speakBtn.textContent = "▶ Resume";
+      return;
+    }
+
+    const text = speechContent.innerText.replace(/\s+/g, " ").trim();
+
+    if (!text) return;
+
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    utterance.lang = "en-US";
+    utterance.rate = 0.92;
+    utterance.pitch = 1;
+
+    utterance.onend = resetButton;
+    utterance.onerror = resetButton;
+
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+
+    speakBtn.textContent = "⏸ Pause";
+  });
+
+  stopBtn?.addEventListener("click", () => {
+    window.speechSynthesis.cancel();
+    resetButton();
+  });
+
+  window.addEventListener("beforeunload", () => {
+    window.speechSynthesis.cancel();
+  });
+}
+
 function initBlogsDetailsPage() {
   const root = document.getElementById("blogsDetailsRoot");
   if (!root) return;
@@ -735,6 +889,7 @@ function initBlogsDetailsPage() {
 
   document.title = `${blog.title} - GCTL LED`;
   renderBlogDetails(root, blog);
+  initBlogSpeech();
 }
 
 function waitForBlogsDetailsPage() {

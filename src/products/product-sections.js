@@ -41,7 +41,7 @@ function productCard(product, sectionLink) {
       href="${productLink}"
       class="group overflow-hidden rounded-[12px] border border-[#dbe8f5] bg-white shadow-[0_8px_24px_rgba(15,23,42,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(0,87,216,0.14)]"
     >
-      <div class="relative h-[185px] bg-[#f3f8ff]">
+      <div class="relative h-[185px] bg-white">
         ${productBadge(product)}
         ${productImage(product)}
       </div>

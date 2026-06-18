@@ -3,25 +3,67 @@ import "./style.css";
 import { initProductSections } from "./products/product-sections.js";
 import { initProductDetails } from "./products/product-details.js";
 import { navItems } from "./data/nav-data.js";
-async function loadComponents() {
-  const components = document.querySelectorAll("[data-component]");
+// async function loadComponents() {
+//   const components = document.querySelectorAll("[data-component]");
 
-  for (const component of components) {
-    const filePath = component.getAttribute("data-component");
+//   for (const component of components) {
+//     const filePath = component.getAttribute("data-component");
 
-    try {
-      const response = await fetch(filePath);
+//     try {
+//       const response = await fetch(filePath);
 
-      if (!response.ok) {
-        throw new Error(`Component not found: ${filePath}`);
-      }
+//       if (!response.ok) {
+//         throw new Error(`Component not found: ${filePath}`);
+//       }
 
-      const html = await response.text();
-      component.innerHTML = html;
-    } catch (error) {
-      console.error(error);
+//       const html = await response.text();
+//       component.innerHTML = html;
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   }
+// }
+
+async function loadSingleComponent(component) {
+  const filePath = component.getAttribute("data-component");
+  if (!filePath) return;
+
+  try {
+    const response = await fetch(filePath);
+
+    if (!response.ok) {
+      throw new Error(`Component not found: ${filePath}`);
     }
+
+    const html = await response.text();
+    component.innerHTML = html;
+  } catch (error) {
+    console.error(error);
   }
+}
+
+async function loadNavbarFirst() {
+  const navbarComponent = document.querySelector(
+    '[data-component="/components/navbar.html"]',
+  );
+
+  if (!navbarComponent) return;
+
+  await loadSingleComponent(navbarComponent);
+
+  renderNavbar();
+  initNavbar();
+}
+
+async function loadOtherComponents() {
+  const components = Array.from(document.querySelectorAll("[data-component]"));
+
+  const otherComponents = components.filter(
+    (component) =>
+      component.getAttribute("data-component") !== "/components/navbar.html",
+  );
+
+  await Promise.all(otherComponents.map(loadSingleComponent));
 }
 
 function initNavbar() {
@@ -33,6 +75,43 @@ function initNavbar() {
   mobileMenuButton.addEventListener("click", () => {
     mobileMenu.classList.toggle("hidden");
   });
+}
+
+function initIndustriesSlider() {
+  const slider = document.getElementById("industriesSlider");
+  if (!slider) return;
+
+  const prevBtn = document.getElementById("industriesPrevBtn");
+  const nextBtn = document.getElementById("industriesNextBtn");
+  const mobilePrevBtn = document.getElementById("industriesMobilePrevBtn");
+  const mobileNextBtn = document.getElementById("industriesMobileNextBtn");
+
+  function getScrollAmount() {
+    const card = slider.querySelector("[data-industry-card]");
+    if (!card) return 260;
+
+    const gap = 16;
+    return card.offsetWidth + gap;
+  }
+
+  function slideNext() {
+    slider.scrollBy({
+      left: getScrollAmount(),
+      behavior: "smooth",
+    });
+  }
+
+  function slidePrev() {
+    slider.scrollBy({
+      left: -getScrollAmount(),
+      behavior: "smooth",
+    });
+  }
+
+  nextBtn?.addEventListener("click", slideNext);
+  prevBtn?.addEventListener("click", slidePrev);
+  mobileNextBtn?.addEventListener("click", slideNext);
+  mobilePrevBtn?.addEventListener("click", slidePrev);
 }
 
 function slugify(text) {
@@ -782,8 +861,8 @@ function initHeroSlider() {
 
     dot.className =
       index === 0
-        ? "h-2.5 w-8 rounded-full bg-[#0068c9] transition-all"
-        : "h-2.5 w-2.5 rounded-full bg-blue-200 transition-all hover:bg-blue-300";
+        ? "h-2 w-6 rounded-full bg-[#0068c9] transition-all"
+        : "h-2 w-2 rounded-full bg-blue-200 transition-all hover:bg-blue-300";
 
     dot.addEventListener("click", () => {
       showSlide(index);
@@ -1092,6 +1171,33 @@ function mountProductDetailsLayout() {
   `;
 }
 
+// document.addEventListener("DOMContentLoaded", async () => {
+//   const isDetailsPage = isProductDetailsRoute();
+
+//   if (isDetailsPage) {
+//     mountProductDetailsLayout();
+//   }
+
+//   await loadComponents();
+
+//   renderNavbar();
+
+//   initNavbar();
+//   initCurrentYear();
+
+//   if (isDetailsPage) {
+//     initProductDetails();
+//     return;
+//   }
+
+//   initHeroSlider();
+//   initTestimonials();
+//   initIndustriesSlider();
+//   initProductSections();
+//   initProjectsSlider();
+//   initProjectTypeMultiSelect();
+// });
+
 document.addEventListener("DOMContentLoaded", async () => {
   const isDetailsPage = isProductDetailsRoute();
 
@@ -1099,11 +1205,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     mountProductDetailsLayout();
   }
 
-  await loadComponents();
+  await loadNavbarFirst();
 
-  renderNavbar();
+  await loadOtherComponents();
 
-  initNavbar();
   initCurrentYear();
 
   if (isDetailsPage) {
@@ -1113,6 +1218,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   initHeroSlider();
   initTestimonials();
+  initIndustriesSlider();
   initProductSections();
   initProjectsSlider();
   initProjectTypeMultiSelect();
