@@ -13,6 +13,10 @@ const gctlBlogs = [
       "For indoor use, you may need a high-resolution LED display, LCD video wall or interactive signage depending on the environment. For outdoor use, brightness, waterproof protection and strong cabinet quality are very important.",
       "Before buying, consider screen size, pixel pitch, brightness level, refresh rate, installation structure, maintenance access and long-term service support.",
       "A professional LED display solution should not only look attractive, but also perform reliably for daily business communication, advertising and brand visibility.",
+      "Choosing the right digital signage display depends on your business goal, installation location, viewing distance and content type.",
+      "For indoor use, you may need a high-resolution LED display, LCD video wall or interactive signage depending on the environment. For outdoor use, brightness, waterproof protection and strong cabinet quality are very important.",
+      "Before buying, consider screen size, pixel pitch, brightness level, refresh rate, installation structure, maintenance access and long-term service support.",
+      "A professional LED display solution should not only look attractive, but also perform reliably for daily business communication, advertising and brand visibility.",
     ],
   },
   {
@@ -728,23 +732,44 @@ function renderBlogDetails(root, blog) {
                 <span>${readingTime}</span>
               </div>
 
-              <div class="mt-6 flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  id="blogSpeakBtn"
-                  class="inline-flex h-11 items-center justify-center rounded-[8px] bg-[#0068d9] px-5 text-[13px] font-black text-white shadow-[0_10px_24px_rgba(0,104,217,0.18)] transition hover:bg-[#0058ba]"
-                >
-                  🔊 Listen to Article
-                </button>
+        <div class="sticky top-24 z-20 mt-7 max-w-[430px]">
+  <button
+    type="button"
+    id="blogSpeakBtn"
+    class="group flex w-full items-center gap-4 rounded-[18px] border border-[#dbe8f5] bg-white/95 p-3 text-left shadow-[0_18px_45px_rgba(7,31,77,0.12)] backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-[#0068d9]/60 hover:shadow-[0_24px_60px_rgba(0,104,217,0.16)]"
+    aria-label="Listen to article"
+  >
+    <span
+      id="blogSpeechIcon"
+      class="grid h-12 w-12 shrink-0 place-items-center rounded-[14px] bg-gradient-to-br from-[#0068d9] to-[#071f4d] text-[20px] text-white shadow-[0_12px_28px_rgba(0,104,217,0.26)]"
+    >
+      🔊
+    </span>
 
-                <button
-                  type="button"
-                  id="blogStopSpeakBtn"
-                  class="inline-flex h-11 items-center justify-center rounded-[8px] border border-[#d7e4f2] bg-white px-5 text-[13px] font-black text-[#071f4d] transition hover:border-[#0068d9] hover:text-[#0068d9]"
-                >
-                  ■ Stop
-                </button>
-              </div>
+    <span class="min-w-0 flex-1">
+      <span
+        id="blogSpeechTitle"
+        class="block text-[14px] font-black text-[#071f4d]"
+      >
+        Listen to Article
+      </span>
+
+      <span
+        id="blogSpeechText"
+        class="mt-1 block text-[12px] font-bold leading-5 text-[#6b7f95]"
+      >
+        Click to start reading this blog
+      </span>
+    </span>
+
+    <span
+      id="blogSpeechBadge"
+      class="rounded-full bg-[#eef6ff] px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-[#0068d9]"
+    >
+      Play
+    </span>
+  </button>
+</div>
 
               <div id="blogSpeechContent" class="mt-8 space-y-6">
                 ${blog.content
@@ -817,32 +842,50 @@ function renderBlogDetails(root, blog) {
 
 function initBlogSpeech() {
   const speakBtn = document.getElementById("blogSpeakBtn");
-  const stopBtn = document.getElementById("blogStopSpeakBtn");
   const speechContent = document.getElementById("blogSpeechContent");
+  const speechIcon = document.getElementById("blogSpeechIcon");
+  const speechTitle = document.getElementById("blogSpeechTitle");
+  const speechText = document.getElementById("blogSpeechText");
+  const speechBadge = document.getElementById("blogSpeechBadge");
 
   if (!speakBtn || !speechContent) return;
 
   if (!("speechSynthesis" in window)) {
     speakBtn.disabled = true;
-    speakBtn.textContent = "🔇 Speech Not Supported";
     speakBtn.classList.add("cursor-not-allowed", "opacity-60");
+
+    if (speechIcon) speechIcon.textContent = "🔇";
+    if (speechTitle) speechTitle.textContent = "Speech Not Supported";
+    if (speechText) speechText.textContent = "Your browser does not support article reading.";
+    if (speechBadge) speechBadge.textContent = "Off";
+
     return;
   }
 
-  function resetButton() {
-    speakBtn.textContent = "🔊 Listen to Article";
+  function setIdleState() {
+    speakBtn.classList.remove("border-[#0068d9]", "bg-[#eef6ff]");
+    speakBtn.classList.add("bg-white/95");
+
+    if (speechIcon) speechIcon.textContent = "🔊";
+    if (speechTitle) speechTitle.textContent = "Listen to Article";
+    if (speechText) speechText.textContent = "Click to start reading this blog";
+    if (speechBadge) speechBadge.textContent = "Play";
+  }
+
+  function setPlayingState() {
+    speakBtn.classList.remove("bg-white/95");
+    speakBtn.classList.add("border-[#0068d9]", "bg-[#eef6ff]");
+
+    if (speechIcon) speechIcon.textContent = "■";
+    if (speechTitle) speechTitle.textContent = "Reading Article";
+    if (speechText) speechText.textContent = "Click again to stop reading";
+    if (speechBadge) speechBadge.textContent = "Stop";
   }
 
   speakBtn.addEventListener("click", () => {
-    if (window.speechSynthesis.paused) {
-      window.speechSynthesis.resume();
-      speakBtn.textContent = "⏸ Pause";
-      return;
-    }
-
-    if (window.speechSynthesis.speaking) {
-      window.speechSynthesis.pause();
-      speakBtn.textContent = "▶ Resume";
+    if (window.speechSynthesis.speaking || window.speechSynthesis.paused) {
+      window.speechSynthesis.cancel();
+      setIdleState();
       return;
     }
 
@@ -856,18 +899,13 @@ function initBlogSpeech() {
     utterance.rate = 0.92;
     utterance.pitch = 1;
 
-    utterance.onend = resetButton;
-    utterance.onerror = resetButton;
+    utterance.onend = setIdleState;
+    utterance.onerror = setIdleState;
 
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
 
-    speakBtn.textContent = "⏸ Pause";
-  });
-
-  stopBtn?.addEventListener("click", () => {
-    window.speechSynthesis.cancel();
-    resetButton();
+    setPlayingState();
   });
 
   window.addEventListener("beforeunload", () => {
