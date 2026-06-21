@@ -207,12 +207,14 @@ function renderProductMegaTree(item) {
         ${
           image
             ? `
-              <img
-                src="${image}"
-                alt="${title}"
-                class="h-full w-full object-contain"
-                onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
-              />
+           <img
+  data-mega-src="${image}"
+  alt="${title}"
+  loading="lazy"
+  decoding="async"
+  class="h-full w-full object-contain"
+  onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
+/>
 
               <div class="hidden text-center">
                 <div class="mx-auto flex h-9 w-9 items-center justify-center rounded-md border border-blue-100 bg-white text-[17px] text-[#0050a8]">
@@ -659,11 +661,42 @@ function renderMobileNav() {
     .join("");
 }
 
+function loadMegaMenuImages(menu) {
+  const images = menu.querySelectorAll("img[data-mega-src]");
+
+  images.forEach((img) => {
+    if (img.dataset.loaded === "true") return;
+
+    img.src = img.dataset.megaSrc;
+    img.dataset.loaded = "true";
+  });
+}
 function initProductMegaTree() {
   const megaMenus = document.querySelectorAll("[data-product-mega-tree]");
   if (!megaMenus.length) return;
 
   megaMenus.forEach((menu) => {
+    // ✅ এই part টা নতুন add করা হলো
+    // Navbar mega menu hover/focus করলে তখন image load হবে
+    const menuWrapper = menu.closest(".group");
+
+    menuWrapper?.addEventListener(
+      "mouseenter",
+      () => {
+        loadMegaMenuImages(menu);
+      },
+      { once: true },
+    );
+
+    menuWrapper?.addEventListener(
+      "focusin",
+      () => {
+        loadMegaMenuImages(menu);
+      },
+      { once: true },
+    );
+
+    // ✅ নিচের code আগের মতোই থাকবে
     const mainButtons = menu.querySelectorAll("[data-tree-main-btn]");
     const mainLists = menu.querySelectorAll("[data-tree-main-list]");
     const subButtons = menu.querySelectorAll("[data-tree-sub-btn]");
@@ -841,7 +874,7 @@ function initHeroSlider() {
   const slider = document.getElementById("heroSlider");
   if (!slider) return;
 
-  const slides = slider.querySelectorAll(".hero-slide");
+  const slides = Array.from(slider.querySelectorAll(".hero-slide"));
   const prevBtn = document.getElementById("heroPrev");
   const nextBtn = document.getElementById("heroNext");
   const dotsWrapper = document.getElementById("heroDots");
@@ -850,19 +883,93 @@ function initHeroSlider() {
 
   let currentSlide = 0;
   let timer = null;
-  const autoSlideDelay = 5000;
+  const autoSlideDelay = 5500;
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  const desktopQuery = window.matchMedia("(min-width: 768px)");
+
+  function isDesktopScreen() {
+    return desktopQuery.matches;
+  }
+
+  function loadSlideImage(index) {
+    const slide = slides[index];
+    if (!slide) return;
+
+    const img = slide.querySelector(".hero-img");
+    if (!img) return;
+
+    if (img.dataset.loaded === "true") return;
+
+    const picture = img.closest("picture");
+
+    if (picture) {
+      const lazySources = picture.querySelectorAll("source[data-srcset]");
+
+      lazySources.forEach((source) => {
+        source.srcset = source.dataset.srcset;
+      });
+    }
+
+    const lazySrc = img.dataset.src;
+
+    if (lazySrc && !img.getAttribute("src")) {
+      img.src = lazySrc;
+    }
+
+    img.dataset.loaded = "true";
+  }
+
+  function preloadNextImage(index) {
+    // Mobile PageSpeed ভালো রাখার জন্য mobile-এ next image preload করবো না।
+    if (!isDesktopScreen()) return;
+
+    const nextIndex = (index + 1) % slides.length;
+
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(() => {
+        loadSlideImage(nextIndex);
+      });
+    } else {
+      setTimeout(() => {
+        loadSlideImage(nextIndex);
+      }, 900);
+    }
+  }
+
+  function loadCurrentAndNext(index) {
+    loadSlideImage(index);
+    preloadNextImage(index);
+  }
+
+  function updateHeroDot(dot, isActive) {
+    dot.className = isActive
+      ? "group flex h-7 w-10 items-center justify-center rounded-full"
+      : "group flex h-7 w-7 items-center justify-center rounded-full";
+
+    dot.setAttribute("aria-current", isActive ? "true" : "false");
+
+    dot.innerHTML = `
+      <span class="${
+        isActive
+          ? "block h-2.5 w-8 rounded-full bg-[#0068c9] transition-all"
+          : "block h-2.5 w-2.5 rounded-full bg-blue-200 transition-all group-hover:bg-blue-300"
+      }"></span>
+    `;
+  }
 
   dotsWrapper.innerHTML = "";
 
   slides.forEach((_, index) => {
     const dot = document.createElement("button");
+
     dot.type = "button";
     dot.setAttribute("aria-label", `Go to slide ${index + 1}`);
 
-    dot.className =
-      index === 0
-        ? "h-2 w-6 rounded-full bg-[#0068c9] transition-all"
-        : "h-2 w-2 rounded-full bg-blue-200 transition-all hover:bg-blue-300";
+    updateHeroDot(dot, index === 0);
 
     dot.addEventListener("click", () => {
       showSlide(index);
@@ -872,10 +979,12 @@ function initHeroSlider() {
     dotsWrapper.appendChild(dot);
   });
 
-  const dots = dotsWrapper.querySelectorAll("button");
+  const dots = Array.from(dotsWrapper.querySelectorAll("button"));
 
   function showSlide(index) {
     currentSlide = (index + slides.length) % slides.length;
+
+    loadCurrentAndNext(currentSlide);
 
     slides.forEach((slide, slideIndex) => {
       const isActive = slideIndex === currentSlide;
@@ -887,14 +996,11 @@ function initHeroSlider() {
       slide.classList.toggle("opacity-0", !isActive);
       slide.classList.toggle("invisible", !isActive);
       slide.classList.toggle("z-0", !isActive);
+      slide.classList.toggle("pointer-events-none", !isActive);
     });
 
     dots.forEach((dot, dotIndex) => {
-      const isActive = dotIndex === currentSlide;
-
-      dot.className = isActive
-        ? "h-2.5 w-8 rounded-full bg-[#0068c9] transition-all"
-        : "h-2.5 w-2.5 rounded-full bg-blue-200 transition-all hover:bg-blue-300";
+      updateHeroDot(dot, dotIndex === currentSlide);
     });
   }
 
@@ -907,6 +1013,8 @@ function initHeroSlider() {
   }
 
   function startAutoSlide() {
+    if (!isDesktopScreen() || prefersReducedMotion) return;
+
     stopAutoSlide();
     timer = setInterval(nextSlide, autoSlideDelay);
   }

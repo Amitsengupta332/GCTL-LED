@@ -2,11 +2,11 @@ export const productSections = [
   {
     title: "Floor Standing Signage",
     link: "/products/floor-standing-signage.html",
-    bg: "bg-white", 
+    bg: "bg-white",
     products: [
       {
         badge: "Best Seller",
-        badgeClass: "bg-[#f6b400]",
+        badgeClass: "tbg-[#f6b400] text-[#071f4d]",
         name: '43" Floor Standing Signage',
         desc: "Slim indoor digital signage for malls, lobbies and retail promotions.",
         image: "/images/product/3-9.jpg",
@@ -27,7 +27,7 @@ export const productSections = [
       },
       {
         badge: "Outdoor",
-        badgeClass: "bg-[#12b76a]",
+        badgeClass: "bg-[#05603a] text-white",
         name: "Outdoor Floor Signage",
         desc: "Durable standing signage display for outdoor advertising placement.",
         image: "",
@@ -42,7 +42,7 @@ export const productSections = [
     products: [
       {
         badge: "Best Seller",
-        badgeClass: "bg-[#f6b400]",
+        badgeClass: "tbg-[#f6b400] text-[#071f4d]",
         name: '65" Interactive Touch Panel',
         desc: "Smart touch display for classrooms, training rooms and meetings.",
         image: "",
@@ -63,7 +63,7 @@ export const productSections = [
       },
       {
         badge: "Smart",
-        badgeClass: "bg-[#12b76a]",
+        badgeClass: "bg-[#05603a] text-white",
         name: "Smart Interactive Board",
         desc: "Touch-enabled smart board with smooth writing and sharing features.",
         image: "",
@@ -78,7 +78,7 @@ export const productSections = [
     products: [
       {
         badge: "Best Seller",
-        badgeClass: "bg-[#f6b400]",
+        badgeClass: "tbg-[#f6b400] text-[#071f4d]",
         name: "K-Type Information Kiosk",
         desc: "Modern information kiosk for lobby, reception and commercial spaces.",
         image: "",
@@ -99,7 +99,7 @@ export const productSections = [
       },
       {
         badge: "Smart",
-        badgeClass: "bg-[#12b76a]",
+        badgeClass: "bg-[#05603a] text-white",
         name: "Dual Screen Information Kiosk",
         desc: "Dual display kiosk for navigation, queue and customer service systems.",
         image: "",
@@ -114,7 +114,7 @@ export const productSections = [
     products: [
       {
         badge: "Best Seller",
-        badgeClass: "bg-[#f6b400]",
+        badgeClass: "tbg-[#f6b400] text-[#071f4d]",
         name: '46" LCD Video Wall',
         desc: "Seamless video wall panel for control rooms and business displays.",
         image: "",
@@ -128,7 +128,7 @@ export const productSections = [
       },
       {
         badge: "Premium",
-        badgeClass: "bg-[#12b76a]",
+        badgeClass: "bg-[#05603a] text-white",
         name: '55" LCD Video Wall',
         desc: "Large format LCD video wall panel for command center display systems.",
         image: "",
@@ -150,7 +150,7 @@ export const productSections = [
     products: [
       {
         badge: "Best Seller",
-        badgeClass: "bg-[#f6b400]",
+        badgeClass: "tbg-[#f6b400] text-[#071f4d]",
         name: "Self Ordering Kiosk",
         desc: "Touch kiosk for restaurants, retail stores and self-service ordering.",
         image: "",
@@ -164,7 +164,7 @@ export const productSections = [
       },
       {
         badge: "Smart",
-        badgeClass: "bg-[#12b76a]",
+        badgeClass: "bg-[#05603a] text-white",
         name: "Ticketing Touch Kiosk",
         desc: "Self-service ticketing kiosk for transport, events and queue systems.",
         image: "",
@@ -193,7 +193,7 @@ export const productSections = [
       },
       {
         badge: "Best Seller",
-        badgeClass: "bg-[#f6b400]",
+        badgeClass: "tbg-[#f6b400] text-[#071f4d]",
         name: '43" Wall Mount Display',
         desc: "Professional wall display for promotions, showroom and retail use.",
         image: "",
@@ -207,7 +207,7 @@ export const productSections = [
       },
       {
         badge: "Outdoor",
-        badgeClass: "bg-[#12b76a]",
+        badgeClass: "bg-[#05603a] text-white",
         name: "Outdoor Wall Display",
         desc: "Durable wall mounted display for outdoor and semi-outdoor locations.",
         image: "",
@@ -229,14 +229,14 @@ export const productSections = [
       },
       {
         badge: "Best Seller",
-        badgeClass: "bg-[#f6b400]",
+        badgeClass: "tbg-[#f6b400] text-[#071f4d]",
         name: '55" Portable Poster',
         desc: "Large portable signage display with slim and premium body design.",
         image: "",
       },
       {
         badge: "Battery",
-        badgeClass: "bg-[#12b76a]",
+        badgeClass: "bg-[#05603a] text-white",
         name: "Rechargeable LED Poster",
         desc: "Battery-supported poster display for flexible placement and mobility.",
         image: "",
@@ -258,7 +258,7 @@ export const productSections = [
     products: [
       {
         badge: "Outdoor",
-        badgeClass: "bg-[#12b76a]",
+        badgeClass: "bg-[#05603a] text-white",
         name: "P4 Outdoor LED Billboard",
         desc: "High-brightness outdoor LED billboard for commercial advertisements.",
         image: "",
@@ -279,7 +279,7 @@ export const productSections = [
       },
       {
         badge: "Billboard",
-        badgeClass: "bg-[#f6b400]",
+        badgeClass: "tbg-[#f6b400] text-[#071f4d]",
         name: "Highway LED Billboard",
         desc: "Outdoor billboard display designed for roads and high-traffic areas.",
         image: "",

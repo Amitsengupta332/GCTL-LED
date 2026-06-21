@@ -5,7 +5,7 @@ const gctlBlogs = [
     category: "Guide",
     date: "May 10, 2026",
     readTime: "5 min read",
-    image: "/images/blog/a_wide_modern_tech_showroom_lobby_scene_overal.avif",
+    image: "/images/blog/thumbs/a_wide_modern_tech_showroom_lobby_scene_overal.avif",
     excerpt:
       "Key factors to consider before investing in your next display solution.",
     content: [
@@ -25,9 +25,13 @@ const gctlBlogs = [
     category: "Trends",
     date: "May 22, 2026",
     readTime: "4 min read",
-    image: "/images/blog/futuristic_tech_showroom_with_digital_displays.avif",
+    image: "/images/blog/thumbs/futuristic_tech_showroom_with_digital_displays.avif",
     excerpt: "Stay ahead with the latest trends shaping the display industry.",
     content: [
+      "Digital signage is becoming smarter, brighter and more interactive. Businesses are using LED displays not only for advertising, but also for customer engagement and brand experience.",
+      "In 2026, the most important trends include high-resolution LED walls, interactive touch displays, cloud-based content management, 3D anamorphic LED billboards and energy-efficient display systems.",
+      "Retail stores, corporate offices, hospitals, showrooms, restaurants and public spaces are using signage to improve communication and customer attention.",
+      "The future of digital signage is about flexible content, better visuals and easier remote control.",
       "Digital signage is becoming smarter, brighter and more interactive. Businesses are using LED displays not only for advertising, but also for customer engagement and brand experience.",
       "In 2026, the most important trends include high-resolution LED walls, interactive touch displays, cloud-based content management, 3D anamorphic LED billboards and energy-efficient display systems.",
       "Retail stores, corporate offices, hospitals, showrooms, restaurants and public spaces are using signage to improve communication and customer attention.",
@@ -40,7 +44,7 @@ const gctlBlogs = [
     category: "Case Study",
     date: "Apr 18, 2026",
     readTime: "6 min read",
-    image: "/images/blog/modern_boutique_with_digital_displays.avif",
+    image: "/images/blog/thumbs/modern_boutique_with_digital_displays.avif",
     excerpt:
       "Real-world success stories and measurable retail display results.",
     content: [
@@ -56,7 +60,7 @@ const gctlBlogs = [
     category: "Floor Standing Signage",
     date: "Jun 13, 2026",
     readTime: "5 min read",
-    image: "/images/blog/modern_mall_lobby_with_digital_signage.avif",
+    image: "/images/blog/thumbs/modern_mall_lobby_with_digital_signage.avif",
     excerpt:
       "Learn how floor standing signage helps malls, showrooms, lobbies and retail spaces attract attention with premium digital content.",
     content: [
@@ -72,7 +76,7 @@ const gctlBlogs = [
     category: "Interactive Touch Panel",
     date: "Jun 13, 2026",
     readTime: "5 min read",
-    image: "/images/blog/modern_office_meeting_with_tech_visuals.avif",
+    image: "/images/blog/thumbs/modern_office_meeting_with_tech_visuals.avif",
     excerpt:
       "A practical guide to using interactive touch panels for education, training, presentations and team collaboration.",
     content: [
@@ -88,7 +92,7 @@ const gctlBlogs = [
     category: "K-Type Information Kiosk",
     date: "Jun 13, 2026",
     readTime: "4 min read",
-    image: "/images/blog/futuristic_corporate_lobby_with_digital_kiosk.avif",
+    image: "/images/blog/thumbs/futuristic_corporate_lobby_with_digital_kiosk.avif",
     excerpt:
       "Explore how K-Type information kiosks improve visitor experience in malls, offices, hospitals and commercial buildings.",
     content: [
@@ -104,7 +108,7 @@ const gctlBlogs = [
     category: "LCD Video Wall",
     date: "Jun 13, 2026",
     readTime: "5 min read",
-    image: "/images/blog/high_tech_control_room_atmosphere.avif",
+    image: "/images/blog/thumbs/high_tech_control_room_atmosphere.avif",
     excerpt:
       "Understand how LCD video walls support monitoring, command centers, business presentations and high-impact visual display systems.",
     content: [
@@ -121,7 +125,7 @@ const gctlBlogs = [
     category: "Self Service Touch Kiosk",
     date: "Jun 13, 2026",
     readTime: "5 min read",
-    image: "/images/blog/ordering_at_the_modern_food_kiosk.avif",
+    image: "/images/blog/thumbs/ordering_at_the_modern_food_kiosk.avif",
     excerpt:
       "See how self-service kiosks help restaurants, retail stores and service centers improve customer flow and reduce waiting time.",
     content: [
@@ -137,7 +141,7 @@ const gctlBlogs = [
     category: "Wall Mount Display",
     date: "Jun 13, 2026",
     readTime: "4 min read",
-    image: "/images/blog/modern_showroom_with_abstract_digital_display.avif",
+    image: "/images/blog/thumbs/modern_showroom_with_abstract_digital_display.avif",
     excerpt:
       "A useful guide to wall mounted displays for retail branding, corporate communication, showrooms and indoor signage.",
     content: [
@@ -154,7 +158,7 @@ const gctlBlogs = [
     category: "Portable Signage Poster",
     date: "Jun 13, 2026",
     readTime: "4 min read",
-    image: "/images/blog/modern_exhibition_space_with_digital_displays.avif",
+    image: "/images/blog/thumbs/modern_exhibition_space_with_digital_displays.avif",
     excerpt:
       "Learn why portable digital posters are useful for events, pop-up campaigns, retail promotions and flexible branding.",
     content: [
@@ -171,7 +175,7 @@ const gctlBlogs = [
     category: "Advertising Billboard",
     date: "Jun 13, 2026",
     readTime: "6 min read",
-    image: "/images/blog/urban_nightscape_with_glowing_billboard.avif",
+    image: "/images/blog/thumbs/urban_nightscape_with_glowing_billboard.avif",
     excerpt:
       "Understand how outdoor LED billboards help brands reach larger audiences in roads, rooftops and high-traffic city locations.",
     content: [
@@ -187,7 +191,7 @@ const gctlBlogs = [
     category: "LED Module",
     date: "Jun 13, 2026",
     readTime: "5 min read",
-    image: "/images/blog/blue_led_matrix_in_dark_setting.avif",
+    image: "/images/blog/thumbs/blue_led_matrix_in_dark_setting.avif",
     excerpt:
       "Understand how LED modules affect brightness, clarity, maintenance and long-term display performance.",
     content: [
@@ -203,7 +207,7 @@ const gctlBlogs = [
     category: "Flexible LED Module",
     date: "Jun 13, 2026",
     readTime: "5 min read",
-    image: "/images/blog/flexible_led_panel_in_dynamic_arc.avif",
+    image: "/images/blog/thumbs/flexible_led_panel_in_dynamic_arc.avif",
     excerpt:
       "Learn how flexible LED modules are used for curved walls, columns, creative installations and premium display designs.",
     content: [
@@ -220,7 +224,7 @@ const gctlBlogs = [
     category: "Rental LED Display",
     date: "Jun 13, 2026",
     readTime: "5 min read",
-    image: "/images/blog/dramatic_concert_stage_with_led_backdrop.avif",
+    image: "/images/blog/thumbs/dramatic_concert_stage_with_led_backdrop.avif",
     excerpt:
       "A practical guide to rental LED displays for concerts, corporate events, exhibitions and temporary installations.",
     content: [
@@ -236,7 +240,7 @@ const gctlBlogs = [
     category: "LED Poster Display",
     date: "Jun 13, 2026",
     readTime: "4 min read",
-    image: "/images/blog/modern_boutique_with_sleek_design.avif",
+    image: "/images/blog/thumbs/modern_boutique_with_sleek_design.avif",
     excerpt:
       "Discover how LED poster displays help retail stores, showrooms and events present offers in a premium way.",
     content: [
@@ -253,7 +257,7 @@ const gctlBlogs = [
     category: "3D LED Display",
     date: "Jun 13, 2026",
     readTime: "5 min read",
-    image: "/images/blog/futuristic_showroom_with_abstract_digital_art.avif",
+    image: "/images/blog/thumbs/futuristic_showroom_with_abstract_digital_art.avif",
     excerpt:
       "Explore how 3D LED displays create high-impact visual experiences for brands, malls and city advertising.",
     content: [
@@ -269,7 +273,7 @@ const gctlBlogs = [
     category: "Cube LED Display",
     date: "Jun 13, 2026",
     readTime: "4 min read",
-    image: "/images/blog/futuristic_gallery_with_glowing_digital_cube.avif",
+    image: "/images/blog/thumbs/futuristic_gallery_with_glowing_digital_cube.avif",
     excerpt:
       "Learn how cube LED displays are used for creative branding, exhibitions, showrooms and modern commercial interiors.",
     content: [
@@ -287,10 +291,14 @@ const gctlBlogs = [
     date: "Jun 13, 2026",
     readTime: "5 min read",
     image:
-      "/images/blog/modern_luxury_storefront_with_holographic_display.avif",
+      "/images/blog/thumbs/modern_luxury_storefront_with_holographic_display.avif",
     excerpt:
       "See how transparent LED displays help stores, malls and buildings show digital content without blocking visibility.",
     content: [
+      "Transparent LED display is a premium signage solution that can show digital content while keeping visibility through glass. It is commonly used in retail storefronts, shopping malls, showrooms, airports, hotels and commercial buildings.",
+      "The biggest advantage of transparent LED display is that it does not fully block the background view. This makes it useful for glass walls, windows and luxury retail spaces where businesses want both visibility and digital promotion.",
+      "Transparent LED displays can show product ads, brand videos, promotional messages and decorative visuals. They help create a futuristic look while keeping the space open and elegant.",
+      "Before choosing a transparent LED display, businesses should consider transparency level, brightness, pixel pitch, glass size, viewing distance and installation method. It is a strong solution for modern brands that want premium digital presentation.",
       "Transparent LED display is a premium signage solution that can show digital content while keeping visibility through glass. It is commonly used in retail storefronts, shopping malls, showrooms, airports, hotels and commercial buildings.",
       "The biggest advantage of transparent LED display is that it does not fully block the background view. This makes it useful for glass walls, windows and luxury retail spaces where businesses want both visibility and digital promotion.",
       "Transparent LED displays can show product ads, brand videos, promotional messages and decorative visuals. They help create a futuristic look while keeping the space open and elegant.",
@@ -303,6 +311,108 @@ const BLOGS_ALL_CATEGORY = "All Blogs";
 let activeBlogCategory = BLOGS_ALL_CATEGORY;
 
 const DEFAULT_BLOG_AUTHOR = "GCTL Editorial Team";
+const DEFAULT_BLOG_AUTHOR_IMAGE = "/images/blog/thumbs/author.avif";
+
+function getBlogAuthorImage(blog) {
+  return blog.authorImage || DEFAULT_BLOG_AUTHOR_IMAGE;
+}
+
+function getAuthorInitials(author) {
+  return (
+    author
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((word) => word[0])
+      .join("")
+      .toUpperCase() || "G"
+  );
+}
+
+function blogAuthorMeta(blog, showCategory = false) {
+  const author = getBlogAuthor(blog);
+  const authorImage = getBlogAuthorImage(blog);
+  const readingTime = getBlogReadingTime(blog);
+  const initials = getAuthorInitials(author);
+
+  const shareUrl = encodeURIComponent(window.location.href);
+  const shareTitle = encodeURIComponent(blog.title);
+
+  return `
+    <div class="mt-5 flex w-full max-w-[680px] flex-wrap items-center gap-4 rounded-[28px] bg-white px-4 py-3 shadow-[0_10px_34px_rgba(7,31,77,0.08)] ring-1 ring-[#edf3fb] sm:flex-nowrap sm:rounded-full">
+      <div class="flex min-w-0 flex-1 items-center gap-3">
+        <span class="grid h-12 w-12 shrink-0 place-items-center overflow-hidden rounded-full bg-[#e8f3ff] text-[13px] font-black text-[#0068d9] ring-1 ring-[#dbe8f5]">
+          <img
+            src="${authorImage}"
+            alt="${author}"
+            loading="lazy"
+            class="h-full w-full object-cover"
+            onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
+          />
+          <span class="hidden">${initials}</span>
+        </span>
+
+        <span class="min-w-0">
+          <span class="block truncate text-[13px] font-black leading-5 text-[#111111]">
+            ${author}
+          </span>
+
+          <span class="mt-0.5 block text-[12px] font-semibold leading-4 text-[#697b90]">
+            ${blog.date}
+          </span>
+        </span>
+      </div>
+
+      ${
+        showCategory
+          ? `
+            <span class="rounded-full bg-[#eef6ff] px-3 py-1 text-[10px] font-black uppercase tracking-[0.10em] text-[#0068d9]">
+              ${blog.category}
+            </span>
+          `
+          : ""
+      }
+
+      <div class="ml-auto flex items-center gap-3">
+        <span class="whitespace-nowrap text-[13px] font-black text-[#111111]">
+          ${readingTime.replace(" read", "")}
+        </span>
+
+        <div class="flex items-center gap-1 text-[#8a8a8a]">
+          <a
+            href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="grid h-7 w-7 place-items-center rounded-full text-[13px] font-black transition hover:bg-[#eef6ff] hover:text-[#0068d9]"
+            aria-label="Share on Facebook"
+          >
+            f
+          </a>
+
+          <a
+            href="https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="grid h-7 w-7 place-items-center rounded-full text-[12px] font-black transition hover:bg-[#eef6ff] hover:text-[#0068d9]"
+            aria-label="Share on X"
+          >
+            𝕏
+          </a>
+
+          <a
+            href="https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="grid h-7 w-7 place-items-center rounded-full text-[11px] font-black transition hover:bg-[#eef6ff] hover:text-[#0068d9]"
+            aria-label="Share on LinkedIn"
+          >
+            in
+          </a>
+        </div>
+      </div>
+    </div>
+  `;
+}
 const WORDS_PER_MINUTE = 200;
 
 function getBlogAuthor(blog) {
@@ -345,24 +455,31 @@ function blogTableOfContents(blog) {
   if (!tocItems.length) return "";
 
   return `
-    <div class="rounded-[18px] bg-white p-7 shadow-[0_18px_55px_rgba(7,31,77,0.08)]">
-      <h3 class="text-[22px] font-black tracking-[-0.4px] text-[#071f4d]">
-        Table of Contents
-      </h3>
+    <div class="relative overflow-hidden rounded-[24px] bg-white px-8 py-7 shadow-[0_18px_55px_rgba(7,31,77,0.08)] ring-1 ring-[#edf3fb]">
+      <div class="absolute bottom-6 left-6 top-6 w-[4px] rounded-full bg-[#b9ff16]"></div>
+      <div class="absolute left-6 top-6 h-6 w-[4px] rounded-full bg-[#111111]"></div>
 
-      <div class="mt-5 space-y-3">
-        ${tocItems
-          .map(
-            (item) => `
-              <a
-                href="#${item.id}"
-                class="block rounded-[10px] border border-[#e4edf8] bg-[#f7fbff] px-4 py-3 text-[13px] font-bold leading-5 text-[#40556d] transition hover:border-[#0068d9] hover:bg-[#eef6ff] hover:text-[#0068d9]"
-              >
-                ${item.title}
-              </a>
-            `,
-          )
-          .join("")}
+      <div class="pl-7">
+        <h3 class="text-[24px] font-black tracking-[-0.5px] text-[#111111]">
+          Table of Contents
+        </h3>
+
+        <nav class="mt-5 space-y-4">
+          ${tocItems
+            .map(
+              (item, index) => `
+                <a
+                  href="#${item.id}"
+                  class="block text-[14px] font-black leading-5 transition hover:text-[#0068d9] ${
+                    index === 0 ? "text-[#111111]" : "text-[#858585]"
+                  }"
+                >
+                  ${item.title}
+                </a>
+              `,
+            )
+            .join("")}
+        </nav>
       </div>
     </div>
   `;
@@ -692,13 +809,7 @@ function renderBlogDetails(root, blog) {
                 ${blog.title}
               </h1>
 
-              <div class="mt-5 flex flex-wrap items-center gap-3 text-[14px] font-bold text-white/85">
-                <span>By ${author}</span>
-                <span>•</span>
-                <span>${blog.date}</span>
-                <span>•</span>
-                <span>${readingTime}</span>
-              </div>
+          ${blogAuthorMeta(blog)}
             </div>
           </div>
         </div>
@@ -722,15 +833,7 @@ function renderBlogDetails(root, blog) {
                 ${blog.title}
               </h2>
 
-              <div class="mt-4 flex flex-wrap items-center gap-3 text-[13px] font-bold text-[#697b90]">
-                <span>By ${author}</span>
-                <span>•</span>
-                <span>${blog.category}</span>
-                <span>•</span>
-                <span>${blog.date}</span>
-                <span>•</span>
-                <span>${readingTime}</span>
-              </div>
+            ${blogAuthorMeta(blog, true)}
 
         <div class="sticky top-24 z-20 mt-7 max-w-[430px]">
   <button
@@ -856,7 +959,8 @@ function initBlogSpeech() {
 
     if (speechIcon) speechIcon.textContent = "🔇";
     if (speechTitle) speechTitle.textContent = "Speech Not Supported";
-    if (speechText) speechText.textContent = "Your browser does not support article reading.";
+    if (speechText)
+      speechText.textContent = "Your browser does not support article reading.";
     if (speechBadge) speechBadge.textContent = "Off";
 
     return;

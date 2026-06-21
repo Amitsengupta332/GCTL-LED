@@ -3,20 +3,49 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>GCTL LED Display Solutions</title>
+
+    <meta
+      name="description"
+      content="GCTL provides digital signage, LED display, interactive touch panel, kiosk, video wall and commercial display solutions for businesses in Bangladesh." />
+
+    <!-- Preload First Hero Image For Better LCP -->
+    <link
+      rel="preload"
+      as="image"
+      href="/images/hero_images_mobile_avif/modern_cityscape_with_tech_billboard-mobile.avif"
+      type="image/avif"
+      fetchpriority="high"
+      media="(max-width: 639px)" />
+
+    <link
+      rel="preload"
+      as="image"
+      href="/images/hero_images_avif/modern_cityscape_with_tech_billboard.avif"
+      type="image/avif"
+      fetchpriority="high"
+      media="(min-width: 640px)" />
   </head>
 
   <body class="bg-white text-slate-900">
-    <div data-component="/components/navbar.html"></div>
+    <!-- Navbar placeholder height to reduce CLS -->
+    <div
+      data-component="/components/navbar.html"
+      class="min-h-[102px] lg:min-h-[110px]"></div>
 
-    <!-- class="pt-[68px] lg:pt-[30px]" -->
-    <main >
-      <!-- Hero will come next -->
-      <div data-component="/components/hero.html"></div>
+    <main>
+      <!-- Hero placeholder height to reduce CLS -->
+      <div
+        data-component="/components/hero.html"
+        class="min-h-[560px] sm:min-h-[500px] lg:min-h-[520px] xl:min-h-[560px]"></div>
+
       <div data-component="/components/category.html"></div>
       <div data-component="/components/product-sections.html"></div>
       <div data-component="/components/industries.html"></div>
-      <div data-component="/components/stats.html"></div>
+      <div
+        data-component="/components/stats.html"
+        class="min-h-[306px] sm:min-h-[190px] lg:min-h-[170px]"></div>
       <div data-component="/components/software-solution.html"></div>
       <div data-component="/components/testimonials.html"></div>
       <div data-component="/components/projects.html"></div>
@@ -24,6 +53,7 @@
     </main>
 
     <div data-component="/components/footer.html"></div>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
