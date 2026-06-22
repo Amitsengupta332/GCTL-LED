@@ -37,33 +37,42 @@ async function loadSingleComponent(component) {
 
     const html = await response.text();
     component.innerHTML = html;
+
+    // Important: loaded component আবার query-তে না আসে
+    component.removeAttribute("data-component");
   } catch (error) {
     console.error(error);
   }
 }
 
-async function loadNavbarFirst() {
-  const navbarComponent = document.querySelector(
-    '[data-component="/components/navbar.html"]',
+async function loadCriticalComponents() {
+  const criticalComponents = Array.from(
+    document.querySelectorAll('[data-component][data-critical="true"]'),
   );
 
-  if (!navbarComponent) return;
-
-  await loadSingleComponent(navbarComponent);
-
-  renderNavbar();
-  initNavbar();
+  // Navbar + Hero একসাথে load হবে
+  await Promise.all(criticalComponents.map(loadSingleComponent));
 }
 
-async function loadOtherComponents() {
-  const components = Array.from(document.querySelectorAll("[data-component]"));
-
-  const otherComponents = components.filter(
-    (component) =>
-      component.getAttribute("data-component") !== "/components/navbar.html",
+async function loadNormalComponents() {
+  const normalComponents = Array.from(
+    document.querySelectorAll("[data-component]"),
   );
 
-  await Promise.all(otherComponents.map(loadSingleComponent));
+  await Promise.all(normalComponents.map(loadSingleComponent));
+}
+
+function loadNormalComponentsWhenIdle(callback) {
+  const run = async () => {
+    await loadNormalComponents();
+    callback?.();
+  };
+
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(run, { timeout: 1200 });
+  } else {
+    setTimeout(run, 300);
+  }
 }
 
 function initNavbar() {
@@ -157,20 +166,21 @@ function dropdownChevronIcon() {
 }
 
 function renderSimpleDropdown(item) {
-  const dropdownWidth = item.columns === 3 ? "w-[760px]" : "w-[520px]";
+  const dropdownWidth = item.columns === 3 ? "w-[760px]" : "w-[560px]";
   const gridCols = item.columns === 3 ? "grid-cols-3" : "grid-cols-2";
 
   return `
     <div class="group relative">
-   <button
-  type="button"
-  class="flex items-center gap-1.5 py-2 transition hover:text-[#0050a8]"
->
-  ${item.label}
-  ${dropdownChevronIcon()}
-</button>
+      <button
+        type="button"
+        class="relative flex h-[76px] items-center gap-1.5 text-[14px] font-medium transition hover:text-[#0050a8]
+        after:absolute after:bottom-0 after:left-0 after:h-[4px] after:w-0 after:rounded-full after:bg-[#0050a8] after:transition-all after:duration-300 group-hover:after:w-full"
+      >
+        ${item.label}
+        ${dropdownChevronIcon()}
+      </button>
 
-     <div class="invisible absolute left-1/2 top-full ${dropdownWidth} -translate-x-1/2 pt-1 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+      <div class="invisible absolute left-1/2 top-full ${dropdownWidth} -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
         <div class="grid ${gridCols} gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-2xl shadow-slate-200/70">
           ${item.items
             .map(
@@ -203,27 +213,24 @@ function renderProductMegaTree(item) {
     const title = getProductTitle(product);
 
     return `
-      <div class="relative flex h-[86px] items-center justify-center overflow-hidden rounded-lg border border-[#e6eefb] bg-[#f8fbff] p-2">
+      <div class="relative flex h-[96px] items-center justify-center overflow-hidden rounded-lg border border-[#e6eefb] bg-[#f8fbff] p-2">
         ${
           image
             ? `
-           <img
-  data-mega-src="${image}"
-  alt="${title}"
-  loading="lazy"
-  decoding="async"
-  class="h-full w-full object-contain"
-  onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
-/>
+              <img
+                data-mega-src="${image}"
+                alt="${title}"
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-contain"
+                onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
+              />
 
               <div class="hidden text-center">
                 <div class="mx-auto flex h-9 w-9 items-center justify-center rounded-md border border-blue-100 bg-white text-[17px] text-[#0050a8]">
                   🖼
                 </div>
-
-                <p class="mt-1 text-[9px] font-bold text-[#0050a8]">
-                  Image Missing
-                </p>
+                <p class="mt-1 text-[9px] font-bold text-[#0050a8]">Image Missing</p>
               </div>
             `
             : `
@@ -231,10 +238,7 @@ function renderProductMegaTree(item) {
                 <div class="mx-auto flex h-9 w-9 items-center justify-center rounded-md border border-blue-100 bg-white text-[17px] text-[#0050a8]">
                   🖼
                 </div>
-
-                <p class="mt-1 text-[9px] font-bold text-[#0050a8]">
-                  Image Missing
-                </p>
+                <p class="mt-1 text-[9px] font-bold text-[#0050a8]">Image Missing</p>
               </div>
             `
         }
@@ -244,82 +248,48 @@ function renderProductMegaTree(item) {
 
   return `
     <div class="group">
-   <button
-  type="button"
-  class="flex items-center gap-1.5 py-2 transition hover:text-[#0050a8]"
->
-  ${item.label}
-  ${dropdownChevronIcon()}
-</button>
+      <button
+        type="button"
+        class="relative flex h-[76px] items-center gap-1.5 text-[14px] font-medium transition hover:text-[#0050a8]
+        after:absolute after:bottom-0 after:left-0 after:h-[4px] after:w-0 after:rounded-full after:bg-[#0050a8] after:transition-all after:duration-300 group-hover:after:w-full"
+      >
+        ${item.label}
+        ${dropdownChevronIcon()}
+      </button>
 
       <div
         data-product-mega-tree
-       class="invisible absolute left-1/2 top-full z-50 w-[1120px] max-w-[calc(100vw-32px)] -translate-x-1/2 pt-1 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100"
+        class="invisible absolute left-1/2 top-full z-50 w-[1240px] max-w-[calc(100vw-32px)] -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100"
       >
         <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl shadow-slate-300/60">
-          <div class="grid min-h-[430px] grid-cols-[230px_245px_minmax(0,1fr)]">
+          <div class="grid min-h-[470px] grid-cols-[300px_330px_minmax(0,1fr)]">
 
-            <!-- LEFT SIDE CATEGORY -->
-            <div class="border-r border-slate-100 bg-white p-3">
-              <div class="mb-3 px-2 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
-                Product Category
+            <!-- LEFT SUBCATEGORY -->
+            <div class="border-r border-slate-100 bg-white p-4">
+              <div class="mb-4 px-2 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">
+                Product Menu
               </div>
 
-              <div class="max-h-[395px] overflow-y-auto pr-1">
-                <div class="flex flex-col gap-1">
-                  ${item.categories
-                    .map((category, categoryIndex) => {
-                      const isMainActive = categoryIndex === 0;
+              <div class="max-h-[410px] overflow-y-auto pr-1">
+                <div class="flex flex-col gap-1.5">
+                  ${firstMain.children
+                    .map((sub, subIndex) => {
+                      const subKey = `${firstMain.id}__${sub.id}`;
+                      const isSubActive = subIndex === 0;
 
                       return `
-                        <div>
-                          <button
-                            type="button"
-                            data-tree-main-btn="${category.id}"
-                            class="flex w-full items-center justify-between rounded-lg border px-3 py-2.5 text-left text-[12px] font-bold transition ${
-                              isMainActive
-                                ? "border-[#bdd7ff] bg-[#eef5ff] text-[#0050a8]"
-                                : "border-slate-100 bg-white text-slate-800 hover:border-[#bdd7ff] hover:bg-[#f5f9ff]"
-                            }"
-                          >
-                            <span class="flex items-center gap-3">
-                              <span class="flex h-7 w-7 items-center justify-center rounded-md bg-[#f1f6ff] text-[13px] text-[#0050a8]">
-                                ${category.icon}
-                              </span>
-                              <span>${category.label}</span>
-                            </span>
-
-                            <span class="text-slate-400">›</span>
-                          </button>
-
-                          <div
-                            data-tree-main-list="${category.id}"
-                            class="${isMainActive ? "" : "hidden"} mt-1 space-y-1"
-                          >
-                            ${category.children
-                              .map((sub, subIndex) => {
-                                const subKey = `${category.id}__${sub.id}`;
-                                const isSubActive =
-                                  categoryIndex === 0 && subIndex === 0;
-
-                                return `
-                                  <button
-                                    type="button"
-                                    data-tree-sub-btn="${subKey}"
-                                    class="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-[12px] font-semibold transition ${
-                                      isSubActive
-                                        ? "bg-blue-50 text-[#0050a8]"
-                                        : "text-slate-600 hover:bg-blue-50 hover:text-[#0050a8]"
-                                    }"
-                                  >
-                                    <span>${sub.label}</span>
-                                    <span class="text-slate-400">›</span>
-                                  </button>
-                                `;
-                              })
-                              .join("")}
-                          </div>
-                        </div>
+                        <button
+                          type="button"
+                          data-tree-sub-btn="${subKey}"
+                          class="flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-[13px] font-semibold transition ${
+                            isSubActive
+                              ? "bg-blue-50 text-[#0050a8]"
+                              : "text-slate-700 hover:bg-blue-50 hover:text-[#0050a8]"
+                          }"
+                        >
+                          <span>${sub.label}</span>
+                          <span class="text-slate-400">›</span>
+                        </button>
                       `;
                     })
                     .join("")}
@@ -328,199 +298,182 @@ function renderProductMegaTree(item) {
             </div>
 
             <!-- MIDDLE GROUP -->
-            <div class="border-r border-slate-100 bg-white p-4">
-              ${item.categories
-                .map((category) =>
-                  category.children
-                    .map((sub) => {
-                      const subKey = `${category.id}__${sub.id}`;
-                      const isActiveSub = subKey === firstSubKey;
+            <div class="border-r border-slate-100 bg-white p-5">
+              ${firstMain.children
+                .map((sub) => {
+                  const subKey = `${firstMain.id}__${sub.id}`;
+                  const isActiveSub = subKey === firstSubKey;
+
+                  return `
+                    <div
+                      data-tree-group-list="${subKey}"
+                      class="${isActiveSub ? "" : "hidden"}"
+                    >
+                      <div class="mb-4">
+                        <h3 class="text-[15px] font-bold text-slate-900">
+                          ${sub.label}
+                        </h3>
+
+                        <p class="mt-1 text-[12px] leading-5 text-slate-500">
+                          Hover product size or display group
+                        </p>
+                      </div>
+
+                      <div class="max-h-[390px] overflow-y-auto pr-1">
+                        <div class="flex flex-col">
+                          ${sub.groups
+                            .map((group, groupIndex) => {
+                              const groupKey = `${firstMain.id}__${sub.id}__${slugify(
+                                group.title,
+                              )}`;
+                              const isGroupActive =
+                                isActiveSub && groupIndex === 0;
+
+                              return `
+                                <button
+                                  type="button"
+                                  data-tree-group-btn="${groupKey}"
+                                  class="group/mid flex w-full items-center justify-between border-b border-slate-100 px-3 py-3.5 text-left transition ${
+                                    isGroupActive
+                                      ? "border-[#bdd7ff] bg-[#eef5ff] text-[#0050a8]"
+                                      : "border-slate-100 bg-white text-slate-700 hover:border-[#bdd7ff] hover:bg-[#f7fbff] hover:text-[#0050a8]"
+                                  }"
+                                >
+                                  <span>
+                                    <span class="block text-[13px] font-bold leading-snug">
+                                      ${group.title}
+                                    </span>
+
+                                    <span class="mt-1 block text-[11px] font-semibold text-slate-400">
+                                      ${group.products.length} Products
+                                    </span>
+                                  </span>
+
+                                  <span class="ml-2 text-[15px] text-slate-300 group-hover/mid:text-[#0050a8]">
+                                    ›
+                                  </span>
+                                </button>
+                              `;
+                            })
+                            .join("")}
+                        </div>
+                      </div>
+                    </div>
+                  `;
+                })
+                .join("")}
+            </div>
+
+            <!-- RIGHT PRODUCT AREA -->
+            <div class="bg-white p-5">
+              ${firstMain.children
+                .map((sub) =>
+                  sub.groups
+                    .map((group) => {
+                      const groupKey = `${firstMain.id}__${sub.id}__${slugify(
+                        group.title,
+                      )}`;
+                      const isActiveGroup = groupKey === firstGroupKey;
 
                       return `
                         <div
-                          data-tree-group-list="${subKey}"
-                          class="${isActiveSub ? "" : "hidden"}"
+                          data-tree-product-panel="${groupKey}"
+                          class="${isActiveGroup ? "" : "hidden"} flex h-full flex-col"
                         >
-                          <div class="mb-4">
-                            <h3 class="text-[13px] font-bold text-slate-900">
-                              ${sub.label}
-                            </h3>
+                          <div class="mb-4 flex items-start justify-between gap-4">
+                            <div>
+                              <h3 class="text-[15px] font-bold leading-snug text-slate-900">
+                                ${group.title}
+                              </h3>
 
-                            <p class="mt-1 text-[11px] leading-5 text-slate-500">
-                              Select product size or display group
-                            </p>
+                              <p class="mt-1 text-[12px] leading-5 text-slate-500">
+                                Featured product variants
+                              </p>
+                            </div>
+
+                            <a
+                              href="${sub.href}"
+                              class="shrink-0 rounded-md border border-blue-100 px-4 py-2 text-[11px] font-bold text-[#0050a8] hover:bg-blue-50"
+                            >
+                              View Category →
+                            </a>
                           </div>
 
-                          <div class="max-h-[365px] overflow-y-auto pr-1">
-                            <div class="flex flex-col">
-                              ${sub.groups
-                                .map((group, groupIndex) => {
-                                  const groupKey = `${category.id}__${sub.id}__${slugify(
-                                    group.title,
-                                  )}`;
-                                  const isGroupActive =
-                                    isActiveSub && groupIndex === 0;
+                          <div class="overflow-hidden">
+                            <div class="grid grid-cols-5 gap-3">
+                              ${group.products
+                                .slice(0, 5)
+                                .map((product) => {
+                                  const productTitle = getProductTitle(product);
 
                                   return `
-                                    <button
-                                      type="button"
-                                      data-tree-group-btn="${groupKey}"
-                                      class="group/mid flex w-full items-center justify-between border-b border-slate-100 px-2 py-3 text-left transition ${
-                                        isGroupActive
-                                          ? "border-[#bdd7ff] bg-[#eef5ff] text-[#0050a8]"
-                                          : "border-slate-100 bg-white text-slate-700 hover:border-[#bdd7ff] hover:bg-[#f7fbff]"
-                                      }"
+                                    <a
+                                      href="${createProductHref(sub.href, productTitle)}"
+                                      class="group/card rounded-lg border border-slate-100 bg-white p-2.5 transition hover:border-[#bdd7ff] hover:shadow-md hover:shadow-slate-200/70"
                                     >
-                                      <span>
-                                        <span class="block text-[12px] font-bold leading-snug">
-                                          ${group.title}
-                                        </span>
+                                      ${renderProductImage(product)}
 
-                                        <span class="mt-1 block text-[10px] font-semibold text-slate-400">
-                                          ${group.products.length} Products
-                                        </span>
-                                      </span>
-
-                                      <span class="ml-2 text-[14px] text-slate-300 group-hover/mid:text-[#0050a8]">
-                                        ›
-                                      </span>
-                                    </button>
+                                      <h4 class="mt-2 h-[36px] overflow-hidden text-[11px] font-bold leading-[18px] text-slate-900 group-hover/card:text-[#0050a8]">
+                                        ${productTitle}
+                                      </h4>
+                                    </a>
                                   `;
                                 })
                                 .join("")}
                             </div>
                           </div>
+
+                          <!-- QUALITY ROW -->
+                          <div class="mt-4 grid grid-cols-3 gap-4 border-t border-slate-100 pt-4">
+                            <div class="flex items-center gap-3">
+                              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[15px] text-[#0050a8]">✓</span>
+                              <div>
+                                <h4 class="text-[12px] font-bold text-slate-900">Premium Quality</h4>
+                                <p class="text-[10px] text-slate-500">Top-tier products</p>
+                              </div>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[15px] text-[#0050a8]">⚙</span>
+                              <div>
+                                <h4 class="text-[12px] font-bold text-slate-900">Latest Technology</h4>
+                                <p class="text-[10px] text-slate-500">Advanced features</p>
+                              </div>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                              <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[15px] text-[#0050a8]">☎</span>
+                              <div>
+                                <h4 class="text-[12px] font-bold text-slate-900">Global Support</h4>
+                                <p class="text-[10px] text-slate-500">24/7 assistance</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- HELP BANNER -->
+                          <div class="mt-auto rounded-xl bg-gradient-to-r from-[#eef6ff] via-[#f8fbff] to-[#eaf3ff] px-4 py-3">
+                            <div class="flex items-center justify-between gap-4">
+                              <div>
+                                <h3 class="text-[13px] font-bold text-slate-900">
+                                  Need Help Choosing the Right Product?
+                                </h3>
+
+                                <p class="mt-1 max-w-[440px] text-[11px] leading-4 text-slate-500">
+                                  Our experts can help you choose the perfect LED display, kiosk, video wall or digital signage solution.
+                                </p>
+                              </div>
+
+                              <a
+                                href="/contact.html"
+                                class="shrink-0 rounded-lg bg-[#0050a8] px-4 py-2 text-[11px] font-bold text-white hover:bg-[#003f87]"
+                              >
+                                Contact Experts
+                              </a>
+                            </div>
+                          </div>
                         </div>
                       `;
                     })
-                    .join(""),
-                )
-                .join("")}
-            </div>
-
-            <!-- RIGHT PRODUCT AREA -->
-            <div class="bg-white p-4">
-              ${item.categories
-                .map((category) =>
-                  category.children
-                    .map((sub) =>
-                      sub.groups
-                        .map((group) => {
-                          const groupKey = `${category.id}__${sub.id}__${slugify(
-                            group.title,
-                          )}`;
-                          const isActiveGroup = groupKey === firstGroupKey;
-
-                          return `
-                            <div
-                              data-tree-product-panel="${groupKey}"
-                              class="${isActiveGroup ? "" : "hidden"} flex h-full flex-col"
-                            >
-                              <div class="mb-3 flex items-start justify-between gap-4">
-                                <div>
-                                  <h3 class="text-[14px] font-bold leading-snug text-slate-900">
-                                    ${group.title}
-                                  </h3>
-
-                                  <p class="mt-1 text-[11px] leading-5 text-slate-500">
-                                    Featured product variants
-                                  </p>
-                                </div>
-
-                                <a
-                                  href="${sub.href}"
-                                  class="shrink-0 rounded-md border border-blue-100 px-4 py-2 text-[11px] font-bold text-[#0050a8] hover:bg-blue-50"
-                                >
-                                  View Category →
-                                </a>
-                              </div>
-
-                              <div class="overflow-hidden">
-                                <div class="grid grid-cols-5 gap-3">
-                                  ${group.products
-                                    .slice(0, 5)
-                                    .map((product) => {
-                                      const productTitle =
-                                        getProductTitle(product);
-
-                                      return `
-                                        <a
-                                          href="${createProductHref(sub.href, productTitle)}"
-                                          class="group/card rounded-lg border border-slate-100 bg-white p-2 transition hover:border-[#bdd7ff] hover:shadow-md hover:shadow-slate-200/70"
-                                        >
-                                          ${renderProductImage(product)}
-
-                                          <h4 class="mt-2 h-[32px] overflow-hidden text-[10px] font-bold leading-[16px] text-slate-900 group-hover/card:text-[#0050a8]">
-                                            ${productTitle}
-                                          </h4>   
-                                        </a>
-                                      `;
-                                    })
-                                    .join("")}
-                                </div>
-                              </div>
-
-                              <!-- QUALITY ROW -->
-                              <div class="mt-3 grid grid-cols-4 gap-3 border-t border-slate-100 pt-3">
-                                <div class="flex items-center gap-2">
-                                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[12px] text-[#0050a8]">✓</span>
-                                  <div>
-                                    <h4 class="text-[10px] font-bold text-slate-900">Premium Quality</h4>
-                                    <p class="text-[9px] text-slate-500">Top-tier products</p>
-                                  </div>
-                                </div>
-
-                                <div class="flex items-center gap-2">
-                                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[12px] text-[#0050a8]">⚙</span>
-                                  <div>
-                                    <h4 class="text-[10px] font-bold text-slate-900">Latest Technology</h4>
-                                    <p class="text-[9px] text-slate-500">Advanced features</p>
-                                  </div>
-                                </div>
-
-                                <div class="flex items-center gap-2">
-                                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[12px] text-[#0050a8]">⚡</span>
-                                  <div>
-                                    <h4 class="text-[10px] font-bold text-slate-900">Energy Efficient</h4>
-                                    <p class="text-[9px] text-slate-500">Lower power use</p>
-                                  </div>
-                                </div>
-
-                                <div class="flex items-center gap-2">
-                                  <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[12px] text-[#0050a8]">☎</span>
-                                  <div>
-                                    <h4 class="text-[10px] font-bold text-slate-900">Global Support</h4>
-                                    <p class="text-[9px] text-slate-500">24/7 assistance</p>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <!-- HELP BANNER -->
-                              <div class="mt-auto rounded-xl bg-gradient-to-r from-[#eef6ff] via-[#f8fbff] to-[#eaf3ff] px-4 py-3">
-                                <div class="flex items-center justify-between gap-4">
-                                  <div>
-                                    <h3 class="text-[12px] font-bold text-slate-900">
-                                      Need Help Choosing the Right Product?
-                                    </h3>
-
-                                    <p class="mt-1 max-w-[440px] text-[10px] leading-4 text-slate-500">
-                                      Our experts can help you choose the perfect LED display, kiosk, video wall or digital signage solution.
-                                    </p>
-                                  </div>
-
-                                  <a
-                                    href="/contact.html"
-                                    class="shrink-0 rounded-lg bg-[#0050a8] px-4 py-2 text-[10px] font-bold text-white hover:bg-[#003f87]"
-                                  >
-                                    Contact Experts
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-                          `;
-                        })
-                        .join(""),
-                    )
                     .join(""),
                 )
                 .join("")}
@@ -546,10 +499,14 @@ function renderDesktopNav() {
       }
 
       return `
-        <a href="${item.href}" class="py-2 hover:text-[#0050a8]">
-          ${item.label}
-        </a>
-      `;
+  <a
+    href="${item.href}"
+    class="relative flex h-[76px] items-center text-[14px] font-medium transition hover:text-[#0050a8]
+    after:absolute after:bottom-0 after:left-0 after:h-[4px] after:w-0 after:rounded-full after:bg-[#0050a8] after:transition-all after:duration-300 hover:after:w-full"
+  >
+    ${item.label}
+  </a>
+`;
     })
     .join("");
 }
@@ -676,8 +633,6 @@ function initProductMegaTree() {
   if (!megaMenus.length) return;
 
   megaMenus.forEach((menu) => {
-    // ✅ এই part টা নতুন add করা হলো
-    // Navbar mega menu hover/focus করলে তখন image load হবে
     const menuWrapper = menu.closest(".group");
 
     menuWrapper?.addEventListener(
@@ -696,54 +651,10 @@ function initProductMegaTree() {
       { once: true },
     );
 
-    // ✅ নিচের code আগের মতোই থাকবে
-    const mainButtons = menu.querySelectorAll("[data-tree-main-btn]");
-    const mainLists = menu.querySelectorAll("[data-tree-main-list]");
     const subButtons = menu.querySelectorAll("[data-tree-sub-btn]");
     const groupLists = menu.querySelectorAll("[data-tree-group-list]");
     const groupButtons = menu.querySelectorAll("[data-tree-group-btn]");
     const productPanels = menu.querySelectorAll("[data-tree-product-panel]");
-
-    function hideMiddleAndRight() {
-      groupLists.forEach((list) => {
-        list.classList.add("hidden");
-      });
-
-      productPanels.forEach((panel) => {
-        panel.classList.add("hidden");
-      });
-
-      subButtons.forEach((button) => {
-        button.classList.remove("bg-blue-50", "text-[#0050a8]");
-        button.classList.add("text-slate-600");
-      });
-
-      groupButtons.forEach((button) => {
-        button.classList.remove(
-          "border-[#bdd7ff]",
-          "bg-[#eef5ff]",
-          "text-[#0050a8]",
-        );
-
-        button.classList.add("border-slate-100", "bg-white", "text-slate-700");
-      });
-    }
-
-    function closeAllMainLists() {
-      mainLists.forEach((list) => {
-        list.classList.add("hidden");
-      });
-
-      mainButtons.forEach((button) => {
-        button.classList.remove(
-          "border-[#bdd7ff]",
-          "bg-[#eef5ff]",
-          "text-[#0050a8]",
-        );
-
-        button.classList.add("border-slate-100", "bg-white", "text-slate-800");
-      });
-    }
 
     function activateGroup(groupKey) {
       groupButtons.forEach((button) => {
@@ -772,7 +683,8 @@ function initProductMegaTree() {
 
         button.classList.toggle("bg-blue-50", isActive);
         button.classList.toggle("text-[#0050a8]", isActive);
-        button.classList.toggle("text-slate-600", !isActive);
+
+        button.classList.toggle("text-slate-700", !isActive);
       });
 
       groupLists.forEach((list) => {
@@ -792,72 +704,32 @@ function initProductMegaTree() {
       }
     }
 
-    function toggleMain(mainId) {
-      const activeMainButton = menu.querySelector(
-        `[data-tree-main-btn="${mainId}"]`,
-      );
-
-      const activeMainList = menu.querySelector(
-        `[data-tree-main-list="${mainId}"]`,
-      );
-
-      if (!activeMainButton || !activeMainList) return;
-
-      const isAlreadyOpen = !activeMainList.classList.contains("hidden");
-
-      closeAllMainLists();
-
-      if (isAlreadyOpen) {
-        hideMiddleAndRight();
-        return;
-      }
-
-      activeMainButton.classList.remove(
-        "border-slate-100",
-        "bg-white",
-        "text-slate-800",
-      );
-
-      activeMainButton.classList.add(
-        "border-[#bdd7ff]",
-        "bg-[#eef5ff]",
-        "text-[#0050a8]",
-      );
-
-      activeMainList.classList.remove("hidden");
-
-      const firstSubButton = activeMainList.querySelector(
-        "[data-tree-sub-btn]",
-      );
-
-      if (firstSubButton) {
-        activateSub(firstSubButton.dataset.treeSubBtn);
-      }
-    }
-
-    mainButtons.forEach((button) => {
-      button.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        toggleMain(button.dataset.treeMainBtn);
-      });
-    });
-
     subButtons.forEach((button) => {
+      button.addEventListener("mouseenter", () => {
+        activateSub(button.dataset.treeSubBtn);
+      });
+
+      button.addEventListener("focus", () => {
+        activateSub(button.dataset.treeSubBtn);
+      });
+
       button.addEventListener("click", (e) => {
         e.preventDefault();
-        e.stopPropagation();
-
         activateSub(button.dataset.treeSubBtn);
       });
     });
 
     groupButtons.forEach((button) => {
+      button.addEventListener("mouseenter", () => {
+        activateGroup(button.dataset.treeGroupBtn);
+      });
+
+      button.addEventListener("focus", () => {
+        activateGroup(button.dataset.treeGroupBtn);
+      });
+
       button.addEventListener("click", (e) => {
         e.preventDefault();
-        e.stopPropagation();
-
         activateGroup(button.dataset.treeGroupBtn);
       });
     });
@@ -1269,7 +1141,11 @@ function mountProductDetailsLayout() {
   if (document.querySelector("#product-details-root")) return;
 
   document.body.innerHTML = `
-    <div data-component="/components/navbar.html"></div>
+    <div
+      data-component="/components/navbar.html"
+      data-critical="true"
+      class="min-h-[102px] lg:min-h-[110px]"
+    ></div>
 
     <main>
       <section id="product-details-root"></section>
@@ -1286,11 +1162,10 @@ function mountProductDetailsLayout() {
 //     mountProductDetailsLayout();
 //   }
 
-//   await loadComponents();
+//   await loadNavbarFirst();
 
-//   renderNavbar();
+//   await loadOtherComponents();
 
-//   initNavbar();
 //   initCurrentYear();
 
 //   if (isDetailsPage) {
@@ -1313,21 +1188,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     mountProductDetailsLayout();
   }
 
-  await loadNavbarFirst();
+  // 1) Navbar + Hero first, same time
+  await loadCriticalComponents();
 
-  await loadOtherComponents();
-
-  initCurrentYear();
+  // 2) Above-the-fold init
+  renderNavbar();
+  initNavbar();
+  initHeroSlider();
 
   if (isDetailsPage) {
     initProductDetails();
+
+    loadNormalComponentsWhenIdle(() => {
+      initCurrentYear();
+    });
+
     return;
   }
 
-  initHeroSlider();
-  initTestimonials();
-  initIndustriesSlider();
-  initProductSections();
-  initProjectsSlider();
-  initProjectTypeMultiSelect();
+  // 3) Below-the-fold components পরে load হবে
+  loadNormalComponentsWhenIdle(() => {
+    initCurrentYear();
+    initTestimonials();
+    initIndustriesSlider();
+    initProductSections();
+    initProjectsSlider();
+    initProjectTypeMultiSelect();
+  });
 });
