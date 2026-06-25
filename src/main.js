@@ -50,8 +50,20 @@ async function loadCriticalComponents() {
     document.querySelectorAll('[data-component][data-critical="true"]'),
   );
 
-  // Navbar + Hero একসাথে load হবে
-  await Promise.all(criticalComponents.map(loadSingleComponent));
+  const navbarComponent = document.querySelector(
+    '[data-component="/components/navbar.html"]',
+  );
+
+  const componentsToLoad = navbarComponent
+    ? [
+        navbarComponent,
+        ...criticalComponents.filter(
+          (component) => component !== navbarComponent,
+        ),
+      ]
+    : criticalComponents;
+
+  await Promise.all(componentsToLoad.map(loadSingleComponent));
 }
 
 async function loadNormalComponents() {
@@ -166,6 +178,7 @@ function dropdownChevronIcon() {
 }
 
 function renderSimpleDropdown(item) {
+  const isActive = isNavItemActive(item);
   const dropdownWidth = item.columns === 3 ? "w-[760px]" : "w-[560px]";
   const gridCols = item.columns === 3 ? "grid-cols-3" : "grid-cols-2";
 
@@ -173,14 +186,15 @@ function renderSimpleDropdown(item) {
     <div class="group relative">
       <button
         type="button"
-        class="relative flex h-[76px] items-center gap-1.5 text-[14px] font-medium transition hover:text-[#0050a8]
-        after:absolute after:bottom-0 after:left-0 after:h-[4px] after:w-0 after:rounded-full after:bg-[#0050a8] after:transition-all after:duration-300 group-hover:after:w-full"
+       class="relative flex h-[76px] items-center gap-1.5 text-[14px] font-medium transition hover:text-[#0050a8]
+after:absolute after:bottom-0 after:left-0 after:h-[4px] after:rounded-full after:bg-[#0050a8] after:transition-all after:duration-300 group-hover:after:w-full
+${isActive ? "text-[#0050a8] after:w-full" : "after:w-0"}"
       >
         ${item.label}
         ${dropdownChevronIcon()}
       </button>
 
-      <div class="invisible absolute left-1/2 top-full ${dropdownWidth} -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+      <div class="invisible absolute left-1/2 top-full ${dropdownWidth} -translate-x-1/2 pt-0 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
         <div class="grid ${gridCols} gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-2xl shadow-slate-200/70">
           ${item.items
             .map(
@@ -199,6 +213,7 @@ function renderSimpleDropdown(item) {
 }
 
 function renderProductMegaTree(item) {
+  const isActive = isNavItemActive(item);
   const firstMain = item.categories?.[0];
   const firstSub = firstMain?.children?.[0];
   const firstGroup = firstSub?.groups?.[0];
@@ -251,7 +266,9 @@ function renderProductMegaTree(item) {
       <button
         type="button"
         class="relative flex h-[76px] items-center gap-1.5 text-[14px] font-medium transition hover:text-[#0050a8]
-        after:absolute after:bottom-0 after:left-0 after:h-[4px] after:w-0 after:rounded-full after:bg-[#0050a8] after:transition-all after:duration-300 group-hover:after:w-full"
+        after:absolute after:bottom-0 after:left-0 after:h-[4px] after:w-0 after:rounded-full after:bg-[#0050a8] after:transition-all after:duration-300 group-hover:after:w-full
+          ${isActive ? "text-[#0050a8] after:w-full" : "after:w-0"}       
+        "
       >
         ${item.label}
         ${dropdownChevronIcon()}
@@ -259,7 +276,7 @@ function renderProductMegaTree(item) {
 
       <div
         data-product-mega-tree
-        class="invisible absolute left-1/2 top-full z-50 w-[1240px] max-w-[calc(100vw-32px)] -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100"
+        class="invisible absolute left-1/2 top-full z-50 w-[1240px] max-w-[calc(100vw-32px)] -translate-x-1/2 pt-0 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100"
       >
         <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl shadow-slate-300/60">
           <div class="grid min-h-[470px] grid-cols-[300px_330px_minmax(0,1fr)]">
@@ -484,6 +501,73 @@ function renderProductMegaTree(item) {
     </div>
   `;
 }
+
+function normalizeNavPath(path) {
+  if (!path) return "/";
+
+  return (
+    path
+      .replace(window.location.origin, "")
+      .replace(/\/index\.html$/, "/")
+      .replace(/\.html$/, "")
+      .replace(/\/$/, "") || "/"
+  );
+}
+
+function isSameNavPath(href) {
+  if (!href || href.startsWith("http") || href.startsWith("#")) return false;
+
+  const currentPath = normalizeNavPath(window.location.pathname);
+  const targetPath = normalizeNavPath(
+    new URL(href, window.location.origin).pathname,
+  );
+
+  return currentPath === targetPath;
+}
+
+// function isNavItemActive(item) {
+//   const currentPath = normalizeNavPath(window.location.pathname);
+
+//   if (isSameNavPath(item.href)) return true;
+
+//   if (item.type === "dropdown") {
+//     return item.items?.some((child) => isSameNavPath(child.href));
+//   }
+
+//   if (item.type === "productMegaTree") {
+//     if (currentPath.startsWith("/products")) return true;
+
+//     return item.categories?.some((category) =>
+//       category.children?.some((sub) => isSameNavPath(sub.href)),
+//     );
+//   }
+
+//   return false;
+// }
+
+function isNavItemActive(item) {
+  const currentPath = normalizeNavPath(window.location.pathname);
+
+  if (isSameNavPath(item.href)) return true;
+
+  if (item.type === "dropdown") {
+    return item.items?.some((child) => isSameNavPath(child.href)) || false;
+  }
+
+  if (item.type === "productMegaTree") {
+    
+    if (currentPath.startsWith("/products/details")) return false;
+
+ 
+    return (
+      item.categories?.some((category) =>
+        category.children?.some((sub) => isSameNavPath(sub.href)),
+      ) || false
+    );
+  }
+
+  return false;
+}
 function renderDesktopNav() {
   const desktopNav = document.getElementById("desktopNav");
   if (!desktopNav) return;
@@ -498,15 +582,18 @@ function renderDesktopNav() {
         return renderSimpleDropdown(item);
       }
 
+      const isActive = isNavItemActive(item);
+
       return `
-  <a
-    href="${item.href}"
-    class="relative flex h-[76px] items-center text-[14px] font-medium transition hover:text-[#0050a8]
-    after:absolute after:bottom-0 after:left-0 after:h-[4px] after:w-0 after:rounded-full after:bg-[#0050a8] after:transition-all after:duration-300 hover:after:w-full"
-  >
-    ${item.label}
-  </a>
-`;
+        <a
+          href="${item.href}"
+          class="relative flex h-[76px] items-center text-[14px] font-medium transition hover:text-[#0050a8]
+          after:absolute after:bottom-0 after:left-0 after:h-[4px] after:rounded-full after:bg-[#0050a8] after:transition-all after:duration-300 hover:after:w-full
+          ${isActive ? "text-[#0050a8] after:w-full" : "after:w-0"}"
+        >
+          ${item.label}
+        </a>
+      `;
     })
     .join("");
 }
