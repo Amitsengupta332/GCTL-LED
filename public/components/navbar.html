@@ -102,8 +102,10 @@
     <!-- Right Actions Desktop -->
     <div class="hidden items-center gap-3 lg:flex xl:gap-5">
       <button
+        id="desktopSearchButton"
         type="button"
-        aria-label="Search"
+        aria-label="Open search"
+        aria-expanded="false"
         class="flex h-10 w-10 items-center justify-center rounded-full text-[#0050a8] transition hover:bg-blue-50 hover:text-[#003f87]">
         <svg
           class="h-[19px] w-[19px]"
@@ -124,27 +126,48 @@
     </div>
 
     <!-- Mobile Menu Button -->
-    <button
-      id="mobileMenuButton"
-      type="button"
-      aria-label="Open mobile menu"
-      class="flex h-11 w-11 items-center justify-center rounded-md border border-slate-200 text-[#0050a8] lg:hidden">
-      <svg
-        class="h-6 w-6"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2">
-        <path d="M4 7h16"></path>
-        <path d="M4 12h16"></path>
-        <path d="M4 17h16"></path>
-      </svg>
-    </button>
+    <!-- Mobile Actions -->
+    <div class="flex items-center gap-2 lg:hidden">
+      <button
+        id="mobileSearchButton"
+        type="button"
+        aria-label="Open search"
+        aria-expanded="false"
+        class="flex h-11 w-11 items-center justify-center rounded-md border border-slate-200 text-[#0050a8]">
+        <svg
+          class="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2">
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="m20 20-3.5-3.5"></path>
+        </svg>
+      </button>
+
+      <button
+        id="mobileMenuButton"
+        type="button"
+        aria-label="Open mobile menu"
+        aria-expanded="false"
+        class="flex h-11 w-11 items-center justify-center rounded-md border border-slate-200 text-[#0050a8]">
+        <svg
+          class="h-6 w-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2">
+          <path d="M4 7h16"></path>
+          <path d="M4 12h16"></path>
+          <path d="M4 17h16"></path>
+        </svg>
+      </button>
+    </div>
 
     <!-- Mobile Menu Render From JS -->
     <div
       id="mobileMenu"
-      class="absolute right-5 top-[calc(100%+10px)] hidden max-h-[calc(100vh-120px)] w-[calc(100vw-40px)] max-w-[330px] overflow-y-auto rounded-2xl border border-slate-100 bg-white p-4 shadow-2xl shadow-slate-300/60 sm:right-8 lg:hidden">
+      class="absolute right-5 top-[calc(100%+10px)] z-[70] hidden max-h-[calc(100vh-120px)] w-[calc(100vw-40px)] max-w-[360px] overflow-y-auto rounded-2xl border border-slate-100 bg-white p-4 shadow-2xl shadow-slate-300/60 sm:right-8 lg:hidden">
       <div
         id="mobileNav"
         class="flex flex-col gap-1 text-[14px] font-medium text-slate-900"></div>
@@ -156,4 +179,34 @@
       </a>
     </div>
   </nav>
+
+  <!-- Search Dropdown -->
+  <div
+    id="searchDropdown"
+    class="absolute right-5 top-[calc(100%+10px)] z-[80] hidden w-[calc(100vw-40px)] max-w-[430px] rounded-2xl border border-slate-100 bg-white p-4 shadow-2xl shadow-slate-300/60 sm:right-8">
+    <label
+      for="siteSearchInput"
+      class="mb-2 block text-[12px] font-bold uppercase tracking-[0.14em] text-slate-400">
+      Search Products
+    </label>
+
+    <div
+      class="flex overflow-hidden rounded-xl border border-slate-200 bg-white">
+      <input
+        id="siteSearchInput"
+        type="search"
+        placeholder="Search LED display, kiosk, video wall..."
+        class="min-w-0 flex-1 px-4 py-3 text-[14px] outline-none" />
+
+      <button
+        type="button"
+        class="bg-[#0050a8] px-4 text-[13px] font-semibold text-white">
+        Search
+      </button>
+    </div>
+
+    <div
+      id="siteSearchResults"
+      class="mt-3 max-h-[300px] overflow-y-auto rounded-xl border border-slate-100 bg-[#f8fbff] p-2"></div>
+  </div>
 </header>

@@ -1007,10 +1007,32 @@ export const navItems = [
     label: "Contact Us",
     href: "/contact.html",
   },
-  {
-    label: "Blogs",
-    href: "/blogs.html",
-  },
+  // {
+  //   label: "Blogs",
+  //   href: "/blogs.html",
+  // },
+ {
+  label: "Media",
+  type: "dropdown",
+  dropdownStyle: "media-list",
+  items: [
+    {
+      label: "Blogs",
+      href: "/blogs.html",
+      desc: "Latest articles, guides and updates.",
+    },
+    {
+      label: "Video",
+      href: "/videos.html",
+      desc: "Product videos and solution showcases.",
+    },
+    {
+      label: "Podcast",
+      href: "/podcast.html",
+      desc: "Audio discussions and industry insights.",
+    },
+  ],
+},
   {
     label: "About Us",
     href: "/about.html",

@@ -90,12 +90,254 @@ function loadNormalComponentsWhenIdle(callback) {
 function initNavbar() {
   const mobileMenuButton = document.getElementById("mobileMenuButton");
   const mobileMenu = document.getElementById("mobileMenu");
+  const searchDropdown = document.getElementById("searchDropdown");
 
   if (!mobileMenuButton || !mobileMenu) return;
 
-  mobileMenuButton.addEventListener("click", () => {
-    mobileMenu.classList.toggle("hidden");
+  function openMobileMenu() {
+    mobileMenu.classList.remove("hidden");
+    mobileMenuButton.setAttribute("aria-expanded", "true");
+
+    searchDropdown?.classList.add("hidden");
+  }
+
+  function closeMobileMenu() {
+    mobileMenu.classList.add("hidden");
+    mobileMenuButton.setAttribute("aria-expanded", "false");
+  }
+
+  function toggleMobileMenu() {
+    if (mobileMenu.classList.contains("hidden")) {
+      openMobileMenu();
+    } else {
+      closeMobileMenu();
+    }
+  }
+
+  mobileMenuButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleMobileMenu();
   });
+
+  mobileMenu.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+
+  mobileMenu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeMobileMenu);
+  });
+
+  const topDetails = Array.from(
+    mobileMenu.querySelectorAll("#mobileNav > details"),
+  );
+
+  topDetails.forEach((details) => {
+    details.addEventListener("toggle", () => {
+      if (!details.open) return;
+
+      topDetails.forEach((otherDetails) => {
+        if (otherDetails !== details) {
+          otherDetails.open = false;
+        }
+      });
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (
+      !mobileMenu.contains(e.target) &&
+      !mobileMenuButton.contains(e.target)
+    ) {
+      closeMobileMenu();
+    }
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeMobileMenu();
+    }
+  });
+}
+
+function escapeHtml(text) {
+  return String(text || "").replace(/[&<>"']/g, (match) => {
+    const map = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;",
+    };
+
+    return map[match];
+  });
+}
+
+function collectSearchItems() {
+  const results = [];
+
+  function pushResult(label, href, type) {
+    if (!label || !href) return;
+
+    results.push({
+      label,
+      href,
+      type,
+    });
+  }
+
+  navItems.forEach((item) => {
+    if (item.href) {
+      pushResult(item.label, item.href, "Page");
+    }
+
+    if (item.type === "dropdown") {
+      item.items?.forEach((child) => {
+        pushResult(child.label, child.href, item.label);
+      });
+    }
+
+    if (item.type === "productMegaTree") {
+      item.categories?.forEach((category) => {
+        category.children?.forEach((sub) => {
+          pushResult(sub.label, sub.href, item.label);
+
+          sub.groups?.forEach((group) => {
+            group.products?.forEach((product) => {
+              const productTitle = getProductTitle(product);
+
+              pushResult(
+                productTitle,
+                createProductHref(sub.href, productTitle),
+                sub.label,
+              );
+            });
+          });
+        });
+      });
+    }
+  });
+
+  return results;
+}
+
+function initSearchDropdown() {
+  const desktopSearchButton = document.getElementById("desktopSearchButton");
+  const mobileSearchButton = document.getElementById("mobileSearchButton");
+  const searchDropdown = document.getElementById("searchDropdown");
+  const siteSearchInput = document.getElementById("siteSearchInput");
+  const siteSearchResults = document.getElementById("siteSearchResults");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  const searchButtons = [desktopSearchButton, mobileSearchButton].filter(
+    Boolean,
+  );
+
+  if (!searchButtons.length || !searchDropdown || !siteSearchResults) return;
+
+  const allItems = collectSearchItems();
+
+  function renderResults(query = "") {
+    const searchText = query.trim().toLowerCase();
+
+    const matchedItems = allItems
+      .filter((item) => {
+        if (!searchText) return true;
+
+        return (
+          item.label.toLowerCase().includes(searchText) ||
+          item.type.toLowerCase().includes(searchText)
+        );
+      })
+      .slice(0, 9);
+
+    if (!matchedItems.length) {
+      siteSearchResults.innerHTML = `
+        <p class="px-3 py-3 text-[13px] text-slate-500">
+          No product found.
+        </p>
+      `;
+      return;
+    }
+
+    siteSearchResults.innerHTML = matchedItems
+      .map(
+        (item) => `
+          <a
+            href="${item.href}"
+            class="block rounded-lg px-3 py-3 transition hover:bg-white hover:shadow-sm">
+            <span class="block text-[13px] font-bold text-slate-900">
+              ${escapeHtml(item.label)}
+            </span>
+
+            <span class="mt-0.5 block text-[11px] font-semibold text-[#0050a8]">
+              ${escapeHtml(item.type)}
+            </span>
+          </a>
+        `,
+      )
+      .join("");
+  }
+
+  function openSearch() {
+    searchDropdown.classList.remove("hidden");
+    mobileMenu?.classList.add("hidden");
+
+    searchButtons.forEach((button) => {
+      button.setAttribute("aria-expanded", "true");
+    });
+
+    renderResults(siteSearchInput?.value || "");
+
+    setTimeout(() => {
+      siteSearchInput?.focus();
+    }, 50);
+  }
+
+  function closeSearch() {
+    searchDropdown.classList.add("hidden");
+
+    searchButtons.forEach((button) => {
+      button.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  function toggleSearch() {
+    if (searchDropdown.classList.contains("hidden")) {
+      openSearch();
+    } else {
+      closeSearch();
+    }
+  }
+
+  searchButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleSearch();
+    });
+  });
+
+  siteSearchInput?.addEventListener("input", () => {
+    renderResults(siteSearchInput.value);
+  });
+
+  searchDropdown.addEventListener("click", (e) => {
+    e.stopPropagation();
+  });
+
+  document.addEventListener("click", () => {
+    closeSearch();
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeSearch();
+    }
+  });
+
+  renderResults();
 }
 
 function initIndustriesSlider() {
@@ -179,6 +421,42 @@ function dropdownChevronIcon() {
 
 function renderSimpleDropdown(item) {
   const isActive = isNavItemActive(item);
+
+  if (item.dropdownStyle === "media-list") {
+    return `
+      <div class="group relative">
+        <button
+          type="button"
+          class="relative flex h-[76px] items-center gap-1.5 text-[14px] font-medium transition hover:text-[#0050a8]
+          after:absolute after:bottom-0 after:left-0 after:h-[4px] after:rounded-full after:bg-[#0050a8] after:transition-all after:duration-300 group-hover:after:w-full
+          ${isActive ? "text-[#0050a8] after:w-full" : "after:w-0"}"
+        >
+          ${item.label}
+          ${dropdownChevronIcon()}
+        </button>
+
+       <div class="invisible absolute left-0 top-full z-50 w-[300px] pt-0 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+          <div class="overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-2xl shadow-slate-200/70">
+            ${item.items
+              .map(
+                (child, index) => `
+                  <a
+                    href="${child.href}"
+                    class="flex items-center justify-between gap-4 px-5 py-4 text-[14px] font-bold text-slate-900 transition hover:bg-[#f7fbff] hover:text-[#0050a8]
+                    ${index !== item.items.length - 1 ? "border-b border-slate-100" : ""}"
+                  >
+                    <span>${child.label}</span>
+                    <span class="text-[15px] text-[#0050a8]">→</span>
+                  </a>
+                `,
+              )
+              .join("")}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
   const dropdownWidth = item.columns === 3 ? "w-[760px]" : "w-[560px]";
   const gridCols = item.columns === 3 ? "grid-cols-3" : "grid-cols-2";
 
@@ -186,15 +464,15 @@ function renderSimpleDropdown(item) {
     <div class="group relative">
       <button
         type="button"
-       class="relative flex h-[76px] items-center gap-1.5 text-[14px] font-medium transition hover:text-[#0050a8]
-after:absolute after:bottom-0 after:left-0 after:h-[4px] after:rounded-full after:bg-[#0050a8] after:transition-all after:duration-300 group-hover:after:w-full
-${isActive ? "text-[#0050a8] after:w-full" : "after:w-0"}"
+        class="relative flex h-[76px] items-center gap-1.5 text-[14px] font-medium transition hover:text-[#0050a8]
+        after:absolute after:bottom-0 after:left-0 after:h-[4px] after:rounded-full after:bg-[#0050a8] after:transition-all after:duration-300 group-hover:after:w-full
+        ${isActive ? "text-[#0050a8] after:w-full" : "after:w-0"}"
       >
         ${item.label}
         ${dropdownChevronIcon()}
       </button>
 
-      <div class="invisible absolute left-1/2 top-full ${dropdownWidth} -translate-x-1/2 pt-0 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+      <div class="invisible absolute left-1/2 top-full z-50 ${dropdownWidth} -translate-x-1/2 pt-0 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
         <div class="grid ${gridCols} gap-4 rounded-2xl border border-slate-100 bg-white p-5 shadow-2xl shadow-slate-200/70">
           ${item.items
             .map(
@@ -555,10 +833,8 @@ function isNavItemActive(item) {
   }
 
   if (item.type === "productMegaTree") {
-    
     if (currentPath.startsWith("/products/details")) return false;
 
- 
     return (
       item.categories?.some((category) =>
         category.children?.some((sub) => isSameNavPath(sub.href)),
@@ -606,58 +882,58 @@ function renderMobileNav() {
     .map((item) => {
       if (item.type === "productMegaTree") {
         return `
-          <details class="rounded-xl">
-            <summary class="cursor-pointer list-none rounded-xl px-3 py-3 hover:bg-blue-50">
-              ${item.label}
+          <details class="group rounded-xl border border-transparent open:border-blue-100 open:bg-blue-50/40">
+            <summary class="flex cursor-pointer list-none items-center justify-between rounded-xl px-3 py-3 font-semibold hover:bg-blue-50">
+              <span>${item.label}</span>
+              <span class="transition group-open:rotate-180">⌄</span>
             </summary>
 
-            <div class="ml-3 flex flex-col gap-2 border-l border-slate-100 pl-3 text-[13px] text-slate-600">
+            <div class="mt-1 flex flex-col gap-1 px-2 pb-2">
               ${item.categories
+                .flatMap((category) => category.children || [])
                 .map(
-                  (category) => `
-                    <details class="rounded-lg">
-                      <summary class="cursor-pointer list-none rounded-lg py-2 font-bold text-slate-900">
-                        ${category.label}
+                  (sub) => `
+                    <details class="group/sub rounded-lg bg-white">
+                      <summary class="flex cursor-pointer list-none items-center justify-between rounded-lg px-3 py-2.5 text-[13px] font-semibold text-slate-700 hover:bg-blue-50 hover:text-[#0050a8]">
+                        <span>${sub.label}</span>
+                        <span class="transition group-open/sub:rotate-180">⌄</span>
                       </summary>
 
-                      <div class="ml-3 flex flex-col gap-1 border-l border-slate-100 pl-3">
-                        ${category.children
+                      <div class="ml-3 border-l border-slate-100 pl-3">
+                        <a
+                          href="${sub.href}"
+                          class="block py-2 text-[12px] font-bold text-[#0050a8]">
+                          View ${sub.label}
+                        </a>
+
+                        ${(sub.groups || [])
+                          .slice(0, 8)
                           .map(
-                            (sub) => `
-                              <details class="rounded-lg">
-                                <summary class="cursor-pointer list-none py-2 font-semibold text-slate-700">
-                                  ${sub.label}
+                            (group) => `
+                              <details class="group/group">
+                                <summary class="flex cursor-pointer list-none items-center justify-between py-2 text-[12px] font-semibold text-slate-600">
+                                  <span>${group.title}</span>
+                                  <span class="transition group-open/group:rotate-180">⌄</span>
                                 </summary>
 
                                 <div class="ml-3 flex flex-col gap-1 border-l border-slate-100 pl-3">
-                                  ${sub.groups
-                                    .map(
-                                      (group) => `
-                                        <details>
-                                          <summary class="cursor-pointer list-none py-2 text-[12px] font-semibold text-slate-600">
-                                            ${group.title}
-                                          </summary>
+                                  ${(group.products || [])
+                                    .slice(0, 4)
+                                    .map((product) => {
+                                      const productTitle =
+                                        getProductTitle(product);
 
-                                          <div class="ml-3 flex flex-col gap-1 border-l border-slate-100 pl-3">
-                                            ${group.products
-                                              .map(
-                                                (product) => `
-                                                  <a
-                                                 href="${createProductHref(
-                                                   sub.href,
-                                                   getProductTitle(product),
-                                                 )}"
-                                                    class="py-2 text-[12px] hover:text-[#0050a8]"
-                                                  >
-                                                    ${getProductTitle(product)}
-                                                  </a>
-                                                `,
-                                              )
-                                              .join("")}
-                                          </div>
-                                        </details>
-                                      `,
-                                    )
+                                      return `
+                                        <a
+                                          href="${createProductHref(
+                                            sub.href,
+                                            productTitle,
+                                          )}"
+                                          class="py-2 text-[12px] text-slate-500 hover:text-[#0050a8]">
+                                          ${productTitle}
+                                        </a>
+                                      `;
+                                    })
                                     .join("")}
                                 </div>
                               </details>
@@ -676,9 +952,10 @@ function renderMobileNav() {
 
       if (item.type === "dropdown") {
         return `
-          <details class="rounded-xl">
-            <summary class="cursor-pointer list-none rounded-xl px-3 py-3 hover:bg-blue-50">
-              ${item.label}
+          <details class="group rounded-xl border border-transparent open:border-blue-100 open:bg-blue-50/40">
+            <summary class="flex cursor-pointer list-none items-center justify-between rounded-xl px-3 py-3 font-semibold hover:bg-blue-50">
+              <span>${item.label}</span>
+              <span class="transition group-open:rotate-180">⌄</span>
             </summary>
 
             <div class="ml-3 flex flex-col gap-1 border-l border-slate-100 pl-3 text-[13px] text-slate-600">
@@ -697,7 +974,7 @@ function renderMobileNav() {
       }
 
       return `
-        <a href="${item.href}" class="rounded-xl px-3 py-3 hover:bg-blue-50">
+        <a href="${item.href}" class="rounded-xl px-3 py-3 font-semibold hover:bg-blue-50">
           ${item.label}
         </a>
       `;
@@ -1281,6 +1558,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 2) Above-the-fold init
   renderNavbar();
   initNavbar();
+  initSearchDropdown();
   initHeroSlider();
 
   if (isDetailsPage) {
