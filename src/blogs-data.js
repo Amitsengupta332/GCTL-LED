@@ -5,7 +5,8 @@ const gctlBlogs = [
     category: "Guide",
     date: "May 10, 2026",
     readTime: "5 min read",
-    image: "/images/blog/thumbs/a_wide_modern_tech_showroom_lobby_scene_overal.avif",
+    image:
+      "/images/blog/thumbs/a_wide_modern_tech_showroom_lobby_scene_overal.avif",
     excerpt:
       "Key factors to consider before investing in your next display solution.",
     content: [
@@ -25,7 +26,8 @@ const gctlBlogs = [
     category: "Trends",
     date: "May 22, 2026",
     readTime: "4 min read",
-    image: "/images/blog/thumbs/futuristic_tech_showroom_with_digital_displays.avif",
+    image:
+      "/images/blog/thumbs/futuristic_tech_showroom_with_digital_displays.avif",
     excerpt: "Stay ahead with the latest trends shaping the display industry.",
     content: [
       "Digital signage is becoming smarter, brighter and more interactive. Businesses are using LED displays not only for advertising, but also for customer engagement and brand experience.",
@@ -92,7 +94,8 @@ const gctlBlogs = [
     category: "K-Type Information Kiosk",
     date: "Jun 13, 2026",
     readTime: "4 min read",
-    image: "/images/blog/thumbs/futuristic_corporate_lobby_with_digital_kiosk.avif",
+    image:
+      "/images/blog/thumbs/futuristic_corporate_lobby_with_digital_kiosk.avif",
     excerpt:
       "Explore how K-Type information kiosks improve visitor experience in malls, offices, hospitals and commercial buildings.",
     content: [
@@ -141,7 +144,8 @@ const gctlBlogs = [
     category: "Wall Mount Display",
     date: "Jun 13, 2026",
     readTime: "4 min read",
-    image: "/images/blog/thumbs/modern_showroom_with_abstract_digital_display.avif",
+    image:
+      "/images/blog/thumbs/modern_showroom_with_abstract_digital_display.avif",
     excerpt:
       "A useful guide to wall mounted displays for retail branding, corporate communication, showrooms and indoor signage.",
     content: [
@@ -158,7 +162,8 @@ const gctlBlogs = [
     category: "Portable Signage Poster",
     date: "Jun 13, 2026",
     readTime: "4 min read",
-    image: "/images/blog/thumbs/modern_exhibition_space_with_digital_displays.avif",
+    image:
+      "/images/blog/thumbs/modern_exhibition_space_with_digital_displays.avif",
     excerpt:
       "Learn why portable digital posters are useful for events, pop-up campaigns, retail promotions and flexible branding.",
     content: [
@@ -257,7 +262,8 @@ const gctlBlogs = [
     category: "3D LED Display",
     date: "Jun 13, 2026",
     readTime: "5 min read",
-    image: "/images/blog/thumbs/futuristic_showroom_with_abstract_digital_art.avif",
+    image:
+      "/images/blog/thumbs/futuristic_showroom_with_abstract_digital_art.avif",
     excerpt:
       "Explore how 3D LED displays create high-impact visual experiences for brands, malls and city advertising.",
     content: [
@@ -273,7 +279,8 @@ const gctlBlogs = [
     category: "Cube LED Display",
     date: "Jun 13, 2026",
     readTime: "4 min read",
-    image: "/images/blog/thumbs/futuristic_gallery_with_glowing_digital_cube.avif",
+    image:
+      "/images/blog/thumbs/futuristic_gallery_with_glowing_digital_cube.avif",
     excerpt:
       "Learn how cube LED displays are used for creative branding, exhibitions, showrooms and modern commercial interiors.",
     content: [
@@ -835,43 +842,93 @@ function renderBlogDetails(root, blog) {
 
             ${blogAuthorMeta(blog, true)}
 
-        <div class="sticky top-24 z-20 mt-7 max-w-[430px]">
-  <button
-    type="button"
-    id="blogSpeakBtn"
-    class="group flex w-full items-center gap-4 rounded-[18px] border border-[#dbe8f5] bg-white/95 p-3 text-left shadow-[0_18px_45px_rgba(7,31,77,0.12)] backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-[#0068d9]/60 hover:shadow-[0_24px_60px_rgba(0,104,217,0.16)]"
-    aria-label="Listen to article"
+<div class="sticky top-24 z-20 mt-7">
+  <div
+    id="blogSpeechPlayer"
+    class="w-full max-w-[720px] rounded-[22px] border border-[#dbe8f5] bg-white/95 p-4 shadow-[0_18px_45px_rgba(7,31,77,0.12)] backdrop-blur"
   >
-    <span
-      id="blogSpeechIcon"
-      class="grid h-12 w-12 shrink-0 place-items-center rounded-[14px] bg-gradient-to-br from-[#0068d9] to-[#071f4d] text-[20px] text-white shadow-[0_12px_28px_rgba(0,104,217,0.26)]"
-    >
-      🔊
-    </span>
+    <div class="flex items-center gap-4">
+     <button
+  type="button"
+  id="blogSpeakBtn"
+  class="group grid h-14 w-14 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#0077ff] to-[#0054c8] text-white shadow-[0_14px_34px_rgba(0,104,217,0.35)] ring-4 ring-[#e6f2ff] transition duration-300 hover:scale-105 hover:shadow-[0_18px_42px_rgba(0,104,217,0.42)]"
+  aria-label="Play article audio"
+>
+  <span id="blogSpeechIcon" class="ml-0.5 text-[19px] leading-none">▶</span>
+</button>
 
-    <span class="min-w-0 flex-1">
-      <span
-        id="blogSpeechTitle"
-        class="block text-[14px] font-black text-[#071f4d]"
-      >
-        Listen to Article
-      </span>
+      <div class="min-w-0 flex-1">
+        <div class="mb-2 flex items-center justify-between gap-3">
+          <span
+            id="blogSpeechTitle"
+            class="truncate text-[13px] font-black text-[#071f4d]"
+          >
+            Listen to Article
+          </span>
 
-      <span
-        id="blogSpeechText"
-        class="mt-1 block text-[12px] font-bold leading-5 text-[#6b7f95]"
-      >
-        Click to start reading this blog
-      </span>
-    </span>
+          <span
+            id="blogSpeechTime"
+            class="shrink-0 text-[12px] font-bold text-[#6b7f95]"
+          >
+            0:00 / 0:00
+          </span>
+        </div>
 
-    <span
-      id="blogSpeechBadge"
-      class="rounded-full bg-[#eef6ff] px-3 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-[#0068d9]"
-    >
-      Play
-    </span>
-  </button>
+        <input
+          id="blogSpeechProgress"
+          type="range"
+          min="0"
+          max="100"
+          value="0"
+          class="h-2 w-full cursor-pointer accent-[#0068d9]"
+          aria-label="Article audio progress"
+        />
+
+        <div class="mt-3 flex flex-wrap items-center gap-4">
+          <label class="flex items-center gap-2 text-[12px] font-bold text-[#52657d]">
+            Volume
+            <input
+              id="blogSpeechVolume"
+              type="range"
+              min="0"
+              max="1"
+              step="0.1"
+              value="1"
+              class="w-20 cursor-pointer accent-[#0068d9]"
+            />
+          </label>
+
+          <label class="flex items-center gap-2 text-[12px] font-bold text-[#52657d]">
+            Speed
+            <input
+              id="blogSpeechRate"
+              type="range"
+              min="0.7"
+              max="1.6"
+              step="0.1"
+              value="1"
+              class="w-24 cursor-pointer accent-[#0068d9]"
+            />
+          </label>
+
+          <span
+            id="blogSpeechRateText"
+            class="rounded-full bg-[#eef6ff] px-3 py-1 text-[11px] font-black text-[#0068d9]"
+          >
+            1.0x
+          </span>
+
+          <button
+            type="button"
+            id="blogSpeechStop"
+            class="ml-auto rounded-full border border-[#dbe8f5] px-4 py-2 text-[11px] font-black text-[#071f4d] transition hover:border-[#0068d9] hover:bg-[#eef6ff] hover:text-[#0068d9]"
+          >
+            Stop
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
               <div id="blogSpeechContent" class="mt-8 space-y-6">
@@ -944,77 +1001,387 @@ function renderBlogDetails(root, blog) {
 }
 
 function initBlogSpeech() {
-  const speakBtn = document.getElementById("blogSpeakBtn");
+  const playBtn = document.getElementById("blogSpeakBtn");
+  const playIcon = document.getElementById("blogSpeechIcon");
+  const stopBtn = document.getElementById("blogSpeechStop");
   const speechContent = document.getElementById("blogSpeechContent");
-  const speechIcon = document.getElementById("blogSpeechIcon");
   const speechTitle = document.getElementById("blogSpeechTitle");
-  const speechText = document.getElementById("blogSpeechText");
-  const speechBadge = document.getElementById("blogSpeechBadge");
+  const progressInput = document.getElementById("blogSpeechProgress");
+  const timeText = document.getElementById("blogSpeechTime");
+  const volumeInput = document.getElementById("blogSpeechVolume");
+  const rateInput = document.getElementById("blogSpeechRate");
+  const rateText = document.getElementById("blogSpeechRateText");
 
-  if (!speakBtn || !speechContent) return;
+  if (!playBtn || !speechContent || !progressInput || !timeText) return;
 
-  if (!("speechSynthesis" in window)) {
-    speakBtn.disabled = true;
-    speakBtn.classList.add("cursor-not-allowed", "opacity-60");
+  if (
+    !("speechSynthesis" in window) ||
+    !("SpeechSynthesisUtterance" in window)
+  ) {
+    playBtn.disabled = true;
 
-    if (speechIcon) speechIcon.textContent = "🔇";
-    if (speechTitle) speechTitle.textContent = "Speech Not Supported";
-    if (speechText)
-      speechText.textContent = "Your browser does not support article reading.";
-    if (speechBadge) speechBadge.textContent = "Off";
+    if (playIcon) {
+      playIcon.textContent = "🔇";
+    } else {
+      playBtn.textContent = "🔇";
+    }
+
+    if (speechTitle) {
+      speechTitle.textContent = "Speech not supported";
+    }
 
     return;
   }
 
-  function setIdleState() {
-    speakBtn.classList.remove("border-[#0068d9]", "bg-[#eef6ff]");
-    speakBtn.classList.add("bg-white/95");
+  const articleText = speechContent.innerText.replace(/\s+/g, " ").trim();
 
-    if (speechIcon) speechIcon.textContent = "🔊";
-    if (speechTitle) speechTitle.textContent = "Listen to Article";
-    if (speechText) speechText.textContent = "Click to start reading this blog";
-    if (speechBadge) speechBadge.textContent = "Play";
+  const chunks =
+    articleText
+      .match(/[^.!?]+[.!?]+|[^.!?]+$/g)
+      ?.map((item) => item.trim())
+      .filter(Boolean) || [];
+
+  if (!chunks.length) return;
+
+  let currentChunkIndex = 0;
+  let currentUtterance = null;
+  let isPlaying = false;
+  let isPaused = false;
+  let isSeeking = false;
+  let progressTimer = null;
+  let chunkStartedAt = 0;
+  let chunkPlayedSeconds = 0;
+  let speechRunId = 0;
+
+  const WORDS_PER_MINUTE = 170;
+
+  function getRate() {
+    return Number(rateInput?.value || 1);
   }
 
-  function setPlayingState() {
-    speakBtn.classList.remove("bg-white/95");
-    speakBtn.classList.add("border-[#0068d9]", "bg-[#eef6ff]");
-
-    if (speechIcon) speechIcon.textContent = "■";
-    if (speechTitle) speechTitle.textContent = "Reading Article";
-    if (speechText) speechText.textContent = "Click again to stop reading";
-    if (speechBadge) speechBadge.textContent = "Stop";
+  function getVolume() {
+    return Number(volumeInput?.value || 1);
   }
 
-  speakBtn.addEventListener("click", () => {
-    if (window.speechSynthesis.speaking || window.speechSynthesis.paused) {
-      window.speechSynthesis.cancel();
-      setIdleState();
+  function getChunkSeconds(chunk) {
+    const words = chunk.split(/\s+/).filter(Boolean).length;
+    const seconds = (words / WORDS_PER_MINUTE) * 60;
+
+    return Math.max(2, seconds / getRate());
+  }
+
+  function getTotalSeconds() {
+    return chunks.reduce((total, chunk) => total + getChunkSeconds(chunk), 0);
+  }
+
+  function getSecondsBeforeChunk(index) {
+    return chunks
+      .slice(0, index)
+      .reduce((total, chunk) => total + getChunkSeconds(chunk), 0);
+  }
+
+  function getCurrentChunkElapsed() {
+    if (!isPlaying || isPaused) return chunkPlayedSeconds;
+
+    return chunkPlayedSeconds + (Date.now() - chunkStartedAt) / 1000;
+  }
+
+  function getCurrentSeconds() {
+    const before = getSecondsBeforeChunk(currentChunkIndex);
+    const current = Math.min(
+      getCurrentChunkElapsed(),
+      getChunkSeconds(chunks[currentChunkIndex] || ""),
+    );
+
+    return before + current;
+  }
+
+  function formatTime(seconds) {
+    const safeSeconds = Math.max(0, Math.floor(seconds || 0));
+    const mins = Math.floor(safeSeconds / 60);
+    const secs = safeSeconds % 60;
+
+    return `${mins}:${String(secs).padStart(2, "0")}`;
+  }
+
+  function updateProgressUI() {
+    const total = getTotalSeconds();
+    const current = getCurrentSeconds();
+    const percent = total ? Math.min(100, (current / total) * 100) : 0;
+
+    if (!isSeeking) {
+      progressInput.value = String(percent);
+    }
+
+    timeText.textContent = `${formatTime(current)} / ${formatTime(total)}`;
+
+    if (rateText) {
+      rateText.textContent = `${getRate().toFixed(1)}x`;
+    }
+  }
+
+  function setPlayIcon(icon) {
+    if (playIcon) {
+      playIcon.textContent = icon;
+
+      if (icon === "▶") {
+        playIcon.className = "ml-0.5 text-[19px] leading-none";
+      } else {
+        playIcon.className = "text-[18px] leading-none";
+      }
+
       return;
     }
 
-    const text = speechContent.innerText.replace(/\s+/g, " ").trim();
+    playBtn.textContent = icon;
+  }
 
-    if (!text) return;
+  function setIdleUI() {
+    setPlayIcon("▶");
 
-    const utterance = new SpeechSynthesisUtterance(text);
+    if (speechTitle) {
+      speechTitle.textContent = "Listen to Article";
+    }
+  }
 
-    utterance.lang = "en-US";
-    utterance.rate = 0.92;
-    utterance.pitch = 1;
+  function setPlayingUI() {
+    setPlayIcon("❚❚");
 
-    utterance.onend = setIdleState;
-    utterance.onerror = setIdleState;
+    if (speechTitle) {
+      speechTitle.textContent = "Reading Article";
+    }
+  }
+
+  function setPausedUI() {
+    setPlayIcon("▶");
+
+    if (speechTitle) {
+      speechTitle.textContent = "Paused";
+    }
+  }
+
+  function startProgressTimer() {
+    stopProgressTimer();
+
+    progressTimer = window.setInterval(updateProgressUI, 250);
+  }
+
+  function stopProgressTimer() {
+    if (progressTimer) {
+      window.clearInterval(progressTimer);
+      progressTimer = null;
+    }
+  }
+
+  function resetSpeech() {
+    speechRunId += 1;
+    window.speechSynthesis.cancel();
+
+    currentUtterance = null;
+    isPlaying = false;
+    isPaused = false;
+    isSeeking = false;
+    chunkPlayedSeconds = 0;
+    chunkStartedAt = 0;
+    currentChunkIndex = 0;
+
+    stopProgressTimer();
+    setIdleUI();
+    updateProgressUI();
+  }
+
+  function finishSpeech() {
+    speechRunId += 1;
+    window.speechSynthesis.cancel();
+
+    currentUtterance = null;
+    isPlaying = false;
+    isPaused = false;
+    isSeeking = false;
+    chunkPlayedSeconds = 0;
+    chunkStartedAt = 0;
+    currentChunkIndex = 0;
+
+    stopProgressTimer();
+    setIdleUI();
+
+    const total = getTotalSeconds();
+    progressInput.value = "100";
+    timeText.textContent = `${formatTime(total)} / ${formatTime(total)}`;
+  }
+
+  function speakChunk(index) {
+    if (index >= chunks.length) {
+      finishSpeech();
+      return;
+    }
+
+    speechRunId += 1;
+    const currentRunId = speechRunId;
 
     window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
 
-    setPlayingState();
+    currentChunkIndex = index;
+    chunkPlayedSeconds = 0;
+    chunkStartedAt = Date.now();
+
+    currentUtterance = new SpeechSynthesisUtterance(chunks[currentChunkIndex]);
+    currentUtterance.lang = "en-US";
+    currentUtterance.rate = getRate();
+    currentUtterance.pitch = 1;
+    currentUtterance.volume = getVolume();
+
+    currentUtterance.onend = () => {
+      if (currentRunId !== speechRunId) return;
+      if (!isPlaying || isPaused) return;
+
+      speakChunk(currentChunkIndex + 1);
+    };
+
+    currentUtterance.onerror = () => {
+      if (currentRunId !== speechRunId) return;
+
+      resetSpeech();
+    };
+
+    window.speechSynthesis.speak(currentUtterance);
+
+    isPlaying = true;
+    isPaused = false;
+
+    setPlayingUI();
+    startProgressTimer();
+    updateProgressUI();
+  }
+
+  function pauseSpeech() {
+    if (!isPlaying || isPaused) return;
+
+    chunkPlayedSeconds += (Date.now() - chunkStartedAt) / 1000;
+
+    window.speechSynthesis.pause();
+
+    isPaused = true;
+    setPausedUI();
+    updateProgressUI();
+  }
+
+  function resumeSpeech() {
+    if (!isPlaying || !isPaused) return;
+
+    chunkStartedAt = Date.now();
+
+    window.speechSynthesis.resume();
+
+    isPaused = false;
+    setPlayingUI();
+    updateProgressUI();
+  }
+
+  function getChunkIndexFromPercent(percent) {
+    const totalSeconds = getTotalSeconds();
+    const targetSeconds = (Number(percent) / 100) * totalSeconds;
+
+    let runningSeconds = 0;
+
+    for (let i = 0; i < chunks.length; i += 1) {
+      runningSeconds += getChunkSeconds(chunks[i]);
+
+      if (runningSeconds >= targetSeconds) {
+        return i;
+      }
+    }
+
+    return chunks.length - 1;
+  }
+
+  playBtn.addEventListener("click", () => {
+    if (!isPlaying) {
+      speakChunk(currentChunkIndex);
+      return;
+    }
+
+    if (isPaused) {
+      resumeSpeech();
+      return;
+    }
+
+    pauseSpeech();
+  });
+
+  stopBtn?.addEventListener("click", resetSpeech);
+
+  progressInput.addEventListener("input", () => {
+    isSeeking = true;
+
+    const total = getTotalSeconds();
+    const targetSeconds = (Number(progressInput.value) / 100) * total;
+
+    timeText.textContent = `${formatTime(targetSeconds)} / ${formatTime(total)}`;
+  });
+
+  progressInput.addEventListener("change", () => {
+    const targetIndex = getChunkIndexFromPercent(progressInput.value);
+    const shouldContinuePlaying = isPlaying && !isPaused;
+    const wasPaused = isPlaying && isPaused;
+
+    currentChunkIndex = targetIndex;
+    chunkPlayedSeconds = 0;
+    chunkStartedAt = 0;
+    isSeeking = false;
+
+    if (shouldContinuePlaying) {
+      speakChunk(currentChunkIndex);
+      return;
+    }
+
+    if (wasPaused) {
+      speechRunId += 1;
+      window.speechSynthesis.cancel();
+
+      currentUtterance = null;
+      isPlaying = false;
+      isPaused = false;
+
+      setPausedUI();
+    }
+
+    updateProgressUI();
+  });
+
+  rateInput?.addEventListener("input", () => {
+    if (currentUtterance) {
+      currentUtterance.rate = getRate();
+    }
+
+    updateProgressUI();
+
+    /*
+      এখানে speakChunk() call করা যাবে না।
+      তাই speed change করলে audio restart হবে না।
+      Browser speech API current sentence মাঝখানে speed fully apply নাও করতে পারে,
+      কিন্তু next sentence/chunk থেকে new speed apply হবে।
+    */
+  });
+
+  volumeInput?.addEventListener("input", () => {
+    if (currentUtterance) {
+      currentUtterance.volume = getVolume();
+    }
+
+    updateProgressUI();
+
+    /*
+      এখানে speakChunk() call করা যাবে না।
+      তাই volume change করলে audio restart হবে না।
+    */
   });
 
   window.addEventListener("beforeunload", () => {
     window.speechSynthesis.cancel();
   });
+
+  updateProgressUI();
 }
 
 function initBlogsDetailsPage() {
