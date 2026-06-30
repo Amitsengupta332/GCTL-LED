@@ -30,6 +30,10 @@ function cleanRoutes() {
           req.url = "/blog-details.html";
         }
 
+        if (req.url && req.url.startsWith("/videos/")) {
+          req.url = "/video-details.html";
+        }
+
         if (req.url && req.url.startsWith("/project-details/")) {
           req.url = "/project-details.html";
         }
@@ -46,6 +50,10 @@ function cleanRoutes() {
       server.middlewares.use((req, res, next) => {
         if (req.url && req.url.startsWith("/blogs/")) {
           req.url = "/blog-details.html";
+        }
+
+        if (req.url && req.url.startsWith("/videos/")) {
+          req.url = "/video-details.html";
         }
 
         if (req.url && req.url.startsWith("/project-details/")) {

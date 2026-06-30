@@ -1,5 +1,6 @@
 import "./style.css";
 // import "./blogs/blogs-data.js";
+import "./videos-data.js";
 import { initProductSections } from "./products/product-sections.js";
 import { initProductDetails } from "./products/product-details.js";
 import { navItems } from "./data/nav-data.js";
@@ -1293,43 +1294,385 @@ function initHeroSlider() {
 }
 
 function initTestimonials() {
-  const track = document.querySelector("[data-testimonial-track]");
-  if (!track) return;
+  const root = document.querySelector("[data-gctl-reviews]");
+  if (!root) return;
 
-  const nextButtons = document.querySelectorAll("[data-testimonial-next]");
-  const prevButtons = document.querySelectorAll("[data-testimonial-prev]");
+  if (root.dataset.testimonialsReady === "true") return;
+  root.dataset.testimonialsReady = "true";
 
-  function slideNext() {
-    const width = track.clientWidth;
-    const maxScroll = track.scrollWidth - track.clientWidth;
+  const stage = root.querySelector("[data-review-stage]");
+  const dotsWrapper = root.querySelector("[data-review-dots]");
+  const prevButtons = root.querySelectorAll("[data-review-prev]");
+  const nextButtons = root.querySelectorAll("[data-review-next]");
 
-    if (track.scrollLeft >= maxScroll - 10) {
-      track.scrollTo({ left: 0, behavior: "smooth" });
-    } else {
-      track.scrollBy({ left: width, behavior: "smooth" });
+  if (!stage || !dotsWrapper) return;
+
+  const reviews = [
+    {
+      name: "Michael Thompson",
+      role: "Project Director",
+      country: "United States",
+      flag: "🇺🇸",
+      avatar: "/images/testimonials/client-01.avif",
+      text: "GCTL supported our commercial LED display project with clear planning, professional communication, and reliable installation. The screen quality, brightness, and overall finishing helped us deliver a premium visual experience for our business environment.",
+    },
+    {
+      name: "Emily Carter",
+      role: "Head of Event Production",
+      country: "The UK",
+      flag: "🇬🇧",
+      avatar: "/images/testimonials/client-02.avif",
+      text: "For our event productions, we needed LED screens that were easy to assemble, stable during long programs, and visually powerful. GCTL provided a dependable solution with smooth performance and responsive support whenever our team needed help.",
+    },
+    {
+      name: "David Trem",
+      role: "Creative Director",
+      country: "The US",
+      flag: "🇺🇸",
+      avatar: "/images/testimonials/client-03.avif",
+      text: "Our advertising campaigns depend on displays that look sharp from every angle. GCTL helped us choose the right indoor and outdoor LED solutions, and the final result improved both campaign visibility and client satisfaction.",
+    },
+    {
+      name: "James Will",
+      role: "Technical Director",
+      country: "Australia",
+      flag: "🇦🇺",
+      avatar: "/images/testimonials/client-04.avif",
+      text: "As a system integration team, we care about stability, compatibility, and support. GCTL provided LED display hardware that integrated smoothly with our control system and reduced installation complexity for our technical team.",
+    },
+    {
+      name: "Lisa Becky",
+      role: "Retail Operations Manager",
+      country: "Germany",
+      flag: "🇩🇪",
+      avatar: "/images/testimonials/client-05.avif",
+      text: "Our retail locations needed clear LED displays for product promotion and brand presentation. GCTL understood our store requirements, suggested suitable screen sizes, and completed installation with very little disruption to daily operations.",
+    },
+    {
+      name: "Pierre Dubo",
+      role: "Senior Architect",
+      country: "France",
+      flag: "🇫🇷",
+      avatar: "/images/testimonials/client-06.avif",
+      text: "We needed LED screens that matched a clean architectural interior without looking bulky. GCTL provided a slim, modern display solution that blended nicely with our design concept and delivered excellent visual quality.",
+    },
+    {
+      name: "Khalid Rahman",
+      role: "CEO",
+      country: "Qatar",
+      flag: "🇶🇦",
+      avatar: "/images/testimonials/client-07.avif",
+      text: "For outdoor advertising, brightness and durability are extremely important. GCTL guided us through the right LED display options and delivered a solution that performs reliably in demanding outdoor conditions.",
+    },
+    {
+      name: "Carlos RL",
+      role: "Event Technical Manager",
+      country: "Spain",
+      flag: "🇪🇸",
+      avatar: "/images/testimonials/client-08.avif",
+      text: "Our event team needed lightweight LED equipment that could be installed quickly and perform smoothly during live shows. GCTL provided a practical rental display solution with excellent refresh rate and strong visual impact.",
+    },
+    {
+      name: "Benjamin Tanni",
+      role: "Project Manager",
+      country: "Singapore",
+      flag: "🇸🇬",
+      avatar: "/images/testimonials/client-09.avif",
+      text: "GCTL helped us complete multiple display projects on a tight schedule. Their team was organized, supportive, and focused on practical solutions, which made the whole process much easier for our project team.",
+    },
+    {
+      name: "Mohammad AL",
+      role: "Technical Director",
+      country: "Saudi Arabia",
+      flag: "🇸🇦",
+      avatar: "/images/testimonials/client-10.avif",
+      text: "We needed dependable LED display products with clear technical guidance and after-sales support. GCTL provided a balanced solution with good performance, practical installation advice, and reliable communication.",
+    },
+    {
+      name: "John Mkhize",
+      role: "Network Operations Manager",
+      country: "South Africa",
+      flag: "🇿🇦",
+      avatar: "/images/testimonials/client-11.avif",
+      text: "Our outdoor billboard network requires screens that can stay bright and stable throughout changing weather. GCTL provided a durable LED display solution that supports our business needs with consistent performance.",
+    },
+    {
+      name: "Abdullah Ahmed",
+      role: "Chief Event Designer",
+      country: "UAE",
+      flag: "🇦🇪",
+      avatar: "/images/testimonials/client-12.avif",
+      text: "For large events and entertainment projects, visual performance matters a lot. GCTL delivered LED displays with strong brightness, solid structure, and helpful technical support during planning and installation.",
+    },
+  ];
+
+  let currentIndex = 0;
+  let autoTimer = null;
+  let touchStartX = 0;
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  function getInitials(name = "") {
+    return name
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((part) => part[0])
+      .slice(0, 2)
+      .join("")
+      .toUpperCase();
+  }
+
+  function getWrappedDiff(index) {
+    const total = reviews.length;
+    let diff = (index - currentIndex + total) % total;
+
+    if (diff > total / 2) {
+      diff -= total;
+    }
+
+    return diff;
+  }
+
+  function createReviewCard(review, index) {
+    const card = document.createElement("article");
+
+    card.dataset.reviewCard = String(index);
+    card.className =
+      "absolute left-1/2 top-0 w-full origin-center overflow-hidden rounded-[14px] border border-slate-200 bg-white shadow-[0_18px_55px_rgba(15,23,42,0.13)] transition-[opacity,transform,filter] duration-500 ease-out";
+
+    card.innerHTML = `
+      <div class="grid gap-5 p-4 sm:p-6 md:grid-cols-[216px_minmax(0,1fr)] md:gap-9">
+        <div class="relative h-[300px] overflow-hidden rounded-[6px] bg-gradient-to-br from-slate-100 to-slate-300 md:h-[284px]">
+          <img
+            src="${review.avatar}"
+            alt="${escapeHtml(review.name)}"
+            loading="${index === 0 ? "eager" : "lazy"}"
+            decoding="async"
+            class="h-full w-full object-cover"
+          />
+
+          <div
+            data-avatar-fallback
+            class="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-slate-100 to-slate-300"
+          >
+            <span class="flex h-20 w-20 items-center justify-center rounded-full bg-[#0057d8] text-[24px] font-bold text-white">
+              ${escapeHtml(getInitials(review.name))}
+            </span>
+          </div>
+        </div>
+
+        <div class="flex min-w-0 flex-col justify-center md:py-1">
+          <div class="text-[28px] font-black leading-none text-[#df1633]">
+            “
+          </div>
+
+          <p class="mt-2 text-[12px] leading-[2.05] text-slate-600 sm:text-[13px]">
+            ${escapeHtml(review.text)}
+          </p>
+
+          <div class="mt-3 flex items-end justify-between gap-3">
+            <div>
+              <h3 class="text-[14px] font-extrabold leading-tight text-[#0057d8]">
+                ${escapeHtml(review.name)}
+              </h3>
+
+              <p class="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                ${escapeHtml(review.role)}
+              </p>
+            </div>
+
+            <div class="flex shrink-0 items-center gap-2 text-[13px] text-slate-700">
+              <span class="text-[14px]">${review.flag}</span>
+              <span>${escapeHtml(review.country)}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const img = card.querySelector("img");
+    const fallback = card.querySelector("[data-avatar-fallback]");
+
+    img?.addEventListener("error", () => {
+      img.classList.add("hidden");
+      fallback?.classList.remove("hidden");
+    });
+
+    return card;
+  }
+
+  function createDot(index) {
+    const dot = document.createElement("button");
+
+    dot.type = "button";
+    dot.setAttribute("aria-label", `Go to review ${index + 1}`);
+    dot.className =
+      "h-2 w-2 rounded-full bg-slate-400/70 transition-all duration-300 hover:bg-[#df1633]";
+
+    dot.addEventListener("click", () => {
+      goToReview(index);
+      restartAutoSlide();
+    });
+
+    return dot;
+  }
+
+  stage.innerHTML = "";
+  dotsWrapper.innerHTML = "";
+
+  const cards = reviews.map((review, index) => {
+    const card = createReviewCard(review, index);
+    stage.appendChild(card);
+    return card;
+  });
+
+  const dots = reviews.map((_, index) => {
+    const dot = createDot(index);
+    dotsWrapper.appendChild(dot);
+    return dot;
+  });
+
+function updateSlider() {
+    const isSmallScreen = window.matchMedia("(max-width: 639px)").matches;
+
+    cards.forEach((card, index) => {
+      const diff = getWrappedDiff(index);
+      const absDiff = Math.abs(diff);
+
+      let opacity = 0;
+      let scale = 0.9;
+      let x = 0;
+      let rotate = 0;
+      let zIndex = 0;
+
+      if (absDiff === 0) {
+        opacity = 1;
+        scale = 1;
+        x = 0;
+        rotate = 0;
+        zIndex = 30;
+      } else if (absDiff === 1) {
+        opacity = 0.6;
+        scale = 0.95;
+        x = diff > 0 ? (isSmallScreen ? 12 : 35) : isSmallScreen ? -12 : -35;
+        rotate = diff > 0 ? 2 : -2;
+        zIndex = 20;
+      } else if (absDiff === 2) {
+        opacity = 0.25;
+        scale = 0.90;
+        x = diff > 0 ? (isSmallScreen ? 24 : 65) : isSmallScreen ? -24 : -65;
+        rotate = diff > 0 ? 4 : -4;
+        zIndex = 10;
+      }
+
+      card.style.opacity = String(opacity);
+      card.style.zIndex = String(zIndex);
+      card.style.pointerEvents = absDiff === 0 ? "auto" : "none";
+      // Removed heavy blur filter for better low-end mobile hardware scrolling performance
+      card.style.transform = `translateX(calc(-50% + ${x}px)) scale(${scale}) rotate(${rotate}deg)`;
+
+      card.setAttribute("aria-hidden", absDiff === 0 ? "false" : "true");
+    });
+
+    dots.forEach((dot, index) => {
+      const isActive = index === currentIndex;
+      dot.className = isActive
+        ? "h-2 w-5 rounded-full bg-[#df1633] transition-all duration-300"
+        : "h-2 w-2 rounded-full bg-slate-400/70 transition-all duration-300 hover:bg-[#df1633]";
+      dot.setAttribute("aria-current", isActive ? "true" : "false");
+    });
+  }
+
+  function goToReview(index) {
+    currentIndex = (index + reviews.length) % reviews.length;
+    updateSlider();
+  }
+
+  function nextReview() {
+    goToReview(currentIndex + 1);
+  }
+
+  function prevReview() {
+    goToReview(currentIndex - 1);
+  }
+
+  function startAutoSlide() {
+    if (prefersReducedMotion) return;
+
+    stopAutoSlide();
+    autoTimer = setInterval(nextReview, 5200);
+  }
+
+  function stopAutoSlide() {
+    if (autoTimer) {
+      clearInterval(autoTimer);
+      autoTimer = null;
     }
   }
 
-  function slidePrev() {
-    const width = track.clientWidth;
-
-    if (track.scrollLeft <= 10) {
-      track.scrollTo({
-        left: track.scrollWidth - track.clientWidth,
-        behavior: "smooth",
-      });
-    } else {
-      track.scrollBy({ left: -width, behavior: "smooth" });
-    }
+  function restartAutoSlide() {
+    stopAutoSlide();
+    startAutoSlide();
   }
 
   nextButtons.forEach((button) => {
-    button.addEventListener("click", slideNext);
+    button.addEventListener("click", () => {
+      nextReview();
+      restartAutoSlide();
+    });
   });
 
   prevButtons.forEach((button) => {
-    button.addEventListener("click", slidePrev);
+    button.addEventListener("click", () => {
+      prevReview();
+      restartAutoSlide();
+    });
   });
+
+  stage.addEventListener(
+    "touchstart",
+    (event) => {
+      touchStartX = event.touches[0]?.clientX || 0;
+    },
+    { passive: true },
+  );
+
+  stage.addEventListener(
+    "touchend",
+    (event) => {
+      const touchEndX = event.changedTouches[0]?.clientX || 0;
+      const diff = touchStartX - touchEndX;
+
+      if (Math.abs(diff) < 45) return;
+
+      if (diff > 0) {
+        nextReview();
+      } else {
+        prevReview();
+      }
+
+      restartAutoSlide();
+    },
+    { passive: true },
+  );
+
+  root.addEventListener("mouseenter", stopAutoSlide);
+  root.addEventListener("mouseleave", startAutoSlide);
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopAutoSlide();
+    } else {
+      startAutoSlide();
+    }
+  });
+
+  window.addEventListener("resize", updateSlider);
+
+  updateSlider();
+  startAutoSlide();
 }
 
 function initProjectsSlider() {
@@ -1519,6 +1862,28 @@ function mountProductDetailsLayout() {
   `;
 }
 
+function isVideoDetailsRoute() {
+  return window.location.pathname.startsWith("/videos/");
+}
+
+function mountVideoDetailsLayout() {
+  if (document.querySelector("#videosDetailsRoot")) return;
+
+  document.body.innerHTML = `
+    <div
+      data-component="/components/navbar.html"
+      data-critical="true"
+      class="min-h-[102px] lg:min-h-[110px]"
+    ></div>
+
+    <main>
+      <div data-component="/pages/videos-details.html"></div>
+    </main>
+
+    <div data-component="/components/footer.html"></div>
+  `;
+}
+
 // document.addEventListener("DOMContentLoaded", async () => {
 //   const isDetailsPage = isProductDetailsRoute();
 
@@ -1546,10 +1911,15 @@ function mountProductDetailsLayout() {
 // });
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const isDetailsPage = isProductDetailsRoute();
+  const isProductDetailsPage = isProductDetailsRoute();
+  const isVideoDetailsPage = isVideoDetailsRoute();
 
-  if (isDetailsPage) {
+  if (isProductDetailsPage) {
     mountProductDetailsLayout();
+  }
+
+  if (isVideoDetailsPage) {
+    mountVideoDetailsLayout();
   }
 
   // 1) Navbar + Hero first, same time
@@ -1561,9 +1931,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   initSearchDropdown();
   initHeroSlider();
 
-  if (isDetailsPage) {
+  if (isProductDetailsPage) {
     initProductDetails();
 
+    loadNormalComponentsWhenIdle(() => {
+      initCurrentYear();
+    });
+
+    return;
+  }
+
+  if (isVideoDetailsPage) {
     loadNormalComponentsWhenIdle(() => {
       initCurrentYear();
     });
