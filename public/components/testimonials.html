@@ -1,57 +1,66 @@
 <section
   id="customerReviews"
   data-gctl-reviews
-  class="relative overflow-hidden bg-gradient-to-b from-[#f7faff] via-[#edf5ff] to-[#d9e8ff] py-12 sm:py-16"
+  class="relative overflow-hidden bg-gradient-to-b from-[#f7faff] via-[#edf5ff] to-[#d9e8ff] py-10 sm:py-14"
 >
   <div class="mx-auto max-w-[1320px] px-4 sm:px-6 lg:px-8">
-    <h2 class="text-center text-[26px] font-black uppercase tracking-wider text-slate-900 sm:text-[32px]">
+    <h2
+      class="text-center text-[25px] font-black uppercase tracking-[0.04em] text-slate-900 sm:text-[32px]"
+    >
       Customer Reviews
     </h2>
 
-    <div class="relative mt-10 min-h-[580px] sm:min-h-[440px] md:min-h-[380px]">
+    <div class="relative mt-8 min-h-[760px] sm:min-h-[470px] md:min-h-[420px]">
+      <!-- Desktop Previous -->
       <button
         type="button"
         data-review-prev
         aria-label="Previous review"
-        class="absolute left-0 top-[40%] z-40 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[22px] font-bold text-slate-800 shadow-md transition hover:bg-[#0057d8] hover:text-white md:flex lg:left-[4%] xl:left-[8%]"
+        class="absolute left-1 top-[38%] z-50 hidden h-10 w-10 -translate-y-1/2 items-center justify-center bg-white text-[24px] font-black text-slate-800 shadow-md transition hover:bg-[#0057d8] hover:text-white md:flex lg:left-[7%] xl:left-[10%]"
       >
-        ‹
+        ←
       </button>
 
+      <!-- Desktop Next -->
       <button
         type="button"
         data-review-next
         aria-label="Next review"
-        class="absolute right-0 top-[40%] z-40 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[22px] font-bold text-slate-800 shadow-md transition hover:bg-[#0057d8] hover:text-white md:flex lg:right-[4%] xl:right-[8%]"
+        class="absolute right-1 top-[38%] z-50 hidden h-10 w-10 -translate-y-1/2 items-center justify-center bg-white text-[24px] font-black text-slate-800 shadow-md transition hover:bg-[#0057d8] hover:text-white md:flex lg:right-[7%] xl:right-[10%]"
       >
-        ›
+        →
       </button>
 
+      <!-- Slider Stage -->
       <div
         data-review-stage
-        class="relative z-20 mx-auto min-h-[480px] sm:min-h-[340px] max-w-[760px]"
+        class="relative z-20 mx-auto min-h-[650px] w-full max-w-[720px] sm:min-h-[360px]"
       ></div>
 
-      <div class="mt-8 flex justify-center gap-4 md:hidden">
+      <!-- Mobile Buttons -->
+      <div class="mt-5 flex justify-center gap-3 md:hidden">
         <button
           type="button"
           data-review-prev
-          class="flex h-10 w-12 items-center justify-center rounded-lg bg-white text-[22px] font-bold text-slate-800 shadow-sm border border-slate-200"
+          aria-label="Previous review"
+          class="flex h-10 w-12 items-center justify-center bg-white text-[24px] font-black text-slate-800 shadow-md transition hover:bg-[#0057d8] hover:text-white"
         >
-          ‹
+          ←
         </button>
+
         <button
           type="button"
           data-review-next
-          class="flex h-10 w-12 items-center justify-center rounded-lg bg-white text-[22px] font-bold text-slate-800 shadow-sm border border-slate-200"
+          aria-label="Next review"
+          class="flex h-10 w-12 items-center justify-center bg-white text-[24px] font-black text-slate-800 shadow-md transition hover:bg-[#0057d8] hover:text-white"
         >
-          ›
+          →
         </button>
       </div>
 
       <div
         data-review-dots
-        class="mt-6 flex items-center justify-center gap-2.5"
+        class="mt-6 flex flex-wrap items-center justify-center gap-2.5"
       ></div>
     </div>
   </div>

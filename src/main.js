@@ -1440,57 +1440,57 @@ function initTestimonials() {
 
     card.dataset.reviewCard = String(index);
     card.className =
-      "absolute left-1/2 top-0 w-full origin-center overflow-hidden rounded-[14px] border border-slate-200 bg-white shadow-[0_18px_55px_rgba(15,23,42,0.13)] transition-[opacity,transform,filter] duration-500 ease-out";
+      "absolute left-1/2 top-0 w-[calc(100%-14px)] origin-center overflow-hidden rounded-[14px] border border-slate-200 bg-white shadow-[0_18px_55px_rgba(15,23,42,0.13)] transition-[opacity,transform] duration-500 ease-out sm:w-full";
 
     card.innerHTML = `
-      <div class="grid gap-5 p-4 sm:p-6 md:grid-cols-[216px_minmax(0,1fr)] md:gap-9">
-        <div class="relative h-[300px] overflow-hidden rounded-[6px] bg-gradient-to-br from-slate-100 to-slate-300 md:h-[284px]">
-          <img
-            src="${review.avatar}"
-            alt="${escapeHtml(review.name)}"
-            loading="${index === 0 ? "eager" : "lazy"}"
-            decoding="async"
-            class="h-full w-full object-cover"
-          />
+    <div class="grid gap-5 p-4 sm:p-6 md:grid-cols-[216px_minmax(0,1fr)] md:gap-9">
+      <div class="relative h-[330px] overflow-hidden rounded-[6px] bg-gradient-to-br from-slate-100 via-slate-200 to-slate-300 sm:h-[284px]">
+        <img
+          src="${review.avatar}"
+          alt="${escapeHtml(review.name)}"
+          loading="${index === 0 ? "eager" : "lazy"}"
+          decoding="async"
+          class="h-full w-full object-cover object-[center_top]"
+        />
 
-          <div
-            data-avatar-fallback
-            class="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-slate-100 to-slate-300"
-          >
-            <span class="flex h-20 w-20 items-center justify-center rounded-full bg-[#0057d8] text-[24px] font-bold text-white">
-              ${escapeHtml(getInitials(review.name))}
-            </span>
-          </div>
+        <div
+          data-avatar-fallback
+          class="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-slate-100 via-slate-200 to-slate-300"
+        >
+          <span class="flex h-24 w-24 items-center justify-center rounded-full bg-[#0057d8] text-[28px] font-black text-white shadow-lg">
+            ${escapeHtml(getInitials(review.name))}
+          </span>
+        </div>
+      </div>
+
+      <div class="flex min-w-0 flex-col justify-center md:py-1">
+        <div class="text-[30px] font-black leading-none text-[#df1633]">
+          “
         </div>
 
-        <div class="flex min-w-0 flex-col justify-center md:py-1">
-          <div class="text-[28px] font-black leading-none text-[#df1633]">
-            “
+        <p class="mt-2 text-[12px] leading-[1.9] text-slate-600 sm:text-[13px] sm:leading-[2.05]">
+          ${escapeHtml(review.text)}
+        </p>
+
+        <div class="mt-4 flex items-end justify-between gap-3">
+          <div>
+            <h3 class="text-[14px] font-extrabold leading-tight text-[#0057d8]">
+              ${escapeHtml(review.name)}
+            </h3>
+
+            <p class="mt-1 text-[10px] font-semibold uppercase tracking-[0.13em] text-slate-500 sm:text-[11px]">
+              ${escapeHtml(review.role)}
+            </p>
           </div>
 
-          <p class="mt-2 text-[12px] leading-[2.05] text-slate-600 sm:text-[13px]">
-            ${escapeHtml(review.text)}
-          </p>
-
-          <div class="mt-3 flex items-end justify-between gap-3">
-            <div>
-              <h3 class="text-[14px] font-extrabold leading-tight text-[#0057d8]">
-                ${escapeHtml(review.name)}
-              </h3>
-
-              <p class="mt-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-                ${escapeHtml(review.role)}
-              </p>
-            </div>
-
-            <div class="flex shrink-0 items-center gap-2 text-[13px] text-slate-700">
-              <span class="text-[14px]">${review.flag}</span>
-              <span>${escapeHtml(review.country)}</span>
-            </div>
+          <div class="flex shrink-0 items-center gap-1.5 text-[12px] text-slate-700 sm:text-[13px]">
+            <span class="text-[14px]">${review.flag}</span>
+            <span>${escapeHtml(review.country)}</span>
           </div>
         </div>
       </div>
-    `;
+    </div>
+  `;
 
     const img = card.querySelector("img");
     const fallback = card.querySelector("[data-avatar-fallback]");
@@ -1498,6 +1498,7 @@ function initTestimonials() {
     img?.addEventListener("error", () => {
       img.classList.add("hidden");
       fallback?.classList.remove("hidden");
+      fallback?.classList.add("flex");
     });
 
     return card;
@@ -1534,7 +1535,7 @@ function initTestimonials() {
     return dot;
   });
 
-function updateSlider() {
+  function updateSlider() {
     const isSmallScreen = window.matchMedia("(max-width: 639px)").matches;
 
     cards.forEach((card, index) => {
@@ -1542,7 +1543,7 @@ function updateSlider() {
       const absDiff = Math.abs(diff);
 
       let opacity = 0;
-      let scale = 0.9;
+      let scale = 0.88;
       let x = 0;
       let rotate = 0;
       let zIndex = 0;
@@ -1554,15 +1555,15 @@ function updateSlider() {
         rotate = 0;
         zIndex = 30;
       } else if (absDiff === 1) {
-        opacity = 0.6;
-        scale = 0.95;
-        x = diff > 0 ? (isSmallScreen ? 12 : 35) : isSmallScreen ? -12 : -35;
+        opacity = isSmallScreen ? 0.18 : 0.55;
+        scale = isSmallScreen ? 0.97 : 0.95;
+        x = diff > 0 ? (isSmallScreen ? 10 : 38) : isSmallScreen ? -10 : -38;
         rotate = diff > 0 ? 2 : -2;
         zIndex = 20;
       } else if (absDiff === 2) {
-        opacity = 0.25;
-        scale = 0.90;
-        x = diff > 0 ? (isSmallScreen ? 24 : 65) : isSmallScreen ? -24 : -65;
+        opacity = isSmallScreen ? 0 : 0.25;
+        scale = 0.9;
+        x = diff > 0 ? 68 : -68;
         rotate = diff > 0 ? 4 : -4;
         zIndex = 10;
       }
@@ -1570,7 +1571,6 @@ function updateSlider() {
       card.style.opacity = String(opacity);
       card.style.zIndex = String(zIndex);
       card.style.pointerEvents = absDiff === 0 ? "auto" : "none";
-      // Removed heavy blur filter for better low-end mobile hardware scrolling performance
       card.style.transform = `translateX(calc(-50% + ${x}px)) scale(${scale}) rotate(${rotate}deg)`;
 
       card.setAttribute("aria-hidden", absDiff === 0 ? "false" : "true");
@@ -1578,9 +1578,11 @@ function updateSlider() {
 
     dots.forEach((dot, index) => {
       const isActive = index === currentIndex;
+
       dot.className = isActive
         ? "h-2 w-5 rounded-full bg-[#df1633] transition-all duration-300"
         : "h-2 w-2 rounded-full bg-slate-400/70 transition-all duration-300 hover:bg-[#df1633]";
+
       dot.setAttribute("aria-current", isActive ? "true" : "false");
     });
   }
@@ -1839,6 +1841,57 @@ function initProjectTypeMultiSelect() {
 }
 
 // function added
+function initAboutFaqAccordion() {
+  const faqRoots = document.querySelectorAll("[data-about-faq]");
+  if (!faqRoots.length) return;
+
+  faqRoots.forEach((root) => {
+    if (root.dataset.aboutFaqReady === "true") return;
+    root.dataset.aboutFaqReady = "true";
+
+    const buttons = Array.from(
+      root.querySelectorAll("[data-about-faq-button]"),
+    );
+
+    function closeFaq(button) {
+      const panelId = button.getAttribute("aria-controls");
+      const panel = panelId ? document.getElementById(panelId) : null;
+      const icon = button.querySelector("[data-about-faq-icon]");
+
+      button.setAttribute("aria-expanded", "false");
+      panel?.classList.add("hidden");
+
+      if (icon) {
+        icon.textContent = "+";
+      }
+    }
+
+    function openFaq(button) {
+      const panelId = button.getAttribute("aria-controls");
+      const panel = panelId ? document.getElementById(panelId) : null;
+      const icon = button.querySelector("[data-about-faq-icon]");
+
+      button.setAttribute("aria-expanded", "true");
+      panel?.classList.remove("hidden");
+
+      if (icon) {
+        icon.textContent = "−";
+      }
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const isOpen = button.getAttribute("aria-expanded") === "true";
+
+        buttons.forEach(closeFaq);
+
+        if (!isOpen) {
+          openFaq(button);
+        }
+      });
+    });
+  });
+}
 
 function isProductDetailsRoute() {
   return window.location.pathname.startsWith("/products/details/");
@@ -1957,5 +2010,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     initProductSections();
     initProjectsSlider();
     initProjectTypeMultiSelect();
+    initAboutFaqAccordion();
   });
 });
