@@ -1840,6 +1840,89 @@ function initProjectTypeMultiSelect() {
   });
 }
 
+function initContactCaptcha() {
+  const forms = document.querySelectorAll("[data-contact-form]");
+
+  if (!forms.length) return;
+
+  forms.forEach((form) => {
+    if (form.dataset.captchaReady === "true") return;
+    form.dataset.captchaReady = "true";
+
+    const captchaPanel = form.querySelector("[data-captcha-panel]");
+    const question = form.querySelector("[data-captcha-question]");
+    const answerInput = form.querySelector("[data-captcha-answer]");
+    const refreshButton = form.querySelector("[data-captcha-refresh]");
+    const errorText = form.querySelector("[data-captcha-error]");
+
+    if (!captchaPanel || !question || !answerInput || !errorText) return;
+
+    let correctAnswer = 0;
+    let captchaShown = false;
+
+    function generateCaptcha() {
+      const firstNumber = Math.floor(Math.random() * 8) + 2;
+      const secondNumber = Math.floor(Math.random() * 8) + 2;
+
+      correctAnswer = firstNumber + secondNumber;
+
+      question.textContent = `${firstNumber} + ${secondNumber} = ?`;
+      answerInput.value = "";
+      answerInput.classList.remove("border-red-400");
+      errorText.classList.add("hidden");
+    }
+
+    function showCaptchaPanel() {
+      captchaShown = true;
+
+      captchaPanel.classList.remove("hidden");
+      generateCaptcha();
+
+      setTimeout(() => {
+        answerInput.focus();
+        captchaPanel.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }, 50);
+    }
+
+    function showCaptchaError() {
+      answerInput.classList.add("border-red-400");
+      errorText.classList.remove("hidden");
+      answerInput.focus();
+    }
+
+    answerInput.addEventListener("input", () => {
+      answerInput.classList.remove("border-red-400");
+      errorText.classList.add("hidden");
+    });
+
+    refreshButton?.addEventListener("click", () => {
+      generateCaptcha();
+      answerInput.focus();
+    });
+
+    form.addEventListener("submit", (e) => {
+      // Project Type validation আগে fail করলে captcha দেখাবে না
+      if (e.defaultPrevented) return;
+
+      // First click on Send Message: show captcha, don't submit
+      if (!captchaShown) {
+        e.preventDefault();
+        showCaptchaPanel();
+        return;
+      }
+
+      const userAnswer = Number(answerInput.value.trim());
+
+      if (!answerInput.value.trim() || userAnswer !== correctAnswer) {
+        e.preventDefault();
+        showCaptchaError();
+      }
+    });
+  });
+}
 // function added
 function initAboutFaqAccordion() {
   const faqRoots = document.querySelectorAll("[data-about-faq]");
@@ -2011,5 +2094,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     initProjectsSlider();
     initProjectTypeMultiSelect();
     initAboutFaqAccordion();
+    initContactCaptcha();
   });
 });

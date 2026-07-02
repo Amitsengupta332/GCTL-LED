@@ -309,7 +309,7 @@ function projectCard(project) {
           ${project.categoryLabel}
         </span>
 
-        <h3 class="mt-4 min-h-[60px] text-[20px] font-black leading-[1.25] tracking-[-0.4px] text-[#071f4d]">
+       <h3 class="mt-4 min-h-[60px] text-[20px] font-medium leading-[1.35] tracking-[-0.2px] text-[#071f4d]">
           <a href="${detailsLink}" class="transition hover:text-[#0068d9]">
             ${project.title}
           </a>

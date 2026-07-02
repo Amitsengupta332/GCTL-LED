@@ -4,17 +4,22 @@ const gctlVideos = [
     slug: "indoor-led-display-solution-showcase",
     category: "LED Display",
     date: "Jun 20, 2026",
+    uploadDate: "2026-06-20",
     duration: "2:35",
+    durationISO: "PT2M35S",
     image:
       "/images/video/thumbs/futuristic_tech_showroom_with_digital_displays.avif",
     excerpt:
       "Explore indoor LED display visuals for showroom, retail and corporate environments.",
-    videoUrl: "/videos/indoor-led-display-solution-showcase.mp4",
-    // youtubeId: "YOUR_YOUTUBE_ID",
+    seoDescription:
+      "Watch GCTL LED indoor LED display solution showcase for showrooms, retail stores, corporate lobbies, meeting rooms and commercial display projects.",
+    youtubeId: "IHWKd7tThYU",
+    videoUrl: "",
     content: [
       "This video showcases how indoor LED display solutions can improve brand presentation, customer engagement and visual communication.",
       "Indoor LED screens are commonly used in showrooms, retail stores, corporate lobbies, meeting rooms and commercial spaces.",
       "A professional indoor LED setup should deliver bright visuals, smooth playback, accurate color and stable long-term performance.",
+      "GCTL LED helps businesses choose suitable screen size, pixel pitch, installation style and display configuration based on project requirements.",
     ],
   },
   {
@@ -22,15 +27,21 @@ const gctlVideos = [
     slug: "digital-signage-for-retail-stores",
     category: "Digital Signage",
     date: "Jun 18, 2026",
+    uploadDate: "2026-06-18",
     duration: "1:58",
+    durationISO: "PT1M58S",
     image: "/images/video/thumbs/modern_boutique_with_digital_displays.avif",
     excerpt:
       "See how digital signage helps retail stores promote offers, products and brand campaigns.",
-    videoUrl: "/videos/digital-signage-for-retail-stores.mp4",
+    seoDescription:
+      "Watch GCTL LED digital signage video for retail stores, shopping malls, showrooms, supermarkets and commercial promotion displays.",
+    youtubeId: "EqA5-EkqUm8",
+    videoUrl: "",
     content: [
       "Retail digital signage helps businesses display offers, product videos, seasonal campaigns and promotional messages in a more attractive way.",
       "Compared with printed posters, digital signage is easier to update and more eye-catching for customers.",
       "This type of display works well for boutiques, malls, supermarkets, showrooms and premium retail environments.",
+      "GCTL LED digital signage solutions can support product promotion, brand communication, customer engagement and in-store advertising.",
     ],
   },
   {
@@ -38,15 +49,21 @@ const gctlVideos = [
     slug: "lcd-video-wall-for-control-rooms",
     category: "LCD Video Wall",
     date: "Jun 15, 2026",
+    uploadDate: "2026-06-15",
     duration: "3:10",
+    durationISO: "PT3M10S",
     image: "/images/video/thumbs/high_tech_control_room_atmosphere.avif",
     excerpt:
       "A quick look at LCD video wall usage for monitoring, command centers and control rooms.",
-    videoUrl: "/videos/lcd-video-wall-for-control-rooms.mp4",
+    seoDescription:
+      "Watch GCTL LED LCD video wall showcase for control rooms, security monitoring centers, command centers and operation rooms.",
+    youtubeId: "ZkGwwWalv9Q",
+    videoUrl: "",
     content: [
       "LCD video walls are widely used in control rooms, security monitoring centers and command centers.",
       "They allow multiple data sources, camera feeds and dashboards to be shown on one large visual surface.",
       "A proper video wall setup should include quality panels, controller support, strong mounting and easy maintenance access.",
+      "GCTL LED helps organizations plan video wall layouts for monitoring, surveillance, operation control and professional visual management.",
     ],
   },
   {
@@ -54,15 +71,67 @@ const gctlVideos = [
     slug: "outdoor-led-billboard-advertising-display",
     category: "Advertising Billboard",
     date: "Jun 12, 2026",
+    uploadDate: "2026-06-12",
     duration: "2:42",
+    durationISO: "PT2M42S",
     image: "/images/video/thumbs/urban_nightscape_with_glowing_billboard.avif",
     excerpt:
       "Watch how outdoor LED billboards create high-impact brand visibility in city locations.",
-    videoUrl: "/videos/outdoor-led-billboard-advertising-display.mp4",
+    seoDescription:
+      "Watch GCTL LED outdoor billboard advertising display video for roadsides, rooftops, shopping areas and high-visibility city advertising locations.",
+    youtubeId: "JswTCA6WD3k",
+    videoUrl: "",
     content: [
       "Outdoor LED billboards are designed for high visibility in roads, rooftops, shopping areas and city advertising zones.",
       "Brightness, waterproof protection, cabinet durability and viewing distance are important for outdoor billboard performance.",
       "A well-planned LED billboard can help brands reach a large audience with continuous visual impact.",
+      "GCTL LED outdoor display solutions are suitable for commercial advertising, brand campaigns, public messaging and large-format digital promotion.",
+    ],
+  },
+  {
+    title: "Outdoor LED Billboard Installation Process",
+    slug: "outdoor-led-billboard-installation-process",
+    category: "Advertising Billboard",
+    date: "Jun 10, 2026",
+    uploadDate: "2026-06-10",
+    duration: "3:20",
+    durationISO: "PT3M20S",
+    image:
+      "/images/video/thumbs/outdoor_led_billboard_installation_process.avif",
+    excerpt:
+      "See the basic installation process for outdoor LED billboard display projects.",
+    seoDescription:
+      "Watch outdoor LED billboard installation process video for large-format advertising displays, modular structure planning and commercial billboard setup.",
+    youtubeId: "S17GKspZMPs",
+    videoUrl: "",
+    content: [
+      "Outdoor LED billboard installation requires proper structure planning, cabinet alignment, power connection and signal configuration.",
+      "A strong installation setup helps improve display stability, service access and long-term outdoor performance.",
+      "For commercial advertising projects, planning the viewing distance, screen size and brightness level is very important.",
+      "GCTL LED can support businesses with outdoor LED billboard planning, product selection, installation guidance and technical consultation.",
+    ],
+  },
+  {
+    title: "Transparent LED Display Solution Showcase",
+    slug: "transparent-led-display-solution-showcase",
+    category: "LED Display",
+    date: "Jun 08, 2026",
+    uploadDate: "2026-06-08",
+    duration: "2:25",
+    durationISO: "PT2M25S",
+    image:
+      "/images/video/thumbs/transparent_led_display_solution_showcase.avif",
+    excerpt:
+      "Explore transparent LED display solutions for glass walls, retail fronts and premium commercial spaces.",
+    seoDescription:
+      "Watch transparent LED display solution video for glass wall digital signage, retail storefronts, showroom displays and premium commercial environments.",
+    youtubeId: "uh4Kis0q4mU",
+    videoUrl: "",
+    content: [
+      "Transparent LED displays are useful for glass walls, retail windows, showrooms and modern commercial environments.",
+      "They help businesses present digital content while keeping visibility through the glass surface.",
+      "This display type can create a premium visual effect for product promotion, brand campaigns and architectural display projects.",
+      "GCTL LED can help plan transparent LED display projects based on glass size, viewing distance, brightness needs and installation style.",
     ],
   },
 ];
@@ -80,6 +149,118 @@ function getVideoCategories() {
 
 function getVideoLink(video) {
   return `/videos/${video.slug}`;
+}
+
+function getAbsoluteUrl(path = "") {
+  return new URL(path, window.location.origin).href;
+}
+
+function setMetaAttribute(attributeName, attributeValue, content) {
+  if (!content) return;
+
+  let meta = document.head.querySelector(
+    `meta[${attributeName}="${attributeValue}"]`,
+  );
+
+  if (!meta) {
+    meta = document.createElement("meta");
+    meta.setAttribute(attributeName, attributeValue);
+    document.head.appendChild(meta);
+  }
+
+  meta.setAttribute("content", content);
+}
+
+function setCanonical(url) {
+  let link = document.head.querySelector('link[rel="canonical"]');
+
+  if (!link) {
+    link = document.createElement("link");
+    link.setAttribute("rel", "canonical");
+    document.head.appendChild(link);
+  }
+
+  link.setAttribute("href", url);
+}
+
+function setJsonLd(id, data) {
+  let script = document.getElementById(id);
+
+  if (!script) {
+    script = document.createElement("script");
+    script.id = id;
+    script.type = "application/ld+json";
+    document.head.appendChild(script);
+  }
+
+  script.textContent = JSON.stringify(data);
+}
+
+function updateVideoDetailsSeo(video) {
+  const pageUrl = getAbsoluteUrl(`/videos/${video.slug}`);
+  const title = `${video.title} | GCTL LED Video`;
+  const description = video.seoDescription || video.excerpt;
+  const thumbnailUrl = getAbsoluteUrl(video.image);
+
+  document.title = title;
+
+  setMetaAttribute("name", "description", description);
+  setCanonical(pageUrl);
+
+  setMetaAttribute("property", "og:type", "video.other");
+  setMetaAttribute("property", "og:title", title);
+  setMetaAttribute("property", "og:description", description);
+  setMetaAttribute("property", "og:image", thumbnailUrl);
+  setMetaAttribute("property", "og:url", pageUrl);
+
+  setMetaAttribute("name", "twitter:card", "summary_large_image");
+  setMetaAttribute("name", "twitter:title", title);
+  setMetaAttribute("name", "twitter:description", description);
+  setMetaAttribute("name", "twitter:image", thumbnailUrl);
+
+  setJsonLd("video-details-schema", {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: video.title,
+    description,
+    thumbnailUrl: [thumbnailUrl],
+    uploadDate: video.uploadDate,
+    duration: video.durationISO,
+    embedUrl: video.youtubeId
+      ? `https://www.youtube.com/embed/${video.youtubeId}`
+      : undefined,
+    contentUrl: video.videoUrl ? getAbsoluteUrl(video.videoUrl) : undefined,
+    mainEntityOfPage: pageUrl,
+    publisher: {
+      "@type": "Organization",
+      name: "GCTL LED",
+    },
+  });
+
+  setJsonLd("video-breadcrumb-schema", {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: getAbsoluteUrl("/index.html"),
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Videos",
+        item: getAbsoluteUrl("/videos.html"),
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: video.title,
+        item: pageUrl,
+      },
+    ],
+  });
 }
 
 function videoCard(video) {
@@ -642,7 +823,7 @@ function initVideosDetailsPage() {
     return;
   }
 
-  document.title = `${video.title} - GCTL LED`;
+  updateVideoDetailsSeo(video);
   renderVideoDetails(root, video);
 }
 
